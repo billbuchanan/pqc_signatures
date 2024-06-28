@@ -38,8 +38,9 @@ ECC 256-bit                              64                 32                25
 ```
 
 And for performance in cycles (from paper):
-
+```
              Keygen  Sign             Verify
 biscuit128f  82,505      9,653,412      8,734,302
 biscuit192f  210,150    81,492,308     75,826,788
-biscuit256f 353,223  1,147,099,575    137,359,832 
+biscuit256f 353,223  1,147,099,575    137,359,832
+```
