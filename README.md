@@ -38,14 +38,18 @@ Sphincs SHA256-256f Simple               64                128             49,85
 ASCON-Sign-128f Simple                   32                 64             17,088         1 (128-bit) Hash-based
 ASCON-Sign-192f Simple                   48                 96             35,664         1 (192-bit) Hash-based
 
-UOV Level I                         278,432             237,896               128         1 (128-bit) UOV
-UOV Level III                     1,225,440           1,044,320               200         3 (192-bit) UOV
-UOV Level V                       2,869,440           2,436,704               260         5 (256-bit) UOV
+UOV Level I                         278,432            237,896                128         1 (128-bit) UOV
+UOV Level III                     1,225,440          1,044,320                200         3 (192-bit) UOV
+UOV Level V                       2,869,440          2,436,704                260         5 (256-bit) UOV
 
 Biscuit 128f                             50                115              6,726         1 (128-bit) MPC
 Biscuit 192f                             69                158             15,129         3 (192-bit) MPC
 Biscuit 256f                             93                212             27,348         5 (256-bit) MPC
 
+CROSS R-SDP Level 1                      61                 16             12,944         1 (128-bit) Code
+CROSS R-SDP Level 3                      91                 24             37,080         3 (192-bit) Code
+CROSS R-SDP Level 5                     121                 32             51,120         5 (256-bit) Code
+ 
 RSA-2048                                256                256                256
 ECC 256-bit                              64                 32                256
 ```
