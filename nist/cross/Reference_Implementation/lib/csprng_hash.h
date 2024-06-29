@@ -22,6 +22,8 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  **/
+#define AES_CTR_CSPRNG
+#define SHA2_HASH
 #pragma once
 
 #include "parameters.h"

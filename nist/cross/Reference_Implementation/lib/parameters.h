@@ -23,6 +23,10 @@
  *
  **/
 
+#define RSDP
+#define CATEGORY_1
+#define SPEED
+
 #pragma once
 #include <stdint.h>
 

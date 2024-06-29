@@ -65,7 +65,7 @@ void CROSS_keygen(prikey_t *SK,
                   pubkey_t *PK){
 
   /* generation of random material for public and private key */
-  randombytes(SK->seed,SEED_LENGTH_BYTES);
+  randombytes1(SK->seed,SEED_LENGTH_BYTES);
   uint8_t seede_seed_pub[2][SEED_LENGTH_BYTES];
 
   CSPRNG_STATE_T CSPRNG_state;

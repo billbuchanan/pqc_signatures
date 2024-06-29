@@ -4,6 +4,8 @@ CFLAGS= -O3 -std=gnu11 -Wall -march=native -Wno-missing-braces -Wno-logical-not-
 LDFLAGS=-lm
 AR=ar rcs
 RANLIB=ranlib
+INC_DIR = C:\Strawberry\c\include
+
 
 OBJECTS=objs/fp_p1913.o objs/fp.o objs/fp2.o objs/random.o
 
