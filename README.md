@@ -7,9 +7,9 @@ And, so, Dilithium, FALCON and SPHINCS+ have become NIST standards for digital s
 * MPC-in-the-Head Signatures (7): Biscuit, MIRA, MiRitH (MinRank in the Head), MQOM (MQ on my Mind), PERK, RYDE, and SDitH (Syndrome Decoding in the Head).
 * Lattice-based Signatures (6): EagleSign, EHTv3 and EHTv4, HAETAE, HAWK, HuFu (Hash-and-Sign Signatures From Powerful Gadgets), and SQUIRRELS ( Square Unstructured Integer Euclidean Lattice Signature).
 * Code-based Signatures (5): CROSS (Codes and Restricted Objects Signature), Enhanced pqsigRM, FuLeeca, LESS (Linear Equivalence), MEDS (Matrix Equivalence Digital Signature).
-( Symmetric-based Signatures (4): AIMer, Ascon-Sign, FAEST, and SPHINCS-alpha.
+* Symmetric-based Signatures (4): AIMer, Ascon-Sign, FAEST, and SPHINCS-alpha.
 * Other Signatures (4): ALTEQ, eMLE-Sig 2.0 (Embedded Multilayer Equations with Heavy Layer Randomization), KAZ-SIGN (Kriptografi Atasi Zarah), Preon, and Xifrat1-Sign.
-( Isogeny Signatures (1): SQIsign.
+* Isogeny Signatures (1): SQIsign.
 
 
 ## Implementations
@@ -20,6 +20,7 @@ At present the code contains:
 * Biscuit Sign - [Biscuit Sign](https://asecuritysite.com/pqc/biscuit_sign). An MPC-in-the-Head approach [2, 3] uses non-interactive zero-knowledge proofs of knowledge and MPC (Multiparty Computation). With MPC we can split a problem into a number of computing elements, and these can be worked on in order to produce the result, and where none of the elements can see the working out at intermediate stages. It has the great advantage of this method is that we only use symmetric key methods (block ciphers and hashing functions).
 * Raccoon with C Code. [Raccoon](https://asecuritysite.com/pqc/raccoon_sign). Raccoon is a Lattice-based Post Quantum Signature scheme which uses a Fiat Shamir method without aborts (as apposed to the Dilithium method which does Fiat Shamir with aborts). This method allows distributed threshold signatures to be supported [1], and also gives improved support over side channel attacks. Raccoon has been developed by PQShield and has been submitted to the NIST PQC competition for additional signatures. In this case, we will use the C code for Raccoon-128-1, Raccoon-192-3 and Raccoon-256-1 to sign a random message.
 * Raccoon with Python. [Raccoon](https://asecuritysite.com/pqc/raccoon). Raccoon is a Lattice-based Post Quantum Signature scheme which uses a Fiat Shamir method, and has been submitted to the NIST PQC competition for additional signatures.
+* AIMer. [AIMer](https://asecuritysite.com/pqc/aimer_sign). With AIMer we use a zero-knowledge proof of the preimage knowledge [1] for a one-way function. Both of these use symmetric primitives, and will thus likely to be relatively fast in their implementation.
 
 
 ## Key sizes
