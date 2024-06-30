@@ -65,11 +65,12 @@ Raccoon-256-1 (Lattice)               4,064             26,016             20,33
 AIMER L1                                 32                 16              5,904         1 (128-bit) Symmetric
 AIMER L3                                 48                 24             13,080         3 (192-bit) Symmetric
 AIMER L5                                 64                 32             25,152         5 (256-bit) Symmetric
+
+pqsigRM-6-13 L1                   2,129,400             24,592              1,040         1 (128-bit) Code
 ```
 
 And for performance in cycles (from paper):
 ```
-
                        Keygen            Sign         Verify
 ------------------------------------------------------------
 Dilithium 2           97,621          281,078       108,711 †
@@ -94,8 +95,13 @@ AIMER L1               59,483       4,294,114      4,011,553 †††
 AIMER L3              131,234      10,767,276     10,222,797 †††
 AIMER L5              311,887      21,217,778     20,395,571 †††
 
+Ascon-Sign-128f     5,939,611     115,382,780      6,972,950 †††††
+Ascon-Sign-192f    10,939,221     243,023,163     13,058,030 †††††
+
+pqsigRM-6-13 L1 2,034,133,439       2,232,288        242,901
 ```
 † Intel Xeon E3–1230L v3 1.80GHz (Haswell)
 †† Intel Core i7–12700 clocked at 5.0 GHz (from CROSS paper).
 ††† Intel Xeon E5–1650 v3 at 3.50 GHz
 †††† 11th Gen Intel(R) Core(TM) i7–1185G7 at 3.00GHz CPU
+††††† Intel Core i5 10210U
