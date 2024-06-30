@@ -61,8 +61,8 @@ Raccon-128-1 (Lattice)                2,256             14,800             11,52
 Raccon-192-1 (Lattice)                3,160             18,840             14,544         3 (192-bit) Lattice
 Raccon-256-1 (Lattice)                4,064             26,016             20,330         5 (256-bit) Lattice
 
-AIMER L1                                 32                 16              4,880         1 (128-bit) Symmetric
-AIMER L3                                 48                 24             14,544         3 (192-bit) Symmetric
+AIMER L1                                 32                 16              5,904         1 (128-bit) Symmetric
+AIMER L3                                 48                 24             13,080         3 (192-bit) Symmetric
 AIMER L5                                 64                 32             25,152         5 (256-bit) Symmetric
 ```
 
