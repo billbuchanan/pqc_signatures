@@ -76,23 +76,26 @@ Dilithium 2           97,621          281,078       108,711 †
 Falcon-512        19,189,801          792,360       103,281 †
 SPHINCS+           1,334,220       33,651,546     2,150,290 †
 
-NIST Round 1 Additional Signatures
+NIST Round 1 Additional Signatures (Reference implementations)
 -----------------------------------
 UOV-I               3,311,188         116,624         82,668 †
 UOV-III            22,046,680         346,424        275,216 †
 UOV-V              58,162,124         690,752        514,100 †
 
-biscuit128f            82,505       9,653,412      8,734,302
-biscuit192f           210,150      81,492,308     75,826,788
-biscuit256f           353,223   1,147,099,575    137,359,832
+biscuit128f            82,505       9,653,412      8,734,302 ††††
+biscuit192f           210,150      81,492,308     75,826,788 ††††
+biscuit256f           353,223   1,147,099,575    137,359,832 ††††
 
-CROSS-R-SDP-f Level 1 100,000       6,760,000      3,170,000
-CROSS-R-SDP-f Level 3 240,000      11,810,000      5,870,000
-CROSS-R-SDP-f Level 5 440,000      37,090,000     14,560,000
+CROSS-R-SDP-f Level 1 100,000       6,760,000      3,170,000 ††
+CROSS-R-SDP-f Level 3 240,000      11,810,000      5,870,000 ††
+CROSS-R-SDP-f Level 5 440,000      37,090,000     14,560,000 ††
 
-AIMER L1               59,483       4,294,114      4,011,553          
-AIMER L3              131,234      10,767,276     10,222,797 
-AIMER L5              311,887      21,217,778     20,395,571 
+AIMER L1               59,483       4,294,114      4,011,553 †††         
+AIMER L3              131,234      10,767,276     10,222,797 †††
+AIMER L5              311,887      21,217,778     20,395,571 †††
 
 ```
-† Intel Xeon E3-1230L v3 1.80GHz (Haswell)
+† Intel Xeon E3–1230L v3 1.80GHz (Haswell)
+†† Intel Core i7–12700 clocked at 5.0 GHz (from CROSS paper).
+††† Intel Xeon E5–1650 v3 at 3.50 GHz
+†††† 11th Gen Intel(R) Core(TM) i7–1185G7 at 3.00GHz CPU
