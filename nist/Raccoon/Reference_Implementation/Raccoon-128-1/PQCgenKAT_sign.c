@@ -53,8 +53,8 @@ int main(void) {
         }
 
  printf("\nMessage: %s\n",showhex(m,mlen));
-  printf("\nAlice Public key (128th of signature): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/128));
-  printf("Alice Secret key (1282th of signature): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/128 ));
+  printf("\nAlice Public key (128th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/128));
+  printf("Alice Secret key (1282th of key): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/128 ));
 
   printf("Signature (128th of signature): %s\n\n",showhex(sm,CRYPTO_BYTES/128));
   if (r2==0) printf("Signature verified");
