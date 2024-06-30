@@ -56,8 +56,12 @@ ECC 256-bit                              64                 32                25
 
 And for performance in cycles (from paper):
 ```
-             Keygen  Sign             Verify
-biscuit128f  82,505      9,653,412      8,734,302
-biscuit192f  210,150    81,492,308     75,826,788
-biscuit256f 353,223  1,147,099,575    137,359,832
+                       Keygen            Sign         Verify
+biscuit128f            82,505       9,653,412      8,734,302
+biscuit192f           210,150      81,492,308     75,826,788
+biscuit256f           353,223   1,147,099,575    137,359,832
+CROSS-R-SDP-f Level 1 100,000       6,760,000      3,170,000
+CROSS-R-SDP-f Level 3 240,000      11,810,000      5,870,000
+CROSS-R-SDP-f Level 5 440,000      37,090,000     14,560,000
+
 ```
