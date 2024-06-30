@@ -69,7 +69,6 @@ AIMER L5                                 64                 32             25,15
 
 And for performance in cycles (from paper):
 ```
-
                        Keygen            Sign         Verify
 ------------------------------------------------------------
 Dilithium 2           97,621          281,078       108,711 †
@@ -94,8 +93,12 @@ AIMER L1               59,483       4,294,114      4,011,553 †††
 AIMER L3              131,234      10,767,276     10,222,797 †††
 AIMER L5              311,887      21,217,778     20,395,571 †††
 
+Ascon-Sign-128f     5,939,611     115,382,780      6,972,950 †††††
+Ascon-Sign-192f    10,939,221     243,023,163     13,058,030 †††††
+
 ```
 † Intel Xeon E3–1230L v3 1.80GHz (Haswell)
 †† Intel Core i7–12700 clocked at 5.0 GHz (from CROSS paper).
 ††† Intel Xeon E5–1650 v3 at 3.50 GHz
 †††† 11th Gen Intel(R) Core(TM) i7–1185G7 at 3.00GHz CPU
+††††† Intel Core i5 10210U
