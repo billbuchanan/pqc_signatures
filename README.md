@@ -54,10 +54,6 @@ Biscuit 128f                             50                115              6,72
 Biscuit 192f                             69                158             15,129         3 (192-bit) MPC
 Biscuit 256f                             93                212             27,348         5 (256-bit) MPC
 
-CROSS R-SDP Level 1                      61                 16             12,944         1 (128-bit) Code
-CROSS R-SDP Level 3                      91                 24             37,080         3 (192-bit) Code
-CROSS R-SDP Level 5                     121                 32             51,120         5 (256-bit) Code
-
 Raccoon-128-1 (Lattice)               2,256             14,800             11,524         1 (128-bit) Lattice
 Raccoon-192-1 (Lattice)               3,160             18,840             14,544         3 (192-bit) Lattice
 Raccoon-256-1 (Lattice)               4,064             26,016             20,330         5 (256-bit) Lattice
@@ -66,7 +62,15 @@ AIMER L1                                 32                 16              5,90
 AIMER L3                                 48                 24             13,080         3 (192-bit) Symmetric
 AIMER L5                                 64                 32             25,152         5 (256-bit) Symmetric
 
+CROSS R-SDP Level 1                      61                 16             12,944         1 (128-bit) Code
+CROSS R-SDP Level 3                      91                 24             37,080         3 (192-bit) Code
+CROSS R-SDP Level 5                     121                 32             51,120         5 (256-bit) Code
+
 pqsigRM-6-13 L1                   2,129,400             24,592              1,040         1 (128-bit) Code
+
+FuLecca1                              1,318              2,636              1,100         1 (128-bit) Code
+FuLecca3                              1,982              3,964              1,620         3 (192-bit) Code
+FuLecca5                              2,638              5,276              2,130         5 (256-bit) Code
 ```
 
 And for performance in cycles (from paper):
@@ -99,6 +103,10 @@ Ascon-Sign-128f     5,939,611     115,382,780      6,972,950 †††††
 Ascon-Sign-192f    10,939,221     243,023,163     13,058,030 †††††
 
 pqsigRM-6-13 L1 2,034,133,439       2,232,288        242,901
+
+FuLecca1           49,354,000   1,846,779,000      1,260,000 ††††††
+FuLecca3          110,918,000   2,111,156,000      2,447,000 ††††††
+FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
 ```
 † Intel Xeon E3–1230L v3 1.80GHz (Haswell)
 †† Intel Core i7–12700 clocked at 5.0 GHz (from CROSS paper).
