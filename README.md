@@ -108,8 +108,9 @@ FuLecca1           49,354,000   1,846,779,000      1,260,000 ††††††
 FuLecca3          110,918,000   2,111,156,000      2,447,000 ††††††
 FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
 ```
-† Intel Xeon E3–1230L v3 1.80GHz (Haswell)
-†† Intel Core i7–12700 clocked at 5.0 GHz (from CROSS paper).
-††† Intel Xeon E5–1650 v3 at 3.50 GHz
-†††† 11th Gen Intel(R) Core(TM) i7–1185G7 at 3.00GHz CPU
+† Intel Xeon E3-1230L v3 1.80GHz (Haswell)
+†† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
+††† Intel Xeon E5-1650 v3 at 3.50 GHz
+†††† 11th Gen Intel(R) Core(TM) i7-1185G7 at 3.00GHz CPU
 ††††† Intel Core i5 10210U
+†††††† Intel Comet Lake (Intel Core i7-10700) CPU at 2.9GHz
