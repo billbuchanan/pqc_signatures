@@ -23,6 +23,7 @@ At present the code contains:
 * AIMer. [AIMer](https://asecuritysite.com/pqc/aimer_sign). With AIMer we use a zero-knowledge proof of the preimage knowledge [1] for a one-way function. Both of these use symmetric primitives, and will thus likely to be relatively fast in their implementation.
 * FuLeeca. [FuLeeca](https://asecuritysite.com/pqc/fulecca_sign). While many code-based methods used a Hamming metric, the FuLeeca method uses the Lee metric. This leads to relatively small public key and signature sizes.  With code-based signatures, we can use a Fiat-Shamir method into a zero-knowledge identification technique. This often leads to relatively large signatures. As an alterative we can use a Hash-based approach, such as with the McEliece method, and whch leads to small signature sizes, but relatively large public keys. FuLeeca takes this approach, but modifies it with the Lee weight.
 * SPHINCS-α. [SPHINCS-α](https://asecuritysite.com/pqc/sphincs_sign). SPHINCS+ is a stateless hash-based signature scheme that is PQC (Post Quantum Robust). It is generally believed to be a secure method - based on the hardness of reversing the cryptographic hashing method. Now, SPHINCS-α is proposed as a new standard for Round 1 Additional Signatures. This improves on the SPHINCS+ methods, while still keeping its core elements. The addition includes a size-optimal encoding scheme that is applied to tree-structured one-time signatures.
+* FAEST. [FAEST](https://asecuritysite.com/pqc/faest_sign). NIST approved Dilithium, Falcon and SPHINCS+ for PQC digital signatures and is now looking at other alternative signatures. One of these is the FAEST digital signature algorithm [1], and which uses symmetric key primitives. This links directly to the security of AES128 (Level 1), AES192 (Level 3) and AES256 (Level 5). A key pair (pk,sk) is defined as: pk=(x,y)  and sk=k and where Ek(x)=y. Overall, E is the block cipher to use, k is the private key, and x is a plaintext block. The signature then becomes a non-interactive argument of knowledge of sk. This is similar to the Picnic method, but rather than using the MPC-in-the-Head (MPCitH) framework, it uses the VOLE-in-the-Head method [2].
 
 
 
@@ -37,7 +38,6 @@ Crystals Dilithium 5                  2,592              4,864              4,59
 
 Falcon 512 (Lattice)                    897              1,281                690         1 (128-bit) Lattice
 Falcon 1024                           1,793              2,305              1,330         5 (256-bit) Lattice
-
 Sphincs SHA256-128f Simple               32                 64             17,088         1 (128-bit) Hash-based
 Sphincs SHA256-192f Simple               48                 96             35,664         3 (192-bit) Hash-based
 Sphincs SHA256-256f Simple               64                128             49,856         5 (256-bit) Hash-based
@@ -57,8 +57,6 @@ UOV Level V                       2,869,440          2,436,704                26
 Biscuit 128f                             50                115              6,726         1 (128-bit) MPC
 Biscuit 192f                             69                158             15,129         3 (192-bit) MPC
 Biscuit 256f                             93                212             27,348         5 (256-bit) MPC
-
-
 
 Raccoon-128-1 (Lattice)               2,256             14,800             11,524         1 (128-bit) Lattice
 Raccoon-192-1 (Lattice)               3,160             18,840             14,544         3 (192-bit) Lattice
@@ -82,7 +80,10 @@ FuLecca5                              2,638              5,276              2,13
 sphincs-a-sha2-128f                      32                 64             16,720         1 (128-bit) Hash-based
 sphincs-a-sha2-192f                      48                 96             34,896         3 (192-bit) Hash-based
 sphincs-a-sha2-256f                      64                128             49,312         5 (256-bit) Hash-based
-```
+
+FAEST-128f                               32                 32              6,336         1 (128-bit) Symmetric
+FAEST-192f                               64                 56             16,792         3 (192-bit) Symmetric
+FAEST-256f                               64                 64             28,400         5 (256-bit) Symmetric
 
 And for performance in cycles (from paper):
 ```
@@ -125,7 +126,12 @@ FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
 
 SPHINCS-a-128f       1,036,602     26,635,716     2,028,186 †††††††
 SPHINCS-a-192f       2,199,276     45,218,790     1,744,038 †††††††
-SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 †††††††	
+SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 †††††††
+
+FAEST-128f              92,800     27,836,800    27,836,800 ††††††††     
+FAEST-192f             422,400     70,800,000    70,800,000 ††††††††  
+FAEST-256f             700,800    123,648,000   123,648,000 ††††††††  
+
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
@@ -133,4 +139,5 @@ SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 ††††††�
 †††† 11th Gen Intel(R) Core(TM) i7-1185G7 at 3.00GHz CPU
 ††††† Intel Core i5 10210U
 †††††† Intel Comet Lake (Intel Core i7-10700) CPU at 2.9GHz
-††††††† Ryzen 5 3600 CPU 
+††††††† Ryzen 5 3600 CPU
+†††††††† MD Ryzen 7 5800H processor at 3.2GHz 
