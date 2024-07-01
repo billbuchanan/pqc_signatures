@@ -84,6 +84,7 @@ sphincs-a-sha2-256f                      64                128             49,31
 FAEST-128f                               32                 32              6,336         1 (128-bit) Symmetric
 FAEST-192f                               64                 56             16,792         3 (192-bit) Symmetric
 FAEST-256f                               64                 64             28,400         5 (256-bit) Symmetric
+```
 
 And for performance in cycles (from paper):
 ```
