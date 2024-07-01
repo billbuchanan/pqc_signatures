@@ -35,6 +35,7 @@ Crystals Dilithium 5                  2,592              4,864              4,59
 
 Falcon 512 (Lattice)                    897              1,281                690         1 (128-bit) Lattice
 Falcon 1024                           1,793              2,305              1,330         5 (256-bit) Lattice
+
 Sphincs SHA256-128f Simple               32                 64             17,088         1 (128-bit) Hash-based
 Sphincs SHA256-192f Simple               48                 96             35,664         3 (192-bit) Hash-based
 Sphincs SHA256-256f Simple               64                128             49,856         5 (256-bit) Hash-based
@@ -55,6 +56,8 @@ Biscuit 128f                             50                115              6,72
 Biscuit 192f                             69                158             15,129         3 (192-bit) MPC
 Biscuit 256f                             93                212             27,348         5 (256-bit) MPC
 
+
+
 Raccoon-128-1 (Lattice)               2,256             14,800             11,524         1 (128-bit) Lattice
 Raccoon-192-1 (Lattice)               3,160             18,840             14,544         3 (192-bit) Lattice
 Raccoon-256-1 (Lattice)               4,064             26,016             20,330         5 (256-bit) Lattice
@@ -72,6 +75,11 @@ pqsigRM-6-13 L1                   2,129,400             24,592              1,04
 FuLecca1                              1,318              2,636              1,100         1 (128-bit) Code
 FuLecca3                              1,982              3,964              1,620         3 (192-bit) Code
 FuLecca5                              2,638              5,276              2,130         5 (256-bit) Code
+
+
+sphincs-a-sha2-128f                      32                 64             16,720         1 (128-bit) Hash-based
+sphincs-a-sha2-192f                      48                 96             34,896         3 (192-bit) Hash-based
+sphincs-a-sha2-256f                      64                128             49,312         5 (256-bit) Hash-based
 ```
 
 And for performance in cycles (from paper):
@@ -80,7 +88,10 @@ And for performance in cycles (from paper):
 ------------------------------------------------------------
 Dilithium 2           97,621          281,078       108,711 †
 Falcon-512        19,189,801          792,360       103,281 †
-SPHINCS+           1,334,220       33,651,546     2,150,290 †
+
+SPHINCS+-128f        1,143,558     26,872,236     2,204,802 †††††††
+SPHINCS+-192f        1,662,498     45,405,504     3,003,534 †††††††
+SPHINCS+-256f        4,327,632     92,059,542     2,967,642 †††††††
 
 NIST Round 1 Additional Signatures (Reference implementations)
 -----------------------------------
@@ -108,6 +119,11 @@ pqsigRM-6-13 L1 2,034,133,439       2,232,288        242,901
 FuLecca1           49,354,000   1,846,779,000      1,260,000 ††††††
 FuLecca3          110,918,000   2,111,156,000      2,447,000 ††††††
 FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
+
+
+SPHINCS-a-128f       1,036,602     26,635,716     2,028,186 †††††††
+SPHINCS-a-192f       2,199,276     45,218,790     1,744,038 †††††††
+SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 †††††††	
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
@@ -115,3 +131,4 @@ FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
 †††† 11th Gen Intel(R) Core(TM) i7-1185G7 at 3.00GHz CPU
 ††††† Intel Core i5 10210U
 †††††† Intel Comet Lake (Intel Core i7-10700) CPU at 2.9GHz
+††††††† Ryzen 5 3600 CPU 
