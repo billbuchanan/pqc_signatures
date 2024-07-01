@@ -22,6 +22,8 @@ At present the code contains:
 * Raccoon with Python. [Raccoon](https://asecuritysite.com/pqc/raccoon). Raccoon is a Lattice-based Post Quantum Signature scheme which uses a Fiat Shamir method, and has been submitted to the NIST PQC competition for additional signatures.
 * AIMer. [AIMer](https://asecuritysite.com/pqc/aimer_sign). With AIMer we use a zero-knowledge proof of the preimage knowledge [1] for a one-way function. Both of these use symmetric primitives, and will thus likely to be relatively fast in their implementation.
 * FuLeeca. [FuLeeca](https://asecuritysite.com/pqc/fulecca_sign). While many code-based methods used a Hamming metric, the FuLeeca method uses the Lee metric. This leads to relatively small public key and signature sizes.  With code-based signatures, we can use a Fiat-Shamir method into a zero-knowledge identification technique. This often leads to relatively large signatures. As an alterative we can use a Hash-based approach, such as with the McEliece method, and whch leads to small signature sizes, but relatively large public keys. FuLeeca takes this approach, but modifies it with the Lee weight.
+* SPHINCS-α. [SPHINCS-α](https://asecuritysite.com/pqc/sphincs_sign). SPHINCS+ is a stateless hash-based signature scheme that is PQC (Post Quantum Robust). It is generally believed to be a secure method - based on the hardness of reversing the cryptographic hashing method. Now, SPHINCS-α is proposed as a new standard for Round 1 Additional Signatures. This improves on the SPHINCS+ methods, while still keeping its core elements. The addition includes a size-optimal encoding scheme that is applied to tree-structured one-time signatures.
+
 
 
 ## Key sizes
