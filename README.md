@@ -25,6 +25,7 @@ At present the code contains:
 * SPHINCS-α. [SPHINCS-α](https://asecuritysite.com/pqc/sphincs_sign). SPHINCS+ is a stateless hash-based signature scheme that is PQC (Post Quantum Robust). It is generally believed to be a secure method - based on the hardness of reversing the cryptographic hashing method. Now, SPHINCS-α is proposed as a new standard for Round 1 Additional Signatures. This improves on the SPHINCS+ methods, while still keeping its core elements. The addition includes a size-optimal encoding scheme that is applied to tree-structured one-time signatures.
 * FAEST. [FAEST](https://asecuritysite.com/pqc/faest_sign). NIST approved Dilithium, Falcon and SPHINCS+ for PQC digital signatures and is now looking at other alternative signatures. One of these is the FAEST digital signature algorithm [1], and which uses symmetric key primitives. This links directly to the security of AES128 (Level 1), AES192 (Level 3) and AES256 (Level 5). A key pair (pk,sk) is defined as: pk=(x,y)  and sk=k and where Ek(x)=y. Overall, E is the block cipher to use, k is the private key, and x is a plaintext block. The signature then becomes a non-interactive argument of knowledge of sk. This is similar to the Picnic method, but rather than using the MPC-in-the-Head (MPCitH) framework, it uses the VOLE-in-the-Head method [2].
 * LESS.  [LESS (Linear Equivalence Signature Scheme)](https://asecuritysite.com/pqc/less_sign) LESS uses Fiat-Shamir transformation onto a zero-knowledge identification scheme. It uses a one-round Sigma protocol. The security of LESS depends on the hardness of the Linear Equivalence Problem (LEP).
+* MEDS. [MEDS](https://asecuritysite.com/pqc/meds_sign). The MEDS (Matrix Equivalence Digital Signature) scheme supports PQC digital signing [1]. Its security is supported by the difficulty of finding an isometry between two equivalent matrix rank-metric codes. From this problem, it integrates a zero-knowledge identification scheme for multiple rounds of a Sigma protocol. The Fiat-Shamir method is then used to create the signature.
 
 
 
@@ -91,6 +92,10 @@ FAEST-256f                               64                 64             28,40
 LESS-1b                              13,940                 32              9,286         1 (128-bit) Code
 LESS-3b                              35,074                 48             18,000         3 (192-bit) Code
 LESS-5b                              65,793                 64             31,896         5 (256-bit) Code
+
+MEDS9923                              9,923               1,828             9,896        1 (128-bit) Code
+MEDS41711                            41,711               4,420            41,080        3 (192-bit) Code
+MEDS167717                          167,717              12,444           165,464        5 (256-bit) Code
 ```
 
 And for performance in cycles (from papers):
@@ -138,6 +143,7 @@ FuLecca1           49,354,000   1,846,779,000      1,260,000 ††††††
 FuLecca3          110,918,000   2,111,156,000      2,447,000 ††††††
 FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
 
+
 SPHINCS-a-128f       1,036,602     26,635,716     2,028,186 †††††††
 SPHINCS-a-192f       2,199,276     45,218,790     1,744,038 †††††††
 SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 †††††††
@@ -148,7 +154,11 @@ FAEST-256f             700,800    123,648,000   123,648,000 ††††††�
 
 LESS-1b              3,400,000    878,700,000    890,800,000  Intel Core i7-12700K at 4.9GHz
 LESS-3b              9,300,000  7,224,100,000  7,315,800,000
-LESS-5b             24,400,000 33,787,700,000 34,014,000,000   
+LESS-5b             24,400,000 33,787,700,000 34,014,000,000
+
+MEDS9923            1,900,000     518,050,000    515,580,000
+MEDS41711           9,800,000   1,467,000,000  1,461,970,000 
+MEDS134180         44,750,000   1,629,840,000  1,621,570,000  
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
