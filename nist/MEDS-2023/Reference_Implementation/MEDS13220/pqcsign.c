@@ -32,13 +32,15 @@ int main(void) {
     printf("Public key size: %d\n", CRYPTO_PUBLICKEYBYTES );
     printf("Signature size: %d\n\n", CRYPTO_BYTES );
 
+
     unsigned char sm[256 + CRYPTO_BYTES];
     unsigned char m[256];
     for (unsigned i = 0; i < 256; i++) {
         m[i] = i;
     }
 
-
+	printf("Signature not shown as too slow");
+return(0);
     unsigned char *pk = (unsigned char *)malloc( CRYPTO_PUBLICKEYBYTES );
     unsigned char *sk = (unsigned char *)malloc( CRYPTO_SECRETKEYBYTES );
 
