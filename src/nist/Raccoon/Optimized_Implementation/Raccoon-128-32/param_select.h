@@ -1,1 +1,0 @@
-#define RACCOON_128_32

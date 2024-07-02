@@ -1,3 +1,5 @@
 reference_code/
 reference_code_windows/
 build
+lib
+test_data/results/
