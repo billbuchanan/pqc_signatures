@@ -59,6 +59,8 @@ Biscuit 128f                             50                115              6,72
 Biscuit 192f                             69                158             15,129         3 (192-bit) MPC
 Biscuit 256f                             93                212             27,348         5 (256-bit) MPC
 
+
+
 Raccoon-128-1 (Lattice)               2,256             14,800             11,524         1 (128-bit) Lattice
 Raccoon-192-1 (Lattice)               3,160             18,840             14,544         3 (192-bit) Lattice
 Raccoon-256-1 (Lattice)               4,064             26,016             20,330         5 (256-bit) Lattice
@@ -78,13 +80,17 @@ FuLecca3                              1,982              3,964              1,62
 FuLecca5                              2,638              5,276              2,130         5 (256-bit) Code
 
 
-sphincs-a-sha2-128f                      32                 64             16,720         1 (128-bit) Hash-based
-sphincs-a-sha2-192f                      48                 96             34,896         3 (192-bit) Hash-based
-sphincs-a-sha2-256f                      64                128             49,312         5 (256-bit) Hash-based
+SPHINCS-a-sha2-128f                      32                 64             16,720         1 (128-bit) Hash-based
+SPHINCS-a-sha2-192f                      48                 96             34,896         3 (192-bit) Hash-based
+SPHINCS-a-sha2-256f                      64                128             49,312         5 (256-bit) Hash-based
 
 FAEST-128f                               32                 32              6,336         1 (128-bit) Symmetric
 FAEST-192f                               64                 56             16,792         3 (192-bit) Symmetric
 FAEST-256f                               64                 64             28,400         5 (256-bit) Symmetric
+
+LESS-1b                              13,940                 32              9,286         1 (128-bit) Code
+LESS-3b                              35,074                 48             18,000         3 (192-bit) Code
+LESS-5b                              65,793                 64             31,896         5 (256-bit) Code
 ```
 
 And for performance in cycles (from papers):
@@ -104,7 +110,6 @@ SPHINCS+192f       14,215,518     386,861,992    19,876,926
 SPHINCS+256f       36,950,136     763,942,250    19,886,032      
 
 *Additional: SHAKE256-128f-simple
-
 
 NIST Round 1 Additional Signatures (Reference implementations)
 -----------------------------------
@@ -129,14 +134,9 @@ Ascon-Sign-192f    10,939,221     243,023,163     13,058,030 †††††
 
 pqsigRM-6-13 L1 2,034,133,439       2,232,288        242,901
 
-Raccoon-128         2,112,000       4,817,000      1,757,000 Intel Core i7-i2270 at 2.1GHz
-Raccoon-192         3,252,000       6,860,000      2,765,000
-Raccoon-256         5,119,000      10,026,000      4,554,000
-
 FuLecca1           49,354,000   1,846,779,000      1,260,000 ††††††
 FuLecca3          110,918,000   2,111,156,000      2,447,000 ††††††
 FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
-
 
 SPHINCS-a-128f       1,036,602     26,635,716     2,028,186 †††††††
 SPHINCS-a-192f       2,199,276     45,218,790     1,744,038 †††††††
@@ -144,7 +144,11 @@ SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 ††††††�
 
 FAEST-128f              92,800     27,836,800    27,836,800 ††††††††     
 FAEST-192f             422,400     70,800,000    70,800,000 ††††††††  
-FAEST-256f             700,800    123,648,000   123,648,000 ††††††††    
+FAEST-256f             700,800    123,648,000   123,648,000 ††††††††
+
+LESS-1b              3,400,000    878,700,000    890,800,000  Intel Core i7-12700K at 4.9GHz
+LESS-3b              9,300,000  7,224,100,000  7,315,800,000
+LESS-5b             24,400,000 33,787,700,000 34,014,000,000   
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
