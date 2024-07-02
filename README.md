@@ -86,7 +86,7 @@ FAEST-192f                               64                 56             16,79
 FAEST-256f                               64                 64             28,400         5 (256-bit) Symmetric
 ```
 
-And for performance in cycles (from paper):
+And for performance in cycles (from papers):
 ```
 Method               Keygen           Sign         Verify
 ------------------------------------------------------------
