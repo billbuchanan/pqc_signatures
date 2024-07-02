@@ -1,5 +1,27 @@
 # Round 1 Additional Signatures
 
+## Development Branch Details
+
+### Description:
+This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project.
+
+<!-- As part of the development process of this branch, the `reference_code` directory contains the reference code files created by the varying teams behind the schemes submitted to the competition. It contains the following zip files:
+
+- **reference_code** - This contains the default source code for the  signature schemes and their security variations
+- **reference_code_windows** - This contains modified versions of submitted schemes which can be executed on Windows machines, with pre-generated executables included.
+
+> Note - The versions of the reference code which should be modified for the development of this project can be found within the `src` directory as the versions previously discussed are purely for reference when developing the source code files and will be removed in later versions. -->
+
+### Current Task Checklist for Development Branch:
+- [x] Perform basic restructure source directories and project files after branch initialisation
+- [ ] Review signature scheme source code to identify best method of integration within performance evaluation scripts
+- [ ] Determine if possible to remove redundant copies of the reference-code and instead create the security variations through combined Makefiles 
+- [ ] Review standard methodologies and common C libraries for gathering system performance metrics for when algorithmic operations are being performed
+- [ ] Decide on best approach for including signature source code within evaluation scripts
+- [ ] Create basic setup script and makefiles to compile various algorithm source code that can later be used within performance measuring scripts
+
+# Round 1 Additional Signatures
+
 ## Introduction
 And, so, Dilithium, FALCON and SPHINCS+ have become NIST standards for digital signatures, and with an aim to remove RSA, ECDSA and EdDSA. But, NIST wants alternatives to these, especially so that we are not too dependent on lattice-based approaches (such as with Dilithium and FALCON). These are [here](https://csrc.nist.gov/projects/pqc-dig-sig/round-1-additional-signatures):
 
