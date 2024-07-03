@@ -18,14 +18,25 @@ function create_alg_arrays() {
         raccoon_variations+=("$line")
     done < "$alg_list_dir/raccoon_variations.txt"
 
+    biscuit_variations=()
+    while IFS= read -r line; do
+        biscuit_variations+=("$line")
+    done < "$alg_list_dir/biscuit_variations.txt"
+
+
 }
 
 #------------------------------------------------------------------------------
-function raccoon_test {
+function cycles_test {
 
-    for variation in "${raccoon_variations[@]}"; do
-        echo -e "\nRunning raccoon test for $variation"
-        $lib_dir/raccoon/xtest_$variation >> $results_dir/sig_speed_results.txt
+    # for variation in "${raccoon_variations[@]}"; do
+    #     echo -e "\nRunning raccoon test for $variation"
+    #     $lib_dir/raccoon/xtest_$variation >> $results_dir/sig_speed_results.txt
+    # done
+
+    for variation in "${biscuit_variations[@]}"; do
+        echo -e "\nRunning biscuit test for $variation"
+        $lib_dir/biscuit/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }
@@ -33,6 +44,6 @@ function raccoon_test {
 #------------------------------------------------------------------------------
 function main() {
     create_alg_arrays
-    raccoon_test
+    cycles_test
 }
 main

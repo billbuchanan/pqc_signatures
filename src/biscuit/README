@@ -1,0 +1,105 @@
+Biscuit
+=======
+
+Package Contents
+.
+├── README                        # This file
+├── Supporting_Documentation
+│   └── Biscuit.pdf
+├── KAT                           # Known Answer Tests for all variants
+├── Reference_Implementation
+├── Optimized_Implementation
+└── Additional_Implementations
+    └── sse2
+
+
+The package provides 3 implementations profiles:
+- Reference_Implementation: The main code follows the specification in a
+  straightforward manner. The internal elements are stored in arrays
+  of bytes. The implementation works and answers to KATs for any
+  architecture and any CPU endianness.
+- Optimized_Implementation: The main code performs the algorithm in
+  a slightly different manner in order to optimize RAM
+  usage. Furthermore, the internal elements are stored in arrays of
+  64-bit unsigned integers. The implementation for correctly answers
+  to KAT only for little-endian CPUs. It works correctly on any
+  architecture but is faster on architecture handling 64-bit integers
+  directly.
+- Additional_Implementations/sse2: The main code is the same as the
+  Optimized_Implementation, but the internal elements are now
+  vectorized in SSE2 vector elements. This allows even faster
+  operations. It works only in architecture supporting sse2
+  instructions to work on 256-bit integers.
+
+For each implementation, we provide 2 flavors of biscuit for each
+security level:
+- biscuitXXXs: a variant that has small signatures but is slower
+- biscuitXXXf: a variant that is faster but has larger signatures
+
+In total, for each implementation profile, we have the 6 directories:
+biscuit128f, biscuit128s, biscuit192f, biscuit192s, biscuit256f, biscuit256s
+
+In each of the biscuitXXXx directory, you will find the following
+files:
+
+.
+├── Makefile            # Makefile to build the programs
+├── common.mk
+│
+├── params_mpcith.h     # Parameters for MPCitH protocol 
+├── params_posso.h      # Parameters for PoSSo problem
+├── params_biscuit.h
+├── params_instance.h   # Parameters not already fixed in previous
+├── params.h            # File to be included for implem
+│
+├── utils.c             # Hash functions and seed derivation
+├── utils.h
+│
+├── batch_tools.c       # Functions for dealing with vectors of Fq elements
+├── batch_tools.h       # and polynomial system evaluations
+│
+├── biscuit.c / biscuit_mq_ref.c  # main file (optimized, or reference)
+├── biscuit.h
+│
+├── rng.c               # RNG provided for KATs (NIST package)
+├── rng.h
+├── api.c               # Main API to conform to
+├── api.h
+├── PQCgenKAT_sign.c    # File to generate KATs (NIST package)
+│
+├── test.c              # Basic test file for the biscuit functions
+├── benchmark.c         # File to benchmark internal some parameters
+├── perf_api.c          # Run a single 
+│
+└── sha3/               # Directory containing SHA3 implementation from XKCP
+
+
+In any of such, you will find a Makefile that allows to compile the
+following targets:
+- PQCgenKAT_sign: program to generate known answer tests
+- test: program to test keygen, sign and verify. Check that the
+  verification of a valid signature is valid.
+- benchmark: program to benchmark the inner function keygen, sign, verify.
+- perf_api: program to benchmark the performances of the
+  crypto_sign_keypair, crypto_sign, crypto_sign_open APIs
+
+The benchmark in perf_api.c and benchmark.c is obtained by counting
+PERF_HW_COUNT_CPU_CYCLES. This will work only on linux operating system.
+
+Example: inside Additionnal_Implementations/sse2/biscuit128f:
+> make benchmark
+> ./benchmark 100
+Run 100 tests for each function and take the mean number of cycles
+================================================================================
+params: lambda=128, tau=34, N=16, q=16, n=64, m=67, d=2
+sizes: sk=115 bytes, pk=50 bytes, sig=6726 bytes
+keygen: 84737.930000 cycles
+sign: 9572124.810000 cycles
+verif (ok): 8723494.620000 cycles
+
+Finally, the KAT directory contains Known Answer Tests for all
+variants of biscuit. It has one sub-directory per variant:
+biscuit128f, biscuit128s, biscuit192f, biscuit192s, biscuit256f, biscuit256s.
+Each sub-directory contains 100 .req file containing a seed and an
+input message, and 100 corresponding .rsp file containing the key, and
+signature that would be obtained.

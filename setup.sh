@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon")
+sig_algs=("raccoon" "biscuit")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -18,6 +18,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         raccoon_variations+=("$line")
     done < "$alg_list_dir/raccoon_variations.txt"
+
+    biscuit_variations=()
+    while IFS= read -r line; do
+        biscuit_variations+=("$line")
+    done < "$alg_list_dir/biscuit_variations.txt"
 
 }
 
@@ -54,21 +59,39 @@ function environment_setup() {
 }
 
 #------------------------------------------------------------------------------
-function raccoon_setup() {
+function variations_setup() {
 
-    raccoon_src_dir=$src_dir/raccoon
-    raccoon_dst_dir=$lib_dir/raccoon
+    # # Setting up the variations of the raccoon signature algorithm
+    # raccoon_src_dir=$src_dir/raccoon
+    # raccoon_dst_dir=$lib_dir/raccoon
 
-    cd $raccoon_src_dir
+    # cd $raccoon_src_dir
 
-    # Borrowed from raccoon 
-    for variation in "${raccoon_variations[@]}"; do
+    # # Borrowed from raccoon 
+    # for variation in "${raccoon_variations[@]}"; do
+    #     make clean
+    #     make RACCF="-D$variation -DBENCH_TIMEOUT=2.0"
+    #     cp $raccoon_src_dir/xtest $raccoon_dst_dir/xtest_$variation
+    # done
+
+    # make clean 
+
+    # Setting up the variations of the biscuit signature algorithm
+    biscuit_src_dir=$src_dir/biscuit/Reference_Implementation
+    biscuit_dst_dir=$lib_dir/biscuit
+
+    cd $biscuit_src_dir
+
+    # Loop through the variation dirs
+
+    for variation_dir in "${biscuit_variations[@]}"; do
+        variation_dir_path="$biscuit_src_dir/$variation_dir"
+        cd $variation_dir_path
+        make
+        mv "$variation_dir_path/pqcsign" "$biscuit_dst_dir/pqcsign_$variation_dir"
         make clean
-        make RACCF="-D$variation -DBENCH_TIMEOUT=2.0"
-        cp $raccoon_src_dir/xtest $raccoon_dst_dir/xtest_$variation
     done
 
-    make clean 
     cd $root_dir
 
 }
@@ -80,7 +103,8 @@ function main() {
     environment_setup
 
     echo -e "\nSetting up raccoon testing files"
-    raccoon_setup
+    #raccoon_setup
+    variations_setup
 
     echo -e "\nSetup complete, testing scripts can be found in the test_scripts directory"
 
