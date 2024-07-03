@@ -23,7 +23,10 @@ function create_alg_arrays() {
         biscuit_variations+=("$line")
     done < "$alg_list_dir/biscuit_variations.txt"
 
-
+    cross_variations=()
+    while IFS= read -r line; do
+        cross_variations+=("$line")
+    done < "$alg_list_dir/cross_variations.txt"
 }
 
 #------------------------------------------------------------------------------
@@ -37,6 +40,11 @@ function cycles_test {
     for variation in "${biscuit_variations[@]}"; do
         echo -e "\nRunning biscuit test for $variation"
         $lib_dir/biscuit/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
+    for variation in "${cross_variations[@]}"; do
+        echo -e "\nRunning cross test for $variation"
+        $lib_dir/cross/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }

@@ -29,7 +29,64 @@
 #include "parameters.h"
 #include "CROSS.h"
 
-#define CRYPTO_ALGNAME "CROSS"
+//#define CRYPTO_ALGNAME "CROSS"
+
+// Set defintion of algorithm name based on the parameters passed to the compiler
+#if defined(RSDP)
+    #if defined(CATEGORY_1)
+
+        #if defined(SPEED)
+            #define CRYPTO_ALGNAME "CROSS-RSDP-128-f"
+        #elif defined(SIG_SIZE)
+            #define CRYPTO_ALGNAME "CROSS-RSDP-128-s"
+        #endif
+    
+    #elif defined(CATEGORY_3)
+
+        #if defined(SPEED)
+            #define CRYPTO_ALGNAME "CROSS-RSDP-192-f"
+        #elif defined(SIG_SIZE)
+            #define CRYPTO_ALGNAME "CROSS-RSDP-192-s"
+
+        #endif
+
+    #elif defined(CATEGORY_5)
+
+        #if defined(SPEED)
+            #define CRYPTO_ALGNAME "CROSS-RSDP-256-f"
+        #elif defined(SIG_SIZE)
+            #define CRYPTO_ALGNAME "CROSS-RSDP-256-s"
+        #endif
+
+    #endif
+
+#elif defined(RSDPG)
+    #if defined(CATEGORY_1)
+
+        #if defined(SPEED)
+            #define CRYPTO_ALGNAME "CROSS-RSDPG-128-f"
+        #elif defined(SIG_SIZE)
+            #define CRYPTO_ALGNAME "CROSS-RSDPG-128-s"
+        #endif
+
+    #elif defined(CATEGORY_3)
+        
+        #if defined(SPEED)
+            #define CRYPTO_ALGNAME "CROSS-RSDPG-192-f"
+        #elif defined(SIG_SIZE)
+            #define CRYPTO_ALGNAME "CROSS-RSDPG-192-s"
+        #endif
+
+    #elif defined(CATEGORY_5)
+        #if defined(SPEED)
+            #define CRYPTO_ALGNAME "CROSS-RSDPG-256-f"
+        #elif defined(SIG_SIZE)
+            #define CRYPTO_ALGNAME "CROSS-RSDPG-256-s"
+        #endif
+    #endif
+
+#endif
+
 
 /*  no. of bytes of the secret key */
 #define CRYPTO_SECRETKEYBYTES (sizeof(prikey_t))

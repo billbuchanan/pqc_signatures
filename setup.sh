@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit")
+sig_algs=("raccoon" "biscuit" "cross")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -23,6 +23,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         biscuit_variations+=("$line")
     done < "$alg_list_dir/biscuit_variations.txt"
+
+    cross_variations=()
+    while IFS= read -r line; do
+        cross_variations+=("$line")
+    done < "$alg_list_dir/cross_variations.txt"
 
 }
 
@@ -55,6 +60,35 @@ function environment_setup() {
 
     # Create the various alg arrays to be used in setup functions
     create_alg_arrays
+
+}
+
+#------------------------------------------------------------------------------
+function set_build_cross_flags() {
+
+    # Extract flags from variation name
+    algorithm_flag=$(echo $variation | cut -d'-' -f2)
+    security_level_string=$(echo $variation | cut -d'-' -f3)
+    optimisation_string=$(echo $variation | cut -d'-' -f4)
+
+    # Set the security level flag based on the size value in variation string
+    if [[ "$security_level_string" == "128" ]]; then
+        security_level_flag="CATEGORY_1"
+
+    elif [[ "$security_level_string" == "192" ]]; then
+        security_level_flag="CATEGORY_3"
+
+    elif [[ "$security_level_string" == "256" ]]; then
+        security_level_flag="CATEGORY_5"
+    fi
+
+    # Set the optimisation flag based on the value in the variation string
+    if [[ "$optimisation_string" == "f" ]]; then
+        optimisation_flag="SPEED"
+
+    elif [[ "$optimisation_string" == "s" ]]; then
+        optimisation_flag="SIG_SIZE"
+    fi
 
 }
 
@@ -92,10 +126,26 @@ function variations_setup() {
         make clean
     done
 
-    cd $root_dir
+    # Setting up variations of the cross signing algorithm
+    cross_src_dir=$src_dir/cross/Reference_Implementation
+    cross_dst_dir=$lib_dir/cross
 
+    cd $cross_src_dir
 
+    for variation in "${cross_variations[@]}"; do
+
+        set_build_cross_flags
+
+        # Compile and move pqcsign binary to lib directory
+        make clean
+        make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH"
+        mv "$cross_src_dir/pqcsign" "$cross_dst_dir/pqcsign_$variation"
     
+    done
+
+    make clean
+
+
 
 }
 
@@ -105,7 +155,7 @@ function main() {
     echo "Performing Environment Setup"
     environment_setup
 
-    echo -e "\nSetting up raccoon testing files"
+    #echo -e "\nSetting up raccoon testing files"
     #raccoon_setup
     variations_setup
 
