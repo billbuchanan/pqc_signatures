@@ -101,6 +101,10 @@ MEDS167717                          167,717              12,444           165,46
 WAVE-822                          3,677,389              18,900               822        1 (128-bit) Code
 WAVE-1217                         7,867,597              27,629             1,218        3 (192-bit) Code
 WAVE-1612                        13,632,308              36,359             1,644        5 (256-bit) Code
+
+EagleSign 3                           1,824                 576             2,335        3 (192-bit) Lattice
+EagleSign 5                           3,616                1,600            3,488        5 (192-bit) Lattice
+
 ```
 
 And for performance in cycles (from papers):
@@ -167,7 +171,10 @@ MEDS134180         44,750,000   1,629,840,000  1,621,570,000
 
 WAVE-822       14,468,000,043   1,160,793,621    205,829,565  Intel i5-1135G7 at 2.4GHz 
 WAVE-1249      47,222,134,806   3,507,016,206    464,110,855
-WAVE-1612     108,642,333,507   7,936,541,947    813,301,900 
+WAVE-1612     108,642,333,507   7,936,541,947    813,301,900
+
+EagleSign3          1,020,723       1,283,454        955,956  12th Gen Intel Core i7-1260P 
+EagleSign5          3,443,617       2,358,603      1,602,340
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
