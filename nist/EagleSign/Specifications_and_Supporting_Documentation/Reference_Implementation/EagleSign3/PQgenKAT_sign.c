@@ -1,17 +1,17 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <stdint.h>
 
 #include "api.h"
+#include "sign.h"
+
 
 long long cpucycles(void)
 {
   return __rdtsc();
 }
-
-
 
 
 int randombytes1 (unsigned char* random_array, unsigned long long num_bytes);
@@ -24,25 +24,23 @@ int main(void) {
     unsigned long long mlen = 256;
     unsigned long long smlen;
 
-  uint8_t sig[CRYPTO_BYTES +  mlen];
+  uint8_t sig[pq_eaglesign3_BYTES +  mlen];
   unsigned long long sig_len = sizeof(sig);
 
-  printf("NAME: %s\n", CRYPTO_ALGNAME);
-    printf("Private key size: %d\n", CRYPTO_SECRETKEYBYTES );
-    printf("Public key size: %d\n", CRYPTO_PUBLICKEYBYTES );
-    printf("Signature size: %d\n\n", CRYPTO_BYTES );
+  printf("NAME: %s\n", "Eagle 3");
+    printf("Private key size: %d\n", pq_eaglesign3_SECRETKEYBYTES );
+    printf("Public key size: %d\n", pq_eaglesign3_PUBLICKEYBYTES );
+    printf("Signature size: %d\n\n", pq_eaglesign3_BYTES );
 
-    unsigned char sm[256 + CRYPTO_BYTES];
+    unsigned char sm[256 + pq_eaglesign3_BYTES];
     unsigned char m[256];
     for (unsigned i = 0; i < 256; i++) {
         m[i] = i;
     }
 
-    puts("Method not show, as too slow");
-	return(0);
 
-    unsigned char *pk = (unsigned char *)malloc( CRYPTO_PUBLICKEYBYTES );
-    unsigned char *sk = (unsigned char *)malloc( CRYPTO_SECRETKEYBYTES );
+    unsigned char *pk = (unsigned char *)malloc( pq_eaglesign3_PUBLICKEYBYTES );
+    unsigned char *sk = (unsigned char *)malloc( pq_eaglesign3_SECRETKEYBYTES );
 
 
             int r0;
@@ -81,10 +79,10 @@ int main(void) {
     printf("Verify:\t%llu cycles\n",  verify_time);
   
  printf("\nMessage: %s\n",showhex(m,mlen));
-  printf("\nAlice Public key (16th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/16));
-  printf("Alice Secret key (128th of signature): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/128 ));
+  printf("\nAlice Public key (16th of key): %s\n\n",showhex(pk,pq_eaglesign3_PUBLICKEYBYTES/16));
+  printf("Alice Secret key (16th of signature): %s\n\n",showhex(sk,pq_eaglesign3_SECRETKEYBYTES/16 ));
 
-  printf("Signature (128th of signature): %s\n\n",showhex(sig,CRYPTO_BYTES/128));
+  printf("Signature (16th of signature): %s\n\n",showhex(sig,pq_eaglesign3_BYTES/16));
   if (ret==0) printf("Signature verified");
  
 
