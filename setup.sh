@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -28,6 +28,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         cross_variations+=("$line")
     done < "$alg_list_dir/cross_variations.txt"
+
+    FAEST_variations=()
+    while IFS= read -r line; do
+        FAEST_variations+=("$line")
+    done < "$alg_list_dir/FAEST_variations.txt"
 
 }
 
@@ -121,7 +126,8 @@ function variations_setup() {
     for variation_dir in "${biscuit_variations[@]}"; do
         variation_dir_path="$biscuit_src_dir/$variation_dir"
         cd $variation_dir_path
-        make
+        make clean
+        make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$biscuit_dst_dir/pqcsign_$variation_dir"
         make clean
     done
@@ -138,14 +144,39 @@ function variations_setup() {
 
         # Compile and move pqcsign binary to lib directory
         make clean
-        make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH"
+        make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH" -j $(nproc)
         mv "$cross_src_dir/pqcsign" "$cross_dst_dir/pqcsign_$variation"
+        make clean
+
     
     done
 
-    make clean
+    # Setting up variations of the FAEST signature algorithm
+    FAEST_src_dir=$src_dir/FAEST/Reference_Implementation
+    FAEST_dst_dir=$lib_dir/FAEST
 
+    cd $FAEST_src_dir
 
+    for variation in "${FAEST_variations[@]}"; do
+    
+        echo "current variation - $variation"
+        # Set directory path based on current variation
+        variation_dir_path="$FAEST_src_dir/$variation"
+        
+        cd $variation_dir_path
+    
+        echo "variation path - $variation_dir_path"
+    
+        echo "current directory - $(pwd)"
+
+    
+        # Compile and move pqcsign binary to lib directory
+        make clean
+        make -j $(nproc)
+        mv "$variation_dir_path/pqcsign" "$FAEST_dst_dir/pqcsign_$variation"
+        make clean
+    
+    done
 
 }
 

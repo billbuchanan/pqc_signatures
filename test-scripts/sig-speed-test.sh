@@ -27,6 +27,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         cross_variations+=("$line")
     done < "$alg_list_dir/cross_variations.txt"
+
+    FAEST_variations=()
+    while IFS= read -r line; do
+        FAEST_variations+=("$line")
+    done < "$alg_list_dir/FAEST_variations.txt"
 }
 
 #------------------------------------------------------------------------------
@@ -45,6 +50,11 @@ function cycles_test {
     for variation in "${cross_variations[@]}"; do
         echo -e "\nRunning cross test for $variation"
         $lib_dir/cross/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
+    for variation in "${FAEST_variations[@]}"; do
+        echo -e "\nRunning FAEST test for $variation"
+        $lib_dir/FAEST/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }
