@@ -28,6 +28,7 @@ At present the code contains:
 * MEDS. [MEDS](https://asecuritysite.com/pqc/meds_sign). The MEDS (Matrix Equivalence Digital Signature) scheme supports PQC digital signing [1]. Its security is supported by the difficulty of finding an isometry between two equivalent matrix rank-metric codes. From this problem, it integrates a zero-knowledge identification scheme for multiple rounds of a Sigma protocol. The Fiat-Shamir method is then used to create the signature.
 * Wave. [Waves](https://asecuritysite.com/pqc/wave_sign). Wave is a code-based hash-and-sign signature scheme [1]. It uses the method defined by Gentry, Peikert and Vaikuntanathan to create a trapdoor function [3]. Overall it has a relatively small signature value, but a relatively large public key.
 * Eagle. [Eagle](https://asecuritysite.com/pqc/eagle_sign). NIST has standardised two lattice methods of Dilithium and Falcon for Post Quantum Cryptography digital signing. Dilithium is a MLWE (Module-Learning With Errors)-based signature while Falcon uses a NTRU-based signature. Now there are new lattice methods which are going forward as part of the Additional Signature round. One of these is EagleSign, and which uses a variation of the ElGamal signature method, but uses structured lattices.
+* EHT v3 and v4 - short signatures. [EHT v3 and v4 - short signatures](https://asecuritysite.com/pqc/eht_sign). EHT defines a post quantum cryptography lattice-based method for digital signatures. With EHT v3 Level 1 security, it has a 368-byte private key, and a relaively small signature of 169 bytes. Unfortunately its public key for Level 1 security is 83,490 bytes. For EHVTv4 Level 1, we have a much smaller public key of 1,107 bytes, a private key of 419 bytes, and a signature size of 369 bytes. Both EHTv3 and EHTv4 have much smaller signatures compared with Dilithium.
 
 
 
@@ -104,8 +105,14 @@ WAVE-1217                         7,867,597              27,629             1,21
 WAVE-1612                        13,632,308              36,359             1,644        5 (256-bit) Code
 
 EagleSign 3                           1,824                 576             2,335        3 (192-bit) Lattice
-EagleSign 5                           3,616                1,600            3,488        5 (192-bit) Lattice
+EagleSign 5                           3,616               1,600             3,488        5 (192-bit) Lattice
 
+EHTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
+EHTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
+EHTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
+
+EHTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
+EHTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
 ```
 
 And for performance in cycles (from papers):
@@ -174,8 +181,15 @@ WAVE-822       14,468,000,043   1,160,793,621    205,829,565  Intel i5-1135G7 at
 WAVE-1249      47,222,134,806   3,507,016,206    464,110,855
 WAVE-1612     108,642,333,507   7,936,541,947    813,301,900
 
-EagleSign3          1,020,723       1,283,454        955,956  12th Gen Intel Core i7-1260P 
+EagleSign3          1,020,723       1,283,454        955,956  Intel Core i7-1260P  at 2.40GGz  
 EagleSign5          3,443,617       2,358,603      1,602,340
+
+EHTv3 Level 1     465,600,000   181,920,000      1,968,000    Intel Core(TM) i7-12800H at 2.40GGz  
+EHTv3 Level 3   1,432,800,000   494,400,000      4,272,000        
+EHTv3 Level 5   3,672,000,000   732,000,000      7,584,000       
+
+EHTv4 Level 1      29,040,000    21,600,000      9,240,000      
+EHTv4 Level 5     276,000,000   142,320,000     62,880,000
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
