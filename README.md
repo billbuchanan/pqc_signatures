@@ -98,7 +98,7 @@ LESS-5b                              65,793                 64             31,89
 MAYO1                                 1,168                 24                321         1 (128-bit) UOV
 MAYO2                                 5,488                 24                180         1 (128-bit) UOV
 MAYO3                                 2,656                 32                577         3 (192-bit) UOV
-MAYO5                                 5,008                 48                838         5 (192-bit) UOV
+MAYO5                                 5,008                 48                838         5 (256-bit) UOV
 
 MEDS9923                              9,923               1,828             9,896        1 (128-bit) Code
 MEDS41711                            41,711               4,420            41,080        3 (192-bit) Code
