@@ -106,12 +106,12 @@ WAVE-1612                        13,632,308              36,359             1,64
 EagleSign 3                           1,824                 576             2,335        3 (192-bit) Lattice
 EagleSign 5                           3,616               1,600             3,488        5 (192-bit) Lattice
 
-EHVTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
-EHVTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
-EHVTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
+EHTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
+EHTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
+EHTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
 
-EHVTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
-EHVTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
+EHTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
+EHTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
 ```
 
 And for performance in cycles (from papers):
