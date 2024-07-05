@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -53,6 +53,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         sqi_variations+=("$line")
     done < "$alg_list_dir/sqi_variations.txt"
+
+    uov_variations=()
+    while IFS= read -r line; do
+        uov_variations+=("$line")
+    done < "$alg_list_dir/uov_variations.txt"
 
 }
 
@@ -117,6 +122,7 @@ function set_build_cross_flags() {
 
 }
 
+
 #------------------------------------------------------------------------------
 function variations_setup() {
 
@@ -164,7 +170,9 @@ function variations_setup() {
 
         # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
-        make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH" -j $(nproc)
+        make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag \
+            -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH" -j $(nproc)
+            
         mv "$cross_src_dir/pqcsign" "$cross_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
@@ -244,7 +252,7 @@ function variations_setup() {
     cd $SPHINCS_ALPHA_src_dir
 
     for variation in "${SPHINCS_ALPHA_variations[@]}"; do
-    
+
         echo "current variation - $variation"
         # Set directory path based on current variation
         variation_dir_path="$SPHINCS_ALPHA_src_dir/$variation"
@@ -256,6 +264,7 @@ function variations_setup() {
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$SPHINCS_ALPHA_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
+
     
     done
 
@@ -278,6 +287,26 @@ function variations_setup() {
     make -j $(nproc)
     mv $sqi_apps_dir/pqcsign_* "$sqi_dst_dir/"
     make clean >> /dev/null && cd $sqi_src_dir && rm -rf build
+
+
+    # Setting up variations of the uov signature algorithm
+    uov_src_dir=$src_dir/uov/Reference_Implementation
+    uov_dst_dir=$lib_dir/uov
+
+    cd $uov_src_dir
+
+    for variation in "${uov_variations[@]}"; do
+
+
+        variation_type=$(echo "$variation" | cut -d'_' -f2-)
+        
+        # Compile and move pqcsign binary to lib directory
+        make clean >> /dev/null
+        make "PROJ=$variation_type" -j $(nproc)
+        mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+    
+    done
 
 }
 

@@ -53,6 +53,10 @@ function create_alg_arrays() {
         sqi_variations+=("$line")
     done < "$alg_list_dir/sqi_variations.txt"
 
+    uov_variations=()
+    while IFS= read -r line; do
+        uov_variations+=("$line")
+    done < "$alg_list_dir/uov_variations.txt"
 
 
 }
@@ -100,10 +104,21 @@ function cycles_test {
         $lib_dir/sqi/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
+    for variation in "${uov_variations[@]}"; do
+        echo -e "\nRunning uov test for $variation"
+        $lib_dir/uov/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
 }
 
 #------------------------------------------------------------------------------
 function main() {
+
+    if [ -d $results_dir ]; then
+        rm -rf $results_dir/*
+    fi
+
+
     create_alg_arrays
     cycles_test
 }

@@ -10,7 +10,8 @@ endif
 
 SRC_DIR  := $(PROJ)
 
-CFLAGS   := -O3 $(CFLAGS) -std=c99 -Wall -Wextra -Wpedantic -Werror -fno-omit-frame-pointer
+#CFLAGS   := -O3 $(CFLAGS) -std=c99 -Wall -Wextra -Wpedantic -Werror -fno-omit-frame-pointer
+CFLAGS := -O3 -std=c99 -Wall -Wextra -Wpedantic -fno-omit-frame-pointer -Wno-unused-variable
 INCPATH  := -I/usr/local/include -I/opt/local/include -I/usr/include -I$(SRC_DIR)
 LDFLAGS  := $(LDFLAGS)
 LIBPATH  = -L/usr/local/lib -L/opt/local/lib -L/usr/lib
@@ -24,7 +25,7 @@ SRCS_O_NOTDIR  :=  $(notdir $(SRCS_O))
 
 OBJ = $(SRCS_O_NOTDIR)
 
-EXE= sign_api-test
+EXE= sign_api-test pqcsign
 
 ifdef KAT
 	CFLAGS       += -D_NIST_KAT_
@@ -41,12 +42,18 @@ endif
 all: $(EXE)
 
 sign_api-test: $(OBJ) sign_api-test.c
-	$(CC) $(CFLAGS) $(INCPATH) $(LDFLAGS) $(LIBPATH) $^ -o $@ $(LIBS) 
+	$(CC) $(CFLAGS) $(INCPATH) $(LDFLAGS) $(LIBPATH) $^ -o $@ $(LIBS)
 
 PQCgenKAT_sign: $(OBJ) PQCgenKAT_sign.o
 	$(LD) $(LDFLAGS) $(LIBPATH) -o $@ $^ $(LIBS)
 
 PQCgenKAT_sign.o: nistkat/PQCgenKAT_sign.c
+	$(CC) $(CFLAGS) $(INCPATH) -c $<
+
+pqcsign: $(OBJ) pqcsign.c
+	$(CC) $(CFLAGS) $(INCPATH) $(LDFLAGS) $(LIBPATH) $^ -o $@ $(LIBS)
+
+pqcsign.o: pqcsign.c
 	$(CC) $(CFLAGS) $(INCPATH) -c $<
 
 %.o: $(SRC_DIR)/%.c
@@ -64,3 +71,5 @@ $(foreach dir, $(SRC_EXT_DIRS), $(eval $(call GEN_O,$(dir))))
 
 clean:
 	-rm -f *.o *.req *.rsp PQCgenKAT_sign $(EXE);
+	-rm -f $(SRC_DIR)/*.o
+	-rm -f pqcsign

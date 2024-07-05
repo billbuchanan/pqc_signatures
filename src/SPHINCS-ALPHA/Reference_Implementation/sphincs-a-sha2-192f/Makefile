@@ -57,9 +57,13 @@ test/haraka: test/haraka.c $(filter-out haraka.c,$(SOURCES)) $(HEADERS)
 test/%.exec: test/%
 	@$<
 
+pqcsign: pqcsign.c $(SOURCES) $(HEADERS)
+	$(CC) $(CFLAGS) -o $@ pqcsign.c $(SOURCES) $(LDLIBS)
+
 clean:
 	-$(RM) $(TESTS)
 	-$(RM) $(BENCHMARK)
 	-$(RM) PQCgenKAT_sign
 	-$(RM) PQCsignKAT_*.rsp
 	-$(RM) PQCsignKAT_*.req
+	-$(RM) pqcsign
