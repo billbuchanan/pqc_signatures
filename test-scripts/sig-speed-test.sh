@@ -32,6 +32,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         FAEST_variations+=("$line")
     done < "$alg_list_dir/FAEST_variations.txt"
+
+    FuLecca_variations=()
+    while IFS= read -r line; do
+        FuLecca_variations+=("$line")
+    done < "$alg_list_dir/FuLeeca_variations.txt"
 }
 
 #------------------------------------------------------------------------------
@@ -55,6 +60,11 @@ function cycles_test {
     for variation in "${FAEST_variations[@]}"; do
         echo -e "\nRunning FAEST test for $variation"
         $lib_dir/FAEST/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
+    for variation in "${FuLecca_variations[@]}"; do
+        echo -e "\nRunning FuLecca test for $variation"
+        $lib_dir/FuLecca/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }

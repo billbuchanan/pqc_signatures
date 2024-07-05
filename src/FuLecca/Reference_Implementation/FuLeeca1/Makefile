@@ -6,10 +6,12 @@ SOURCES = sign.c poly.c coeff.c utils.c encode.c
 HEADERS = config.h params.h api.h sign.h poly.h coeff.h utils.h encode.h
 KECCAK_SOURCES = $(SOURCES) fips202.c
 KECCAK_HEADERS = $(HEADERS) fips202.h
+PQCSIGN_SOURCES = pqcsign.c
+RANDOMBYTES = randombytes.c randombytes.h
 
 .PHONY: all shared clean
 
-all: PQCgenKAT_sign
+all: PQCgenKAT_sign pqcsign
 
 test: \
   test/test_red \
@@ -46,7 +48,10 @@ test/test_sign_stack: test/test_sign_stack.c randombytes.c $(KECCAK_SOURCES) $(K
 
 PQCgenKAT_sign: PQCgenKAT_sign.c rng.c rng.h $(KECCAK_SOURCES) \
 	$(KECCAK_HEADERS)
-		$(CC) $(NISTFLAGS) -o $@ $< rng.c $(KECCAK_SOURCES) $(LDFLAGS) -lcrypto
+	$(CC) $(NISTFLAGS) -o $@ $< rng.c $(KECCAK_SOURCES) $(LDFLAGS) -lcrypto
+
+pqcsign: $(PQCSIGN_SOURCES) $(KECCAK_SOURCES) $(KECCAK_HEADERS)
+	$(CC) $(CFLAGS) -o $@ $(PQCSIGN_SOURCES) $(KECCAK_SOURCES) $(RANDOMBYTES) $(LDFLAGS) -lcrypto
 
 clean:
 	rm -f *~ test/*~ *.gcno *.gcda *.lcov *.o *.i *.s
@@ -58,3 +63,4 @@ clean:
 	rm -f test/test_keygen
 	rm -f test/test_sign
 	rm -f test/test_sign_stack
+	rm -f pqcsign
