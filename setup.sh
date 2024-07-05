@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -43,6 +43,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         pqsigRM_variations+=("$line")
     done < "$alg_list_dir/pqsigRM_variations.txt"
+
+    SPHINCS_ALPHA_variations=()
+    while IFS= read -r line; do
+        SPHINCS_ALPHA_variations+=("$line")
+    done < "$alg_list_dir/SPHINCS-ALPHA_variations.txt"
 
 }
 
@@ -222,6 +227,28 @@ function variations_setup() {
         make clean
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$pqsigRM_dst_dir/pqcsign_$variation"
+        make clean
+    
+    done
+
+    # Setting up variations of the SPHINCS-ALPHA signature algorithm
+    SPHINCS_ALPHA_src_dir=$src_dir/SPHINCS-ALPHA/Reference_Implementation
+    SPHINCS_ALPHA_dst_dir=$lib_dir/SPHINCS-ALPHA
+
+    cd $SPHINCS_ALPHA_src_dir
+
+    for variation in "${SPHINCS_ALPHA_variations[@]}"; do
+    
+        echo "current variation - $variation"
+        # Set directory path based on current variation
+        variation_dir_path="$SPHINCS_ALPHA_src_dir/$variation"
+        
+        cd $variation_dir_path
+        
+        # Compile and move pqcsign binary to lib directory
+        make clean
+        make -j $(nproc)
+        mv "$variation_dir_path/pqcsign" "$SPHINCS_ALPHA_dst_dir/pqcsign_$variation"
         make clean
     
     done

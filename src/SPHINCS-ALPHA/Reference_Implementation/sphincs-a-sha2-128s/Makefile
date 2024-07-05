@@ -2,7 +2,7 @@ PARAMS = sphincs-a-sha2-128s
 THASH = simple
 
 CC=/usr/bin/gcc
-CFLAGS=-Wall -Wextra -Wpedantic -O3 -std=c99 -Wconversion -Wmissing-prototypes -DPARAMS=$(PARAMS) $(EXTRA_CFLAGS)
+CFLAGS=-Wall -Wextra -Wpedantic -O3 -std=c99 -Wconversion -Wmissing-prototypes -DPARAMS=$(PARAMS) -DSPHINCS_ALGNAME=\"$(PARAMS)\" $(EXTRA_CFLAGS)
 
 SOURCES =          address.c randombytes.c merkle.c wots.c wotsx1.c utils.c utilsx1.c fors.c sign.c uintx.c
 HEADERS = params.h address.h randombytes.h merkle.h wots.h wotsx1.h utils.h utilsx1.h fors.h api.h  hash.h thash.h uintx.h
@@ -30,9 +30,9 @@ BENCHMARK = test/benchmark
 
 .PHONY: clean test benchmark
 
-default: PQCgenKAT_sign
+default: PQCgenKAT_sign pqcsign
 
-all: PQCgenKAT_sign tests benchmarks
+all: PQCgenKAT_sign tests benchmarks pqcsign
 
 tests: $(TESTS)
 
@@ -57,9 +57,13 @@ test/haraka: test/haraka.c $(filter-out haraka.c,$(SOURCES)) $(HEADERS)
 test/%.exec: test/%
 	@$<
 
+pqcsign: pqcsign.c $(SOURCES) $(HEADERS)
+	$(CC) $(CFLAGS) -o $@ pqcsign.c $(SOURCES) $(LDLIBS)
+
 clean:
 	-$(RM) $(TESTS)
 	-$(RM) $(BENCHMARK)
 	-$(RM) PQCgenKAT_sign
 	-$(RM) PQCsignKAT_*.rsp
 	-$(RM) PQCsignKAT_*.req
+	-$(RM) pqcsign

@@ -42,6 +42,12 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         pqsigRM_variations+=("$line")
     done < "$alg_list_dir/pqsigRM_variations.txt"
+
+    SPHINCS_ALPHA_variations=()
+    while IFS= read -r line; do
+        SPHINCS_ALPHA_variations+=("$line")
+    done < "$alg_list_dir/SPHINCS-ALPHA_variations.txt"
+
 }
 
 #------------------------------------------------------------------------------
@@ -77,6 +83,11 @@ function cycles_test {
         $lib_dir/pqsigRM/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
+    for variation in "${SPHINCS_ALPHA_variations[@]}"; do
+        echo -e "\nRunning SPHINCS-ALPHA test for $variation"
+        $lib_dir/SPHINCS-ALPHA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+    
 }
 
 #------------------------------------------------------------------------------
