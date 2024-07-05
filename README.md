@@ -3,7 +3,14 @@
 ## Development Branch Details
 
 ### Description:
-This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project.
+This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project. It may not be in a fully functioning state and documentation may still need updated. The checkboxes below indicates whether the current development version is in a basic/fully functioning state and if the documentation is accurate for its current functionality. Regardless please keep this in mind and use the main branch if possible, thank you.
+
+- [x] Basic Functioning State*
+- [ ] Fully Functioning State
+- [ ] Up to date documentation
+
+> *Dev branch Notice: All algorithms that are currently included within the `src` directory can be compiled using the `setup.sh` script and tested using the `test-scripts/sig_speed_results.sh` script. Results will be outputted to a txt file located within the generated `test_data/results` directory. At the moment the testing script must be executed within its respective directory.
+
 
 <!-- As part of the development process of this branch, the `reference_code` directory contains the reference code files created by the varying teams behind the schemes submitted to the competition. It contains the following zip files:
 
@@ -14,13 +21,22 @@ This is the development branch for the pqc_signatures project which evaluates th
 
 ### Current Task Checklist for Development Branch:
 - [x] Perform basic restructure source directories and project files after branch initialisation
-- [ ] Review signature scheme source code to identify best method of integration within performance evaluation scripts
-- [ ] Determine if possible to remove redundant copies of the reference-code and instead create the security variations through combined Makefiles 
-- [ ] Review standard methodologies and common C libraries for gathering system performance metrics for when algorithmic operations are being performed
-- [ ] Decide on best approach for including signature source code within evaluation scripts
+- [x] Review signature scheme source code to identify best method of integration within performance evaluation scripts
 - [ ] Create basic setup script and makefiles to compile various algorithm source code that can later be used within performance measuring scripts
+- [ ] Determine if possible to remove redundant copies of the reference-code and instead create the security variations through combined Makefiles 
 
-# Round 1 Additional Signatures
+
+### Algorithms Still to be Implemented based of Main Branch
+- eaglesign
+- EHTv3v4
+- haetae
+- less
+- MEDS-2023
+- WAVER1_1
+
+
+
+## Round 1 Additional Signatures
 
 ## Introduction
 And, so, Dilithium, FALCON and SPHINCS+ have become NIST standards for digital signatures, and with an aim to remove RSA, ECDSA and EdDSA. But, NIST wants alternatives to these, especially so that we are not too dependent on lattice-based approaches (such as with Dilithium and FALCON). These are [here](https://csrc.nist.gov/projects/pqc-dig-sig/round-1-additional-signatures):
@@ -47,6 +63,11 @@ At present the code contains:
 * SPHINCS-α. [SPHINCS-α](https://asecuritysite.com/pqc/sphincs_sign). SPHINCS+ is a stateless hash-based signature scheme that is PQC (Post Quantum Robust). It is generally believed to be a secure method - based on the hardness of reversing the cryptographic hashing method. Now, SPHINCS-α is proposed as a new standard for Round 1 Additional Signatures. This improves on the SPHINCS+ methods, while still keeping its core elements. The addition includes a size-optimal encoding scheme that is applied to tree-structured one-time signatures.
 * FAEST. [FAEST](https://asecuritysite.com/pqc/faest_sign). NIST approved Dilithium, Falcon and SPHINCS+ for PQC digital signatures and is now looking at other alternative signatures. One of these is the FAEST digital signature algorithm [1], and which uses symmetric key primitives. This links directly to the security of AES128 (Level 1), AES192 (Level 3) and AES256 (Level 5). A key pair (pk,sk) is defined as: pk=(x,y)  and sk=k and where Ek(x)=y. Overall, E is the block cipher to use, k is the private key, and x is a plaintext block. The signature then becomes a non-interactive argument of knowledge of sk. This is similar to the Picnic method, but rather than using the MPC-in-the-Head (MPCitH) framework, it uses the VOLE-in-the-Head method [2].
 * LESS.  [LESS (Linear Equivalence Signature Scheme)](https://asecuritysite.com/pqc/less_sign) LESS uses Fiat-Shamir transformation onto a zero-knowledge identification scheme. It uses a one-round Sigma protocol. The security of LESS depends on the hardness of the Linear Equivalence Problem (LEP).
+* MEDS. [MEDS](https://asecuritysite.com/pqc/meds_sign). The MEDS (Matrix Equivalence Digital Signature) scheme supports PQC digital signing [1]. Its security is supported by the difficulty of finding an isometry between two equivalent matrix rank-metric codes. From this problem, it integrates a zero-knowledge identification scheme for multiple rounds of a Sigma protocol. The Fiat-Shamir method is then used to create the signature.
+* Wave. [Waves](https://asecuritysite.com/pqc/wave_sign). Wave is a code-based hash-and-sign signature scheme [1]. It uses the method defined by Gentry, Peikert and Vaikuntanathan to create a trapdoor function [3]. Overall it has a relatively small signature value, but a relatively large public key.
+* Eagle. [Eagle](https://asecuritysite.com/pqc/eagle_sign). NIST has standardised two lattice methods of Dilithium and Falcon for Post Quantum Cryptography digital signing. Dilithium is a MLWE (Module-Learning With Errors)-based signature while Falcon uses a NTRU-based signature. Now there are new lattice methods which are going forward as part of the Additional Signature round. One of these is EagleSign, and which uses a variation of the ElGamal signature method, but uses structured lattices.
+* EHT v3 and v4 - short signatures. [EHT v3 and v4 - short signatures](https://asecuritysite.com/pqc/eht_sign). EHT defines a post quantum cryptography lattice-based method for digital signatures. With EHT v3 Level 1 security, it has a 368-byte private key, and a relaively small signature of 169 bytes. Unfortunately its public key for Level 1 security is 83,490 bytes. For EHVTv4 Level 1, we have a much smaller public key of 1,107 bytes, a private key of 419 bytes, and a signature size of 369 bytes. Both EHTv3 and EHTv4 have much smaller signatures compared with Dilithium.
+* HAETAE. [HAETAE](https://asecuritysite.com/pqc/haetae_sign). HAETAE is a lattice-based Post Quantum Cryptography (PQC) method that is based on the methods of Dilithium. It thus uses the “Fiat-Shamir with Aborts” approach. It differs in two respects: a bimodal distribution for the rejection sampling (similar to the BLISS signature scheme) and sampling from and reject to hyperball uniform distributions.
 
 
 
@@ -113,6 +134,28 @@ FAEST-256f                               64                 64             28,40
 LESS-1b                              13,940                 32              9,286         1 (128-bit) Code
 LESS-3b                              35,074                 48             18,000         3 (192-bit) Code
 LESS-5b                              65,793                 64             31,896         5 (256-bit) Code
+
+MEDS9923                              9,923               1,828             9,896        1 (128-bit) Code
+MEDS41711                            41,711               4,420            41,080        3 (192-bit) Code
+MEDS167717                          167,717              12,444           165,464        5 (256-bit) Code
+
+WAVE-822                          3,677,389              18,900               822        1 (128-bit) Code
+WAVE-1217                         7,867,597              27,629             1,218        3 (192-bit) Code
+WAVE-1612                        13,632,308              36,359             1,644        5 (256-bit) Code
+
+EagleSign 3                           1,824                 576             2,335        3 (192-bit) Lattice
+EagleSign 5                           3,616               1,600             3,488        5 (192-bit) Lattice
+
+EHTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
+EHTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
+EHTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
+
+EHTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
+EHTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
+
+HAETAE Level 2                          992               1,408             1,463         2 (128-bit) Lattice
+HAETAE Level 3                        1,472               2,112             2,337         3 (192-bit) Lattice
+HAETAE Level 5                        2,080               2,752             2,908         5 (256-bit) Lattice
 ```
 
 And for performance in cycles (from papers):
@@ -160,6 +203,7 @@ FuLecca1           49,354,000   1,846,779,000      1,260,000 ††††††
 FuLecca3          110,918,000   2,111,156,000      2,447,000 ††††††
 FuLecca5          192,388,000  12,327,726,000      3,789,000 ††††††
 
+
 SPHINCS-a-128f       1,036,602     26,635,716     2,028,186 †††††††
 SPHINCS-a-192f       2,199,276     45,218,790     1,744,038 †††††††
 SPHINCS-a-256f       4,286,574     91,335,474     3,175,290 †††††††
@@ -170,7 +214,25 @@ FAEST-256f             700,800    123,648,000   123,648,000 ††††††�
 
 LESS-1b              3,400,000    878,700,000    890,800,000  Intel Core i7-12700K at 4.9GHz
 LESS-3b              9,300,000  7,224,100,000  7,315,800,000
-LESS-5b             24,400,000 33,787,700,000 34,014,000,000   
+LESS-5b             24,400,000 33,787,700,000 34,014,000,000
+
+MEDS9923            1,900,000     518,050,000    515,580,000
+MEDS41711           9,800,000   1,467,000,000  1,461,970,000 
+MEDS134180         44,750,000   1,629,840,000  1,621,570,000
+
+WAVE-822       14,468,000,043   1,160,793,621    205,829,565  Intel i5-1135G7 at 2.4GHz 
+WAVE-1249      47,222,134,806   3,507,016,206    464,110,855
+WAVE-1612     108,642,333,507   7,936,541,947    813,301,900
+
+EagleSign3          1,020,723       1,283,454        955,956  Intel Core i7-1260P  at 2.40GGz  
+EagleSign5          3,443,617       2,358,603      1,602,340
+
+EHTv3 Level 1     465,600,000   181,920,000      1,968,000    Intel Core(TM) i7-12800H at 2.40GGz  
+EHTv3 Level 3   1,432,800,000   494,400,000      4,272,000        
+EHTv3 Level 5   3,672,000,000   732,000,000      7,584,000       
+
+EHTv4 Level 1      29,040,000    21,600,000      9,240,000      
+EHTv4 Level 5     276,000,000   142,320,000     62,880,000
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
