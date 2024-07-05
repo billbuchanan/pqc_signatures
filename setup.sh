@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -38,6 +38,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         FuLecca_variations+=("$line")
     done < "$alg_list_dir/FuLeeca_variations.txt"
+
+    pqsigRM_variations=()
+    while IFS= read -r line; do
+        pqsigRM_variations+=("$line")
+    done < "$alg_list_dir/pqsigRM_variations.txt"
 
 }
 
@@ -195,6 +200,28 @@ function variations_setup() {
         make clean
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$FuLecca_dst_dir/pqcsign_$variation"
+        make clean
+    
+    done
+
+    # Setting up variations of the pqsigRM signature algorithm
+    pqsigRM_src_dir=$src_dir/pqsigRM/Reference_Implementation
+    pqsigRM_dst_dir=$lib_dir/pqsigRM
+
+    cd $pqsigRM_src_dir
+
+    for variation in "${pqsigRM_variations[@]}"; do
+    
+        echo "current variation - $variation"
+        # Set directory path based on current variation
+        variation_dir_path="$pqsigRM_src_dir/$variation"
+        
+        cd $variation_dir_path
+        
+        # Compile and move pqcsign binary to lib directory
+        make clean
+        make -j $(nproc)
+        mv "$variation_dir_path/pqcsign" "$pqsigRM_dst_dir/pqcsign_$variation"
         make clean
     
     done

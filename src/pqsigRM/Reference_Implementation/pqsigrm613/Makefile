@@ -1,7 +1,7 @@
 CC = gcc
 
 LDFLAGS =  -L/usr/local/lib
-CFLAGS = -I/usr/local/include -Wunused-variable -Wunused-function
+CFLAGS = -I/usr/local/include -Isrc -Wunused-variable -Wunused-function
 LIBFLAGS = -lcrypto -lssl -lm
 CFILES := $(shell find src -name '*.c' | sed -e 's/\.c/\.o/')
 
@@ -13,9 +13,12 @@ else
     DBG_FLAGS = -O2 -DNDEBUG -Wunused-variable -Wunused-function
 endif
 
+.PHONY: all clean
+
+all: sign runtime pqcsign
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(DBG_FLAGS) -o $@ -c $< 
+	$(CC) $(CFLAGS) $(DBG_FLAGS) -o $@ -c $<  # Ensure this line begins with a tab, not spaces
 	
 sign: ${OBJS} ./PQCgenKAT_sign.c
 	$(CC) $(LDFLAGS) $(CFLAGS) $(DBG_FLAGS) -o $@ $^ $(LIBFLAGS)
@@ -26,6 +29,8 @@ runtime: ${OBJS} ./runtime.c
 test: ${OBJS} ./test.c
 	$(CC) $(LDFLAGS) $(CFLAGS) $(DBG_FLAGS) -o $@ $^ $(LIBFLAGS)
 
+pqcsign: ${OBJS} pqcsign.c
+	$(CC) $(LDFLAGS) $(CFLAGS) $(DBG_FLAGS) -o $@ $^ $(LIBFLAGS)
 
 matrix.o : matrix.h
 rng.o : rng.h
@@ -34,4 +39,5 @@ api.o : api.h
 clean:
 	cd src; rm -f *.o; cd ..
 	rm -f *.o
-	rm -f sign runtime
+	rm -f sign runtime test pqcsign
+
