@@ -80,7 +80,7 @@ int main(void) {
     printf("Verify:\t%llu cycles\n",  verify_time);
   
  printf("\nMessage: %s\n",showhex(m,mlen));
-  printf("\nAlice Public key 256th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/256));
+  printf("\nAlice Public key 8th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/8));
   printf("Alice Secret key (8th of signature): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/8 ));
 
   printf("Signature (8th of signature): %s\n\n",showhex(sig,CRYPTO_BYTES/8));
