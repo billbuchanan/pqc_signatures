@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -48,6 +48,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         SPHINCS_ALPHA_variations+=("$line")
     done < "$alg_list_dir/SPHINCS-ALPHA_variations.txt"
+
+    sqi_variations=()
+    while IFS= read -r line; do
+        sqi_variations+=("$line")
+    done < "$alg_list_dir/sqi_variations.txt"
 
 }
 
@@ -123,12 +128,12 @@ function variations_setup() {
 
     # # Borrowed from raccoon 
     # for variation in "${raccoon_variations[@]}"; do
-    #     make clean
+    #     make clean >> /dev/null
     #     make RACCF="-D$variation -DBENCH_TIMEOUT=2.0"
     #     cp $raccoon_src_dir/xtest $raccoon_dst_dir/xtest_$variation
     # done
 
-    # make clean 
+    # make clean >> /dev/null 
 
     # Setting up the variations of the biscuit signature algorithm
     biscuit_src_dir=$src_dir/biscuit/Reference_Implementation
@@ -141,10 +146,10 @@ function variations_setup() {
     for variation_dir in "${biscuit_variations[@]}"; do
         variation_dir_path="$biscuit_src_dir/$variation_dir"
         cd $variation_dir_path
-        make clean
+        make clean >> /dev/null
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$biscuit_dst_dir/pqcsign_$variation_dir"
-        make clean
+        make clean >> /dev/null
     done
 
     # Setting up variations of the cross signing algorithm
@@ -158,10 +163,10 @@ function variations_setup() {
         set_build_cross_flags
 
         # Compile and move pqcsign binary to lib directory
-        make clean
+        make clean >> /dev/null
         make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH" -j $(nproc)
         mv "$cross_src_dir/pqcsign" "$cross_dst_dir/pqcsign_$variation"
-        make clean
+        make clean >> /dev/null
 
     
     done
@@ -180,10 +185,11 @@ function variations_setup() {
         cd $variation_dir_path
     
         # Compile and move pqcsign binary to lib directory
-        make clean
+        make clean >> /dev/null
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$FAEST_dst_dir/pqcsign_$variation"
-        make clean
+        make clean >> /dev/null
+
     
     done
 
@@ -202,10 +208,10 @@ function variations_setup() {
         cd $variation_dir_path
         
         # Compile and move pqcsign binary to lib directory
-        make clean
+        make clean >> /dev/null
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$FuLecca_dst_dir/pqcsign_$variation"
-        make clean
+        make clean >> /dev/null
     
     done
 
@@ -224,10 +230,10 @@ function variations_setup() {
         cd $variation_dir_path
         
         # Compile and move pqcsign binary to lib directory
-        make clean
+        make clean >> /dev/null
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$pqsigRM_dst_dir/pqcsign_$variation"
-        make clean
+        make clean >> /dev/null
     
     done
 
@@ -246,12 +252,32 @@ function variations_setup() {
         cd $variation_dir_path
         
         # Compile and move pqcsign binary to lib directory
-        make clean
+        make clean >> /dev/null
         make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$SPHINCS_ALPHA_dst_dir/pqcsign_$variation"
-        make clean
+        make clean >> /dev/null
     
     done
+
+    # Setting up variations of the sqi signature algorithm
+    sqi_src_dir=$src_dir/sqi/Reference_Implementation
+    sqi_dst_dir=$lib_dir/sqi
+    sqi_build_dir=$src_dir/sqi/Reference_Implementation/build
+    sqi_apps_dir=$sqi_build_dir/apps
+
+    cd $sqi_src_dir
+
+    if [ ! -d build ]; then
+        mkdir build
+    else
+        rm -rf build && mkdir build
+    fi
+
+    cd $sqi_build_dir
+    cmake -DSQISIGN_BUILD_TYPE=ref -DCMAKE_BUILD_TYPE=Release ../ 
+    make -j $(nproc)
+    mv $sqi_apps_dir/pqcsign_* "$sqi_dst_dir/"
+    make clean >> /dev/null && cd $sqi_src_dir && rm -rf build
 
 }
 
