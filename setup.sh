@@ -126,20 +126,21 @@ function set_build_cross_flags() {
 #------------------------------------------------------------------------------
 function variations_setup() {
 
-    # # Setting up the variations of the raccoon signature algorithm
-    # raccoon_src_dir=$src_dir/raccoon
-    # raccoon_dst_dir=$lib_dir/raccoon
+    # Setting up the variations of the raccoon signature algorithm
+    raccoon_src_dir=$src_dir/Raccoon/Reference_Implementation
+    raccoon_dst_dir=$lib_dir/raccoon
 
-    # cd $raccoon_src_dir
+    cd $raccoon_src_dir
 
-    # # Borrowed from raccoon 
-    # for variation in "${raccoon_variations[@]}"; do
-    #     make clean >> /dev/null
-    #     make RACCF="-D$variation -DBENCH_TIMEOUT=2.0"
-    #     cp $raccoon_src_dir/xtest $raccoon_dst_dir/xtest_$variation
-    # done
-
-    # make clean >> /dev/null 
+    # Loop through the variation dirs
+    for variation in "${raccoon_variations[@]}"; do
+        variation_dir="$raccoon_src_dir/$variation"
+        cd $variation_dir
+        make clean >> /dev/null
+        make -j $(nproc)
+        cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation
+        make clean >> /dev/null
+    done
 
     # Setting up the variations of the biscuit signature algorithm
     biscuit_src_dir=$src_dir/biscuit/Reference_Implementation

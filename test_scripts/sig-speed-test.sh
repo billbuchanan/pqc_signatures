@@ -64,10 +64,10 @@ function create_alg_arrays() {
 #------------------------------------------------------------------------------
 function cycles_test {
 
-    # for variation in "${raccoon_variations[@]}"; do
-    #     echo -e "\nRunning raccoon test for $variation"
-    #     $lib_dir/raccoon/xtest_$variation >> $results_dir/sig_speed_results.txt
-    # done
+    for variation in "${raccoon_variations[@]}"; do
+        echo -e "\nRunning raccoon test for $variation"
+        $lib_dir/raccoon/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
 
     for variation in "${biscuit_variations[@]}"; do
         echo -e "\nRunning biscuit test for $variation"
