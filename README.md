@@ -7,7 +7,7 @@ This is the development branch for the pqc_signatures project which evaluates th
 
 - [x] Basic Functioning State*
 - [ ] Fully Functioning State
-- [ ] Up to date documentation s
+- [ ] Up to date documentation
 
 > *Dev branch Notice: All algorithms that are currently included within the `src` directory can be compiled using the `setup.sh` script and tested using the `test-scripts/sig_speed_results.sh` script. Results will be outputted to a txt file located within the generated `test_data/results` directory. At the moment the testing script must be executed within its respective directory.
 
