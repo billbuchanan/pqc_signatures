@@ -34,6 +34,8 @@ At present the code contains:
 * Eagle. [Eagle](https://asecuritysite.com/pqc/eagle_sign). NIST has standardised two lattice methods of Dilithium and Falcon for Post Quantum Cryptography digital signing. Dilithium is a MLWE (Module-Learning With Errors)-based signature while Falcon uses a NTRU-based signature. Now there are new lattice methods which are going forward as part of the Additional Signature round. One of these is EagleSign, and which uses a variation of the ElGamal signature method, but uses structured lattices.
 * EHT v3 and v4 - short signatures. [EHT v3 and v4 - short signatures](https://asecuritysite.com/pqc/eht_sign). EHT defines a post quantum cryptography lattice-based method for digital signatures. With EHT v3 Level 1 security, it has a 368-byte private key, and a relaively small signature of 169 bytes. Unfortunately its public key for Level 1 security is 83,490 bytes. For EHVTv4 Level 1, we have a much smaller public key of 1,107 bytes, a private key of 419 bytes, and a signature size of 369 bytes. Both EHTv3 and EHTv4 have much smaller signatures compared with Dilithium.
 * HAETAE. [HAETAE](https://asecuritysite.com/pqc/haetae_sign). HAETAE is a lattice-based Post Quantum Cryptography (PQC) method that is based on the methods of Dilithium. It thus uses the “Fiat-Shamir with Aborts” approach. It differs in two respects: a bimodal distribution for the rejection sampling (similar to the BLISS signature scheme) and sampling from and reject to hyperball uniform distributions.
+*  HAWK. [HAWK](https://asecuritysite.com/pqc/hawk_sign). HAWK is a lattice-based signature method that creates signatures using the lattice isomorphism problem (LIP) [1,2]. It is faster than Dilithium for signing and verification. It also has a low memory footprint and is supported on a range of hardware. There is currently no masking function, which could be suspectable to side-channel analysis. There are some worries about the security proofs involved with HAWK.
+* HuFu. [HuFu](https://asecuritysite.com/pqc/hufu_sign). There are two main approaches to lattice-based signatures: Fiat-Shamir and Hash-and-sign. Overall, Dilithium uses a Fiat-Shamir approach, while Falcon takes a Hash-and-sign approach using the GPV lattice trapdoor framework [1]. A new proposed standard is HuFu (Hash-and-Sign Signatures From Powerful Gadgets) and which uses the hardness of standard worst-case problems on generic lattices. As with Falcon, it uses a hash-and-sign signature method with the GPV lattice trapdoor framework. Falcon uses an NTRU lattice approach [here], while HuFu uses a gadget approach to represent the lattice. With the gadget approach, the trapdoor is created using a linear relation between the public lattice and a gadget lattice (and which does not represent the full basis of the lattice). Unfortunately, the gadget approach leads to much larger public and secret keys, but can be the basis of other cryptographic primitives (such as for identity-based encryption and aggregate signatures). 
 
 
 
@@ -48,6 +50,7 @@ Crystals Dilithium 5                  2,592              4,864              4,59
 
 Falcon 512 (Lattice)                    897              1,281                690         1 (128-bit) Lattice
 Falcon 1024                           1,793              2,305              1,330         5 (256-bit) Lattice
+
 Sphincs SHA256-128f Simple               32                 64             17,088         1 (128-bit) Hash-based
 Sphincs SHA256-192f Simple               48                 96             35,664         3 (192-bit) Hash-based
 Sphincs SHA256-256f Simple               64                128             49,856         5 (256-bit) Hash-based
@@ -112,16 +115,24 @@ WAVE-1612                        13,632,308              36,359             1,64
 EagleSign 3                           1,824                 576             2,335        3 (192-bit) Lattice
 EagleSign 5                           3,616               1,600             3,488        5 (192-bit) Lattice
 
-EHTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
-EHTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
-EHTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
+EHVTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
+EHVTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
+EHVTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
 
-EHTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
-EHTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
+EHVTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
+EHVTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
 
 HAETAE Level 2                          992               1,408             1,463         2 (128-bit) Lattice
 HAETAE Level 3                        1,472               2,112             2,337         3 (192-bit) Lattice
 HAETAE Level 5                        2,080               2,752             2,908         5 (256-bit) Lattice
+
+HAWK 256                                450                  96               249         Cryptography test
+HAWK 512                              1,024                 184               555         1 (128-bit) Lattice
+HAWK 1024                             2,440                 360              1,221        5 (256-bit) Lattice
+
+HuFu 1                            1,083,424          11,417,440              2,495       1 (128-bit)  Lattice
+HuFu 3                            2,228,256          23,172,960              3,580       3 (192-bit) Lattice
+HuFu 5                            3,657,888          37,418,720              4,560       5 (256-bit) Lattice
 ```
 
 And for performance in cycles (from papers):
@@ -190,7 +201,7 @@ WAVE-822       14,468,000,043   1,160,793,621    205,829,565  Intel i5-1135G7 at
 WAVE-1249      47,222,134,806   3,507,016,206    464,110,855
 WAVE-1612     108,642,333,507   7,936,541,947    813,301,900
 
-EagleSign3          1,020,723       1,283,454        955,956  Intel Core i7-1260P  at 2.40GGz  
+EagleSign3          1,020,723       1,283,454        955,956  1Intel Core i7-1260P  at 2.40GGz  
 EagleSign5          3,443,617       2,358,603      1,602,340
 
 EHTv3 Level 1     465,600,000   181,920,000      1,968,000    Intel Core(TM) i7-12800H at 2.40GGz  
@@ -199,6 +210,13 @@ EHTv3 Level 5   3,672,000,000   732,000,000      7,584,000
 
 EHTv4 Level 1      29,040,000    21,600,000      9,240,000      
 EHTv4 Level 5     276,000,000   142,320,000     62,880,000
+
+HAWK 512            8,430,000       85,400         181,000 
+HAWK 1024          43,700,000      148,000         303,000
+
+HuFu 1          1,193,896,000    7,322,000       1,804,000  Intel Core i9-12900K at 3.20 GHz
+HuFu 3          8,916,915,000   18,413,000       6,105,000        
+HuFu 5          9,727,510,000   31,896,000      10,424,000
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
