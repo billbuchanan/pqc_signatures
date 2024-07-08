@@ -48,6 +48,7 @@ Crystals Dilithium 5                  2,592              4,864              4,59
 
 Falcon 512 (Lattice)                    897              1,281                690         1 (128-bit) Lattice
 Falcon 1024                           1,793              2,305              1,330         5 (256-bit) Lattice
+
 Sphincs SHA256-128f Simple               32                 64             17,088         1 (128-bit) Hash-based
 Sphincs SHA256-192f Simple               48                 96             35,664         3 (192-bit) Hash-based
 Sphincs SHA256-256f Simple               64                128             49,856         5 (256-bit) Hash-based
@@ -112,16 +113,24 @@ WAVE-1612                        13,632,308              36,359             1,64
 EagleSign 3                           1,824                 576             2,335        3 (192-bit) Lattice
 EagleSign 5                           3,616               1,600             3,488        5 (192-bit) Lattice
 
-EHTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
-EHTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
-EHTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
+EHVTv3 Level 1                       83,490                 368               169         1 (128-bit) Lattice
+EHVTv3 Level 3                      191,574                 532               255         3 (192-bit) Lattice
+EHVTv3 Level 5                      348,975                 701               344         5 (256-bit) Lattice
 
-EHTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
-EHTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
+EHVTv4 Level 1                        1,107                 419               369         1 (128-bit) Lattice
+EHVTv4 Level 5                        2,623                 925               875         5 (256-bit) Lattice
 
 HAETAE Level 2                          992               1,408             1,463         2 (128-bit) Lattice
 HAETAE Level 3                        1,472               2,112             2,337         3 (192-bit) Lattice
 HAETAE Level 5                        2,080               2,752             2,908         5 (256-bit) Lattice
+
+HAWK 256                                450                  96               249         Cryptography test
+HAWK 512                              1,024                 184               555         1 (128-bit) Lattice
+HAWK 1024                             2,440                 360              1,221        5 (256-bit) Lattice
+
+HuFu 1                            1,083,424          11,417,440              2,495       1 (128-bit)  Lattice
+HuFu 3                            2,228,256          23,172,960              3,580       3 (192-bit) Lattice
+HuFu 5                            3,657,888          37,418,720              4,560       5 (256-bit) Lattice
 ```
 
 And for performance in cycles (from papers):
@@ -190,7 +199,7 @@ WAVE-822       14,468,000,043   1,160,793,621    205,829,565  Intel i5-1135G7 at
 WAVE-1249      47,222,134,806   3,507,016,206    464,110,855
 WAVE-1612     108,642,333,507   7,936,541,947    813,301,900
 
-EagleSign3          1,020,723       1,283,454        955,956  Intel Core i7-1260P  at 2.40GGz  
+EagleSign3          1,020,723       1,283,454        955,956  1Intel Core i7-1260P  at 2.40GGz  
 EagleSign5          3,443,617       2,358,603      1,602,340
 
 EHTv3 Level 1     465,600,000   181,920,000      1,968,000    Intel Core(TM) i7-12800H at 2.40GGz  
@@ -199,6 +208,13 @@ EHTv3 Level 5   3,672,000,000   732,000,000      7,584,000
 
 EHTv4 Level 1      29,040,000    21,600,000      9,240,000      
 EHTv4 Level 5     276,000,000   142,320,000     62,880,000
+
+HAWK 512            8,430,000       85,400         181,000 
+HAWK 1024          43,700,000      148,000         303,000
+
+HuFu 1          1,193,896,000    7,322,000       1,804,000  Intel Core i9-12900K at 3.20 GHz
+HuFu 3          8,916,915,000   18,413,000       6,105,000        
+HuFu 5          9,727,510,000   31,896,000      10,424,000
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
