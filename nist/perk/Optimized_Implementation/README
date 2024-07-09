@@ -1,0 +1,95 @@
+
+
+-------------------------------------------------
+PERK: a Digital Signature Scheme
+-------------------------------------------------
+
+
+1. SUBMISSION OVERVIEW
+----------------------
+
+Twelve parameters sets denoted respectively perk-128-fast-3,
+perk-128-fast-5, perk-128-short-3, perk-128-short-5, perk-192-fast-3,
+perk-192-fast-5, perk-192-short-3, perk-192-short-5,
+perk-256-fast-3, perk-256-fast-5, perk-256-short-3 and perk-256-short-5
+are provided as explained in the supporting documentation. Each parameter set
+folder is organized as follows:
+
+- build/: Files generated during compilation
+- doc/: Technical documentation of the scheme
+- lib/: Third party libraries used
+- src/: Source code of the scheme
+- doxygen.conf: Documentation configuration file
+- Makefile: Makefile
+
+
+2. INSTALLATION INSTRUCTIONS
+----------------------------
+
+2.1 Requirements
+
+The following software and libraries are required: make and gcc. The target machine must support AVX2 instructions.
+
+2.2 Compilation Step
+
+Let X denotes -128-fast-3, -128-fast-5, -128-short-3,
+-128-short-5, -192-fast-3, -192-fast-5, -192-short-3, -192-short-5,
+-256-fast-3, -256-fast-5, -256-short-3 and -256-short-5,
+depending on the parameter set considered. PERK can be compiled in three
+different ways:
+- cd perkX
+- Execute make perkX to compile a working example of the scheme. Run build/bin/perkX to
+  execute all the steps of the scheme and display theirs respective
+  performances.
+- Execute make perkX-kat to compile the NIST KAT generator. Run build/bin/prekX-PQCgenKAT_sign to
+  generate KAT files.
+- Execute make perkX-verbose to compile a working example of the scheme in
+  verbose mode. Run build/bin/perkX-verbose to generate intermediate values.
+- Some of parameters require more than 8 MBytes of stack (which is default stack in Linux) to run.
+  The command "ulimit -s 16384" maybe used to increase the available stack for the current shell session.
+- The valgrind tool must be run with the "--max-stackframe=33554432" option to avoid warnings concerning the stack.
+
+2.3 Compilation Step - PERK
+
+During compilation, the following files are created inside the build/src folder:
+- arithmetic.o: Functions related to the arithmetics of the scheme
+- common.o: Functions to generate random vectors, permutations and commitments
+- keygen.o: Functions to perform the key generation
+- parsing.o: Functions to parse public key, secret key and ciphertext of the
+- permutation.o: Functions related to permutations
+- signature.o: Functions related to the internal signing API
+- sign.o: Functions implementing the NIST API exposed in api.h
+- symmetric.o: Functions to perform symmetric crypto operations (PRNG, Hash, Commit)
+- symmetric_times4.o: Functions to perform symmetric crypto operations (PRNG, Hash, Commit) using the times4 optimization
+- theta_tree.o: Functions related to seeds tree
+- verbose.o: Functions to print intermediates values in the verbose mode
+- verify.o: Functions related to the internal verification API
+
+
+3. DOCUMENTATION
+----------------
+
+3.1 Requirements
+
+The following software are required: doxygen.
+
+3.2 Generation Step
+
+- Run doxygen doxygen.conf to generate the code documentation
+- Browse doc/html/index.html to read the documentation
+
+
+4. IMPLEMENTATION OVERVIEW
+-------------------------
+
+The PERK signature scheme is defined in the api.h and parameters.h files and implemented in sign.c.
+The internal API of the scheme is defined in keygen.h, signature.h and verify.h (see also keygen.c, signature.c and verify.c).
+The data structures used in this implementation are defined in data_structures.h. The arithmetic operations including operations
+on vectors and matrices are provided in file arithmetic.c and arithmetic.h. The theta_tree.c and theta_tree.h files contains functions related
+to seed trees. PERK uses permutations, files permutation.c and permutation.h provide the implementation of functions related
+to the generation and operations over random permutations. The aforementioned functions uses the library djbsort to generate 
+permutations and to apply them. The djbsort library is provided in the folder lib/djbsort. The files symmetric.c, symmetric.h, symmetric_times4.c and symmetric_times4.h provides
+functions related to symmetric crypto operations such as randomness generation, hashing and commitments generation. Common functions used in
+both signing and verifications are provided in common.c and common.h. These functions are based on XKCP which is located in the folder lib/XKCP. 
+As public key, secret key and signature can be manipulated either with their mathematical representations or as bit strings, the files 
+parsing.h and parsing.c provide functions to switch between these two representations.
