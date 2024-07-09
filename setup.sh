@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -58,6 +58,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         uov_variations+=("$line")
     done < "$alg_list_dir/uov_variations.txt"
+
+    med_variations=()
+    while IFS= read -r line; do
+        med_variations+=("$line")
+    done < "$alg_list_dir/MED-2023_variations.txt"
 
 }
 
@@ -307,6 +312,25 @@ function variations_setup() {
         mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
     
+    done
+
+    # Setting up variations of the MED-2023 signature algorithm
+    med_src_dir=$src_dir/MEDS-2023/Reference_Implementation
+    med_dst_dir=$lib_dir/MEDS-2023
+
+    cd $med_src_dir
+
+    for variation in "${med_variations[@]}"; do
+
+        variation_dir_path="$med_src_dir/$variation"
+        cd $variation_dir_path
+        # current_dir=$(pwd)
+        # echo -e "\ncurrent dir - $current_dir\n"
+        make clean >> /dev/null
+        make
+        mv "$variation_dir_path/pqcsign" "$med_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
     done
 
 }

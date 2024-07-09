@@ -23,7 +23,7 @@ TARGETS := ${EXES:%=$(OBJDIR)/%}
 
 .PHONY: default clean
 
-default: $(EXES)
+default: $(EXES) pqcsign
 
 OBJECTS = meds.o util.o seed.o osfreq.o fips202.o matrixmod.o bitstream.o randombytes.o
 HEADERS = $(wildcard *.h)
@@ -44,6 +44,12 @@ $(TARGETS) : $(OBJDIR)/%: %.c $(BUILDOBJ)
 	$(CC) $(@F).c $(BUILDOBJ) $(CFLAGS) $(LIBS) -o $@
 
 
+pqcsign: pqcsign.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o pqcsign pqcsign.o $(BUILDOBJ) $(LIBS)
+
+pqcsign.o: pqcsign.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 TEST: test
 	$(OBJDIR)/test
 
@@ -55,4 +61,5 @@ BENCH: bench
 
 clean:
 	rm -rf build/ debug/ PQCsignKAT_*
+	rm -rf pqcsign pqcsign.o
 

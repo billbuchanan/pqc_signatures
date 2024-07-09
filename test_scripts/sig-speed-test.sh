@@ -58,6 +58,10 @@ function create_alg_arrays() {
         uov_variations+=("$line")
     done < "$alg_list_dir/uov_variations.txt"
 
+    med_variations=()
+    while IFS= read -r line; do
+        med_variations+=("$line")
+    done < "$alg_list_dir/MED-2023_variations.txt"
 
 }
 
@@ -107,6 +111,11 @@ function cycles_test {
     for variation in "${uov_variations[@]}"; do
         echo -e "\nRunning uov test for $variation"
         $lib_dir/uov/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
+    for variation in "${med_variations[@]}"; do
+        echo -e "\nRunning MEDS-2023 test for $variation"
+        $lib_dir/MEDS-2023/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }
