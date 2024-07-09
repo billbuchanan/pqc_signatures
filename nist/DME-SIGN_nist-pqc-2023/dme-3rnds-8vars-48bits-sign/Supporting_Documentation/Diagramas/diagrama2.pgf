@@ -1,0 +1,7 @@
+\begin{tikzcd}
+\mathbb{F}_q^{nm}
+\arrow[rrr,bend right=20,"L_1"]
+\arrow[r,"\sim" below]&(\mathbb{F}_{q}^n)^{m}
+\arrow[r,"\tilde{L}_1"]&(\mathbb{F}_{q}^n)^{m}
+\arrow[r,"\tilde{\pi}_1","\sim" below]&(\mathbb{F}_{q^n})^{m}
+\end{tikzcd}

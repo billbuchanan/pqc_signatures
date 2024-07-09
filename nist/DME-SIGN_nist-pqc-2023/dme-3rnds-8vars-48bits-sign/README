@@ -1,0 +1,36 @@
+/
+
+    README  : this file
+
+/KAT/
+
+    PQCkemKAT_545.req  and PQCkemKAT_545.rsp : precomputed KAT files
+
+/Reference_Implementation/
+
+    api.h             : the required API
+    dme.h and dme.c   : the implementation of the DME primitives
+    sign.c            : the implementation of the API required functions
+    sha3.h and sha3.c : the implementation of the SHA3 hash functions
+    rng.h and rng.c   : random number generator (provided by NIST)
+    PQCgenKAT_kem.c   : the known answer test generator (provided by NIST)
+    makefile          : for automated building
+
+/Optimized_Implementation/
+
+    api.h             : the required API
+    dme.h and dme.c   : the implementation of the DME primitives (for the
+                        x86_64 architecture with CLMUL instruction support)
+    sign.c            : the implementation of the API required functions
+    sha3.h and sha3.c : the implementation of the SHA3 hash functions
+    rng.h and rng.c   : random number generator (provided by NIST)
+    PQCgenKAT_kem.c   : the known answer test generator (provided by NIST)
+    makefile          : for automated building
+
+
+/Supporting_Documentation/
+
+    timings.txt       : timings for the API functions
+    DME-SIGN.pdf      : DME-SIGN description
+    DME-SIGN coversheet.pdf   : cover page
+    

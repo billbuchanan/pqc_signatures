@@ -1,7 +1,7 @@
 #ifndef SERIALIZER_H
 #define SERIALIZER_H
 
-#include <flint/flint.h>
+#include "flint.h"
 #include <flint/fmpz_vec.h>
 #include <flint/fmpz_mod_mat.h>
 

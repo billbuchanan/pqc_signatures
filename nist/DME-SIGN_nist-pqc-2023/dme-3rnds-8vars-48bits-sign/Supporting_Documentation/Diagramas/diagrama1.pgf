@@ -1,0 +1,9 @@
+\begin{tikzcd}
+\mathbb{F}_q^{nm}
+\arrow[rrrrr,bend right=20,"F"]
+\arrow[r,"L_1"]&(\mathbb{F}_{q^n})^{m}
+\arrow[r,"G_1"]&(\mathbb{F}_{q^n})^{m}
+\arrow[r,"L_2"]&(\mathbb{F}_{q^m})^{n}
+\arrow[r,"G_2"]&(\mathbb{F}_{q^m})^{n}
+\arrow[r,"L_3"]&\mathbb{F}_{q}^{mn}
+\end{tikzcd}

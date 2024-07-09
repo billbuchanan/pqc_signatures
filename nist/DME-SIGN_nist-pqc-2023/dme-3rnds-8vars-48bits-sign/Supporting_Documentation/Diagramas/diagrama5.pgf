@@ -1,0 +1,7 @@
+﻿\begin{tikzcd}
+(\mathbb{F}_{q^n})^{m}
+\arrow[rrr,bend right=30,"L_3" below]
+\arrow[r,,"{\pi}_2^{-1}","\sim" below]&(\mathbb{F}_{q}^n)^{m}
+\arrow[r,"\tilde{L}_3" below]&(\mathbb{F}_{q}^n)^{m}
+\arrow[r,"\ell^{-1}" below]&\mathbb{F}_{q}^{nm}
+\end{tikzcd}

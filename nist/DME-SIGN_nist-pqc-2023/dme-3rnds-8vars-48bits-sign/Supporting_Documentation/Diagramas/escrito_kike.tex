@@ -1,0 +1,229 @@
+\documentclass[12pt,a4paper]{amsart}
+
+% for computer reading only
+%\usepackage[letterpaper,left=1.2in,right=1.2in,top=1in,bottom=1in]{geometry}
+
+%\title{The prime divisors of the period and index of a Brauer class}
+%\author{Benjamin Antieau and Ben Williams}
+\usepackage{color}
+
+\addtolength{\hoffset}{-1cm} \addtolength{\textwidth}{2cm}
+\linespread{1.2}
+
+
+%\usepackage{palatino, euler}
+% \usepackage{setspace}
+% \onehalfspacing
+
+% AMSRefs is a big pile of garbage and has to go after euler and before xy and hyperref
+%\usepackage{amsrefs}
+
+\usepackage[pdfstartview=FitH]{hyperref}
+\usepackage[english]{babel}
+%\usepackage{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{soul}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{xy}
+% \usepackage{chngcntr}
+\xyoption{all}
+\usepackage{amsmath,amssymb}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{xcolor}
+\usepackage{mathrsfs}
+\usetikzlibrary{cd}
+
+
+\newif\iftikz
+\tikztrue
+
+\iftikz
+\usepackage{tikz}
+\usetikzlibrary{%decorations.markings,
+%matrix,
+calc%,arrows.meta
+}
+\fi
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem*{yano}{Yano's Conjecture}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{prop0}{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lema}[thm]{Lemma}
+\newtheorem{caso}{Case}
+\newtheorem{prps}{Properties}
+\newtheorem{clm}[thm]{Claim}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+\theoremstyle{definition}
+\newtheorem{dfn}[thm]{Definition}
+\newtheorem{ntc}[thm]{Notation}
+\newtheorem{ejm}[thm]{Example}
+\newtheorem{paso}{Step}
+%\numberwithin{equation}{section}
+\DeclareMathOperator{\ord}{ord}
+
+
+
+
+
+
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\supp}{Supp}
+\DeclareMathOperator{\In}{In}
+\DeclareMathOperator{\Gr}{Gr}
+\newcommand\balpha{\boldsymbol{\alpha}}
+\newcommand\bdx{{\mathbf x}}
+\newcommand\bdy{{\mathbf y}}
+\newcommand\bn{{\mathbb N}}
+\newcommand\bz{{\mathbb Z}}
+\newcommand\bq{{\mathbb Q}}
+\newcommand\bc{{\mathbb C}}
+\newcommand\br{{\mathbb R}}
+\newcommand{\cD}{{\mathcal D}}
+\newcommand{\cO}{{\mathcal O}}
+\newcommand{\cC}{{\mathcal C R_\mu }}
+\newcommand{\cA}{{\mathcal E}}
+\DeclareMathOperator*{\res}{Res}
+
+\newcommand\gfq{{\mathbb{F}_q}}
+
+
+
+
+
+%    Absolute value notation
+\newcommand{\abs}[1]{\lvert#1\rvert}
+%    Blank box placeholder for figures (to avoid requiring any
+%    particular graphics capabilities for printing this document).
+\newcommand{\blankbox}[2]{%
+  \parbox{\columnwidth}{\centering
+%    Set fboxsep to 0 so that the actual size of the box will match the
+%    given measurements more closely.
+    \setlength{\fboxsep}{0pt}%
+    \fbox{\raisebox{0pt}[#2]{\hspace{#1}}}%
+  }%
+}
+
+\def\f{f^{-1}\{0\}}
+
+
+\newcommand\enet[1]{\renewcommand\theenumi{#1}
+\renewcommand\labelenumi{\theenumi}}
+
+
+
+\title{Patente}
+
+
+
+%    Information for first author
+\author[I. Luengo]{I. Luengo${^1}$}
+%    Address of record for the research reported here
+\address{Departamento de \'Algebra, Universidad Complutense,
+Plaza de las Ciencias s/n, Ciudad Universitaria, 28040 Madrid, SPAIN}
+%    Current address
+\curraddr{}
+\email{iluengo@ucm.es}
+
+
+
+
+\date{}
+
+
+\begin{document} 
+
+\maketitle
+
+
+The $\mathbb{F}_q$-linear isomorphism $L_3=\ell\circ\tilde{L}_3\circ\pi_2^{-1}$
+is defined as
+\begin{center}
+\input{diagrama5.pgf}
+\end{center}
+The morphism $\tilde{L}_3$ is defined as $\tilde{L}_3=(L_{31},\dots,L_{3n})$ where
+$L_{3j}(x'_j)=x_j' A_{3j}$, $A_{3j}\in\mathscr{M}_{n\times n}(\gfq)$ and
+$\det(A_{3j})\neq 0$.
+
+The main part of the design of the system are the two exponential maps
+$G_1$ and $G_2$ build with monomial maps as follows:
+\[
+G_1(x_1,\dots,x_m)=(x_1^{a_{11}}\cdot\ldots\cdot x_m^{a_{1m}},\dots,x_1^{a_{m1}}\cdot\ldots\cdot x_m^{a_{mm}}),\qquad 
+G_1:(\mathbb{F}_{q^n})^m\to\mathbb{F}_{q^n})^m
+\]
+where $A_1=(a_{ij})\in\mathscr{M}_{m\times m}(\mathbb{Z}_{q^n-1})$ such that $d'_1=\det(A_1)$ is prime with $q^n-1$;
+\[
+G_2(x'_1,\dots,x'_n)=({x'_1}^{b_{11}}\cdot\ldots\cdot {x'_n}^{b_{1n}},\dots,{x'_1}^{b_{n1}}\cdot\ldots\cdot {x'_n}^{b_{nn}}),\qquad 
+G_1:(\mathbb{F}_{q^m})^n\to\mathbb{F}_{q^m})^n
+\]
+where $B_2=(b_{ij})\in\mathscr{M}_{n\times n}(\mathbb{Z}_{q^m-1})$ such that $d'_2=\det(B_2)$ is prime with $q^m-1$
+
+If $\underline{x}=(x_{11},\dots,x_{nm})\in\gfq^{nm}$ are the inicial coordinates, then
+the composition of the five maps $L_1,G_1,L_2,G_2$ and $G_3$ allow us to compute 
+the components of $F(\underline{x})$ as polynomials 
+$F_i\in\mathbb{F}_q[x_{11},\dots,x_{nm}]$. In order to keep small the number
+of monomials, we choose the matrices $A_1$ and $B_2$ with the following properties:
+
+\begin{enumerate}
+ \item The entries of $A_1$ and $B_2$ are of the form $p^a$.
+ \item We fix two integers $s$ and $t$ such that the rows of $A_1$
+ have at most $s$ non zero entries and the rows of $B_2$ have at most
+ $t$ non zero entries. One can compute the monomials in the $F_i$
+ with the algorithm described below, resulting that the total number
+ of monomials is 
+$MON=(b\cdot n^s)^t$ where $b$ depends on the mixing map~$M$.
+\item The inverse maps $G_1^{-1}$ and $G_2^{-1}$ can be computed in the same
+way from the inverse matrix of $A_1$ and $B_2$ respectively and
+$F_1^{-1}$ is also polynomial.
+\end{enumerate}
+If the number of monomials in $F^{-1}$ is not very big, one can get the coefficient
+of the polynomial by computing enough number of pairs $(x,F(x))$. To avoid
+this attack we tak $A_1$ such that $d_1=\frac{1}{\det(A_1)}\mod{q^n-1}$
+has a expansion in base~$p$ with $d_1=[K_0,\dots,K_\ell]$ with at least $s_1$
+non vanishing~$K_i$ and the same with $B_2$ and $d_2=\frac{1}{\det(B_2)}$
+(with at least $t_1$ non vanishing digits). The details of values of $t_1,s_1$
+will be given when discussing the security of the system.
+
+The public key of the system is $K_P=(h,\pi_0,F)$ and the private key is
+given by $h$, $\pi_0$ and the five maps $L_1,\dots,L_3$ and their inverses
+that can be used to encrypt and decrypt. Given an encrypted message $z=F(\underline{x})=
+DM(\overline{x})$, one compute $\underline{x}=F^{-1}(z)$ and discard the randow entries
+with the use of~$h$.
+
+It is possible to get the monomials of the $F_i$ without computing the composition
+of the five maps as follows: we start with $m$ lists that contain
+the coordinates of the $\underline{x}_i$, $M_{01}=[x_{11},\dots,x_{1n}]$, \dots,
+$M_{mn}=[x_{m1},\dots,x_{mn}]$, and we define the operations on lists: multiplication
+and exponentiation. If $S=[s_1,\dots,s_m]$, $T=[t_1,\dots,t_m]$ then
+$S\cdot T=[s_i\cdot t_i]$ and $S^a=[s_i^a]$.
+
+With these notations, one can see that the exponential $G_1$ produce, on each component,
+polynomials whose list of monomials is $N_{0k}=M_{01}^{a_{k1}}\cdot\ldots\cdot M_{0n}^{a_{kn}}$.
+
+The mixing map $M$ determines that in the list of monomials of each $x'_k$ appears
+the list $N_{0k}$, joint with the list $N_{0j}$ of the vectors that are placed
+at the $m-n$ last entreis of $x'_k$. If $b_k$ is the number of vectors adjoined
+to $x'_k$ then, if we denote by $P_{0k}$ ($k=1,\dots,n$) such list, then the final
+list of monomials of each component after $G_2$ to each monomial ${x'_1}^{b_{k1}}\cdot\ldots\cdot{x'_n}^{b_{kn}}$ gives $Q_{0k}=P_{01}^{b_{k1}}\cdot\ldots\cdot P_{0n}^{b_{kn}}$.
+
+Notice that when we apply the final $\gfq$-linear bijection $\tilde{L}_3$,
+each component still have the same monomial, than means that there are $n$ groups
+of $m$ polynomials $F_{k1},\dots,F_{km}$ such that they have the same monomials,
+namely the list $Q_{0k}$.
+
+It is clear that the number of monomials of $Q_{0k}$ is at most $((1+b_k)\cdot n^s)^t$.
+So if we denote by $b_{\max}=\max_k(1+b_k)$, we get on each component
+at most $(b_{\max}\cdot n^s)^t$ monomials.
+
+
+\end{document}
