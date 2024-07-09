@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -63,6 +63,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         med_variations+=("$line")
     done < "$alg_list_dir/MED-2023_variations.txt"
+
+    hawk_variations=()
+    while IFS= read -r line; do
+        hawk_variations+=("$line")
+    done < "$alg_list_dir/hawk_variations.txt"
 
 }
 
@@ -329,6 +334,23 @@ function variations_setup() {
         make clean >> /dev/null
         make
         mv "$variation_dir_path/pqcsign" "$med_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Setting up variations of the hawk signature algorithm
+    hawk_src_dir=$src_dir/hawk/Reference_Implementation
+    hawk_dst_dir=$lib_dir/hawk
+
+    cd $hawk_src_dir
+
+    for variation in "${hawk_variations[@]}"; do
+
+        variation_dir_path="$hawk_src_dir/$variation"
+        cd $variation_dir_path
+        make clean >> /dev/null
+        make
+        mv "$variation_dir_path/pqcsign" "$hawk_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
     done

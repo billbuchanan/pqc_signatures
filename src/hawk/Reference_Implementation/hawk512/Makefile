@@ -8,15 +8,17 @@ OBJCORE = hawk_kgen.o hawk_sign.o hawk_vrfy.o ng_fxp.o ng_hawk.o ng_mp31.o ng_nt
 HEAD = hawk.h hawk_inner.h hawk_config.h sha3.h
 NG_HEAD = ng_config.h ng_inner.h sha3.h
 OBJAPI = api.o
-OBJEXTRA = PQCgenKAT_sign.o rng.o
+PQC_HEADERS = hawk.h hawk_inner.h hawk_config.h sha3.h api.h
+OBJEXTRA_PQC = PQCgenKAT_sign.o rng.o
+OBJEXTRA_PQCSIGN = rng.o
 
-all: PQCgenKAT_sign
+all: PQCgenKAT_sign pqcsign
 
-PQCgenKAT_sign: $(OBJCORE) $(OBJAPI) $(OBJEXTRA)
-	$(LD) $(LDFLAGS) -o PQCgenKAT_sign $(OBJCORE) $(OBJAPI) $(OBJEXTRA) $(LIBS)
+PQCgenKAT_sign: $(OBJCORE) $(OBJAPI) $(OBJEXTRA_PQC)
+	$(LD) $(LDFLAGS) -o PQCgenKAT_sign $(OBJCORE) $(OBJAPI) $(OBJEXTRA_PQC) $(LIBS)
 
-clean:
-	-rm -f $(OBJCORE) $(OBJAPI) $(OBJEXTRA) PQCgenKAT_sign
+pqcsign: $(OBJCORE) $(OBJAPI) $(OBJEXTRA_PQCSIGN) pqcsign.o
+	$(LD) $(LDFLAGS) -o pqcsign $(OBJCORE) $(OBJAPI) $(OBJEXTRA_PQCSIGN) pqcsign.o $(LIBS)
 
 hawk_kgen.o: hawk_kgen.c $(HEAD)
 	$(CC) $(CFLAGS) -c -o hawk_kgen.o hawk_kgen.c
@@ -56,3 +58,10 @@ PQCgenKAT_sign.o: PQCgenKAT_sign.c api.h rng.h
 
 rng.o: rng.c rng.h
 	$(CC) $(CFLAGS) -c -o rng.o rng.c
+
+pqcsign.o: pqcsign.c $(PQC_HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	-rm -f $(OBJCORE) $(OBJAPI) $(OBJEXTRA) PQCgenKAT_sign PQCgenKAT_sign.o
+	-rm -rf pqcsign pqcsign.o
