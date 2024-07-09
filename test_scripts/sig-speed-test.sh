@@ -68,6 +68,12 @@ function create_alg_arrays() {
         hawk_variations+=("$line")
     done < "$alg_list_dir/hawk_variations.txt"
 
+    ehtv3v4_variations=()
+    while IFS= read -r line; do
+        ehtv3v4_variations+=("$line")
+    done < "$alg_list_dir/ehtv3v4_variations.txt"
+
+
 }
 
 #------------------------------------------------------------------------------
@@ -126,6 +132,11 @@ function cycles_test {
     for variation in "${hawk_variations[@]}"; do
         echo -e "\nRunning hawk test for $variation"
         $lib_dir/hawk/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+    
+    for variation in "${ehtv3v4_variations[@]}"; do
+        echo -e "\nRunning EHTv3v4 test for $variation"
+        $lib_dir/EHTv3v4/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }
