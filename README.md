@@ -35,7 +35,9 @@ At present the code contains:
 * EHT v3 and v4 - short signatures. [EHT v3 and v4 - short signatures](https://asecuritysite.com/pqc/eht_sign). EHT defines a post quantum cryptography lattice-based method for digital signatures. With EHT v3 Level 1 security, it has a 368-byte private key, and a relaively small signature of 169 bytes. Unfortunately its public key for Level 1 security is 83,490 bytes. For EHVTv4 Level 1, we have a much smaller public key of 1,107 bytes, a private key of 419 bytes, and a signature size of 369 bytes. Both EHTv3 and EHTv4 have much smaller signatures compared with Dilithium.
 * HAETAE. [HAETAE](https://asecuritysite.com/pqc/haetae_sign). HAETAE is a lattice-based Post Quantum Cryptography (PQC) method that is based on the methods of Dilithium. It thus uses the “Fiat-Shamir with Aborts” approach. It differs in two respects: a bimodal distribution for the rejection sampling (similar to the BLISS signature scheme) and sampling from and reject to hyperball uniform distributions.
 *  HAWK. [HAWK](https://asecuritysite.com/pqc/hawk_sign). HAWK is a lattice-based signature method that creates signatures using the lattice isomorphism problem (LIP) [1,2]. It is faster than Dilithium for signing and verification. It also has a low memory footprint and is supported on a range of hardware. There is currently no masking function, which could be suspectable to side-channel analysis. There are some worries about the security proofs involved with HAWK.
-* HuFu. [HuFu](https://asecuritysite.com/pqc/hufu_sign). There are two main approaches to lattice-based signatures: Fiat-Shamir and Hash-and-sign. Overall, Dilithium uses a Fiat-Shamir approach, while Falcon takes a Hash-and-sign approach using the GPV lattice trapdoor framework [1]. A new proposed standard is HuFu (Hash-and-Sign Signatures From Powerful Gadgets) and which uses the hardness of standard worst-case problems on generic lattices. As with Falcon, it uses a hash-and-sign signature method with the GPV lattice trapdoor framework. Falcon uses an NTRU lattice approach [here], while HuFu uses a gadget approach to represent the lattice. With the gadget approach, the trapdoor is created using a linear relation between the public lattice and a gadget lattice (and which does not represent the full basis of the lattice). Unfortunately, the gadget approach leads to much larger public and secret keys, but can be the basis of other cryptographic primitives (such as for identity-based encryption and aggregate signatures). 
+* HuFu. [HuFu](https://asecuritysite.com/pqc/hufu_sign). There are two main approaches to lattice-based signatures: Fiat-Shamir and Hash-and-sign. Overall, Dilithium uses a Fiat-Shamir approach, while Falcon takes a Hash-and-sign approach using the GPV lattice trapdoor framework [1]. A new proposed standard is HuFu (Hash-and-Sign Signatures From Powerful Gadgets) and which uses the hardness of standard worst-case problems on generic lattices. As with Falcon, it uses a hash-and-sign signature method with the GPV lattice trapdoor framework. Falcon uses an NTRU lattice approach [here], while HuFu uses a gadget approach to represent the lattice. With the gadget approach, the trapdoor is created using a linear relation between the public lattice and a gadget lattice (and which does not represent the full basis of the lattice). Unfortunately, the gadget approach leads to much larger public and secret keys, but can be the basis of other cryptographic primitives (such as for identity-based encryption and aggregate signatures).
+*  MiRitH. [MiRitH](https://asecuritysite.com/pqc/mirith_sign). MiRitH (MinRank in the Head) is a quantum robust digital signature method for MPC-in-the-Head Signatures. It is based on the hardness of the MinRank problem. This is a problem that must find a non-trivial low-rank linear combination of defined matrices over a finite field. Mirith uses a MPC-in-the-Head (MPCitH) based Zero-Knowledge Proof of Knowledge (ZKPoK) that relates to a solution of the MinRank problem, and then is converted to a non-interactive signature scheme using the Fiat–Shamir transform. For Level I-a, it has a relatively small public and private key of 129 and 145 bytes, and a resonable size of signature of 7,877 bytes.
+* PERK. [PERK](https://asecuritysite.com/pqc/perk_sign). PERK is a quantum robust digital signature method that uses a zero-knowledge proof based on a variant of the Permuted Kernel Problem (PKP) and with hash functions as random oracles. This is an MPC-in-the-head approach, and which is then converted into a Fiat-Shamir transform. PERK has a relatively small public and private key, and moderate signature sizes. It also uses symmetric key methods, and thus has good performance levels. 
 
 
 
@@ -133,6 +135,14 @@ HAWK 1024                             2,440                 360              1,2
 HuFu 1                            1,083,424          11,417,440              2,495       1 (128-bit)  Lattice
 HuFu 3                            2,228,256          23,172,960              3,580       3 (192-bit) Lattice
 HuFu 5                            3,657,888          37,418,720              4,560       5 (256-bit) Lattice
+
+Mirith Ia-fast                          129                 145              7,877        1 (128-bit) Symmetric
+Mirith IIIa-fast                        205                 229             17,139        3 (192-bit) Symmetric
+Mirith Va-fast                          253                 285             30,458        5 (256-bit) Symmetric
+
+PERK-I-fast3                            164                  16              8,345        1 (128-bit) Symmetric
+PERK-III-fast3                          246                  24             19,251        3 (192-bit) Symmetric
+PERK-V-fast3                            318                  32             34,100        5 (256-bit) Symmetric
 ```
 
 And for performance in cycles (from papers):
@@ -217,6 +227,15 @@ HAWK 1024          43,700,000      148,000         303,000
 HuFu 1          1,193,896,000    7,322,000       1,804,000  Intel Core i9-12900K at 3.20 GHz
 HuFu 3          8,916,915,000   18,413,000       6,105,000        
 HuFu 5          9,727,510,000   31,896,000      10,424,000
+
+Mirith Ia-fast        108,903    8,703,311       7,311,069  Intel(R) Core(TM) i7-11850H at 2.50GHz 
+Mirith IIIa-fast      246,740   22,485,807      18,431,919               
+Mirith Va-fast        508,607   36,361,915      36,665,342
+
+
+PERK-I-fast3           79,000    7,300,000   5,100,000  Intel® Core i9-13900K at 3.00 GHz     
+PERK-III-fast3        169,000   15,000,000  12,000,000
+PERK-V-fast3          297,000   34,000,000  27,000,000 
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
