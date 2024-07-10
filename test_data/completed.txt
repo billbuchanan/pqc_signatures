@@ -1,0 +1,54 @@
+-----------------------------------------------------------------------------------------------------
+Completed
+Biscuit
+Cross
+FAEST
+FuLecca
+pqsigRM
+Raccoon
+SPHINCS-ALPHA
+Sqi
+Uov
+MEDS-2023
+EHTv3v4
+
+
+hawk !!!! - fix hawk makefile clean statements
+
+
+-----------------------------------------------------------------------------------------------------
+in progress:
+
+
+
+------------------------------------------------------------------------------------------------------
+in progress (leave till last):
+AIMer
+EagleSign
+less
+WAVER1_1
+
+------------------------------------------------------------------------------------------------------
+Still to do:
+haetae
+HuFu
+3wise
+MIRA
+mirith
+perk
+ryde
+sdith
+squirrels
+
+falcon 
+dilithium
+SPHINCS
+
+
+
+
+
+
+
+
+
