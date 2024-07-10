@@ -73,6 +73,10 @@ function create_alg_arrays() {
         ehtv3v4_variations+=("$line")
     done < "$alg_list_dir/ehtv3v4_variations.txt"
 
+    hufu_variations=()
+    while IFS= read -r line; do
+        hufu_variations+=("$line")
+    done < "$alg_list_dir/hufu_variations.txt"
 
 }
 
@@ -139,6 +143,10 @@ function cycles_test {
         $lib_dir/EHTv3v4/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
+    for variation in "${hufu_variations[@]}"; do
+        echo -e "\nRunning hufu test for $variation"
+        $lib_dir/hufu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
 }
 
 #------------------------------------------------------------------------------

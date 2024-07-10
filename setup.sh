@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4" "hufu")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -73,6 +73,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         eht3v4_variations+=("$line")
     done < "$alg_list_dir/ehtv3v4_variations.txt"
+
+    hufu_variations=()
+    while IFS= read -r line; do
+        hufu_variations+=("$line")
+    done < "$alg_list_dir/hufu_variations.txt"
 
 }
 
@@ -373,6 +378,21 @@ function variations_setup() {
         make clean >> /dev/null
         make
         mv "$variation_dir_path/pqcsign" "$eht3v4_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Setting up variations of the hufu signature algorithm
+    hufu_src_dir=$src_dir/HuFu/Reference_Implementation
+    hufu_dst_dir=$lib_dir/hufu
+
+    for variation in "${hufu_variations[@]}"; do
+
+        variation_dir_path="$hufu_src_dir/$variation"
+        cd $variation_dir_path
+        make clean >> /dev/null
+        make
+        mv "$variation_dir_path/pqcsign" "$hufu_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
     done

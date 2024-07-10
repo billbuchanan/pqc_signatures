@@ -11,7 +11,7 @@ Sqi
 Uov
 MEDS-2023
 EHTv3v4
-
+HuFu
 
 hawk !!!! - fix hawk makefile clean statements
 
@@ -31,8 +31,6 @@ haetae
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-haetae
-HuFu
 3wise
 MIRA
 mirith

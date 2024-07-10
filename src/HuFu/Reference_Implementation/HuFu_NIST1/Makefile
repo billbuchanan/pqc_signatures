@@ -12,8 +12,14 @@ CFLAGS= -mavx2 -mbmi2 -mpopcnt -O3 -std=gnu11 -march=native -Wextra -DNIX -mfpma
 LDFLAGS= -lm -lssl -lcrypto
 
 SOURCES= aes/aes.c aes/aes_c.c random/random.c sha3/fips202.c sha3/shake.c sign.c rANS/compress.c normaldist/fixpoint.c gen_mat.c normaldist/normaldist.c sampling/samplez.c sampling/sampling.c util.c cpucycles.c rng.c PQCgenKAT_sign.c
-        
+PQC_SOURCES= aes/aes.c aes/aes_c.c random/random.c sha3/fips202.c sha3/shake.c sign.c rANS/compress.c normaldist/fixpoint.c gen_mat.c normaldist/normaldist.c sampling/samplez.c sampling/sampling.c util.c cpucycles.c rng.c pqcsign.c
+
 HEADERS= aes/aes.h aes/aes_local.h random/random.h sha3/fips202.h sha3/shake.h api.h cbd.h cholesky.h compress.h fixpoint.h fpr.h funcs.h hash.h normaldist.h pack.h params.h print.h samplez.h sampling.h cpucycles.h rng.h
+
+all: pqcsign PQCgenKAT_sign
+
+pqcsign: $(PQC_SOURCES)
+	$(CC) $(CFLAGS) -o $@ $(PQC_SOURCES) $(LDFLAGS)
 
 PQCgenKAT_sign: $(SOURCES)
 	$(CC) $(CFLAGS) -o $@ $(SOURCES) $(LDFLAGS)
@@ -24,4 +30,4 @@ PQCgenKAT_sign: $(SOURCES)
 .PHONY: clean
 
 clean:
-	-rm PQCgenKAT_sign *.o
+	-rm -rf PQCgenKAT_sign pqcsign  *.o
