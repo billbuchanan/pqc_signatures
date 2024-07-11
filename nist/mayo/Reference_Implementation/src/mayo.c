@@ -490,13 +490,13 @@ int mayo_keypair_compact(const mayo_params_t *p, unsigned char *cpk,
     const int param_P3_bytes = PARAM_P3_bytes(p);
     const int param_pk_seed_bytes = PARAM_pk_seed_bytes(p);
     const int param_sk_seed_bytes = PARAM_sk_seed_bytes(p);
-
+    puts("555555");
     // seed_sk $←- B^(sk_seed bytes)
     if (randombytes1(seed_sk, param_sk_seed_bytes) != MAYO_OK) {
         ret = MAYO_ERR;
         goto err;
     }
-
+    puts("555555");
     // S ← SHAKE256(seedsk, pk seed bytes + O bytes)
     SHAKE256(S, param_pk_seed_bytes + param_O_bytes, seed_sk,
              param_sk_seed_bytes);
