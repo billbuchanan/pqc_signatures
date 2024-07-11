@@ -158,7 +158,19 @@ dme-3rnds-8vars-64bits-sign            2880                 721                 
 
 PROV-1                                68,326             203,752                160       1 (128-bit) Multivariate
 PROV-2                               215,694             666,216                232       3 (192-bit) Multivariate
-PROV-3                               524,192           1,597,568                304       5 (256-bit) Multivariate  
+PROV-3                               524,192           1,597,568                304       5 (256-bit) Multivariate
+
+QR-UOV-I                             20,657                 256                 331       1 (128-bit) Multivariate
+QR-UOV-III                           55,173                 385                 489       3 (192-bit) Multivariate
+QR-UOV-V                            135,439                 512                 662       5 (256-bit) Multivariate
+
+SNOVA-I                              1,016                   48                 240        1 (128-bit) Multivariate
+SNOVA-III                            4,104                   64                 376        3 (192-bit) Multivariate
+SNOVA-IV                             8,016                   80                 576        5 (256-bit) Multivariate
+
+TUOV-I                              278,432             239,391                 112        1 (128-bit) Multivariate
+TUOV-III                          1,048,279           1,225,440                 184        3 (128-bit) Multivariate
+TUOV-V                            2,869,440           2,443,711                 244        5 (128-bit)  
 ```
 
 And for performance in cycles (from papers):
@@ -263,7 +275,19 @@ SDitH-L5-hyp      22,750,000    22,680,000      54,400,000
 
 PROV-1         1,171,537,400    38,962,000      52,797,800  Intel Core i5-7260U CPU at 2.20GHz
 PROV-3         5,558,390,200   129,890,200     173,978,200
-PROV-5        16,845,708,000   300,641,000     401,456,000  
+PROV-5        16,845,708,000   300,641,000     401,456,000
+
+QR-UOV-I          96,380,000    64,885,000      13,607,000 AMD EPYC 7763 at 2.45GHz
+QR-UOV-III       370,704,000   245,199,000      45,522,000
+QR-UOV-V       1,172,189,000   755,475,000     104,209,000
+
+SNOVA-I            2,447,831    17,538,089       8,086,815 tel Core i7-6700 CPU at 3.40GHz
+SNOVA-III         15,315,591    68,739,319      31,084,401
+SNOVA-V           59,367,845   186,358,881      90,472,932
+
+TUOV-I            10,682,834       220,792         127,722 Intel Core i5-10210U CPU at 1.60GHz
+TUOV-III          57,322,074       608,604         442,770
+TUOV-V           139,948,218     1,133,958         786,450
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
