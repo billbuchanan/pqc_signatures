@@ -78,6 +78,11 @@ function create_alg_arrays() {
         hufu_variations+=("$line")
     done < "$alg_list_dir/hufu_variations.txt"
 
+    three_wise_variations=()
+    while IFS= read -r line; do
+        three_wise_variations+=("$line")
+    done < "$alg_list_dir/3WISE_variations.txt"
+
 }
 
 #------------------------------------------------------------------------------
@@ -147,6 +152,12 @@ function cycles_test {
         echo -e "\nRunning hufu test for $variation"
         $lib_dir/hufu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
+
+    for variation in "${three_wise_variations[@]}"; do
+        echo -e "\nRunning 3WISE test for $variation"
+        $lib_dir/3WISE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
 }
 
 #------------------------------------------------------------------------------

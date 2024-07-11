@@ -4,3 +4,7 @@ reference_code_windows/
 build
 lib
 test_data/results/
+src/3WISE/Reference_Implementation/flint/
+src/3WISE/Reference_Implementation/flint-2.9.0/
+src/3WISE/Reference_Implementation/v2.9.0.tar.gz
+src/3WISE/Reference_Implementation/v2.9.0.tar.gz.1

@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4" "hufu")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4" "hufu" "3WISE")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -79,6 +79,32 @@ function create_alg_arrays() {
         hufu_variations+=("$line")
     done < "$alg_list_dir/hufu_variations.txt"
 
+    three_wise_variations=()
+    while IFS= read -r line; do
+        three_wise_variations+=("$line")
+    done < "$alg_list_dir/3WISE_variations.txt"
+
+}
+
+#------------------------------------------------------------------------------
+function install_dependencies() {
+
+    # Create dependency array
+    packages=("build-essential" "cmake" "wget" "gcc" "g++" "libssl-dev" "libgmp-dev" "libmpfr-dev")
+    not_installed=()
+
+    # Check if the required packages are installed
+    for package in "${packages[@]}"; do
+        if ! dpkg -s "$package" >/dev/null 2>&1; then
+            not_installed+=("$package")
+        fi
+    done
+
+    # Install any missing dependency packages
+    if [[ ${#not_installed[@]} -ne 0 ]]; then
+        sudo apt-get update && sudo apt upgrade -y
+        sudo apt-get install -y "${not_installed[@]}"
+    fi
 }
 
 #------------------------------------------------------------------------------
@@ -107,6 +133,9 @@ function environment_setup() {
         fi
 
     done
+
+    # Install required dependencies
+    install_dependencies
 
     # Create the various alg arrays to be used in setup functions
     create_alg_arrays
@@ -359,7 +388,7 @@ function variations_setup() {
         variation_dir_path="$hawk_src_dir/$variation"
         cd $variation_dir_path
         make clean >> /dev/null
-        make
+        make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$hawk_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
@@ -376,7 +405,7 @@ function variations_setup() {
         variation_dir_path="$ehtv3v4_src_dir/$variation"
         cd $variation_dir_path
         make clean >> /dev/null
-        make
+        make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$eht3v4_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
@@ -391,8 +420,44 @@ function variations_setup() {
         variation_dir_path="$hufu_src_dir/$variation"
         cd $variation_dir_path
         make clean >> /dev/null
-        make
+        make -j $(nproc)
         mv "$variation_dir_path/pqcsign" "$hufu_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Setting up variations of the 3wise signature algorithm
+    three_wise_src_dir=$src_dir/3WISE/Reference_Implementation
+    three_wise_dst_dir=$lib_dir/3WISE
+    three_wise_flint_path=$three_wise_src_dir/flint
+
+    cd $three_wise_src_dir
+
+    # Ensure there is no previous build of flint library
+    if [ -d "$three_wise_flint_path" ]; then
+        rm -rf "$three_wise_flint_path"
+        rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
+    fi
+
+    mkdir $three_wise_flint_path
+
+    # Setting up flint library dependency
+    wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
+    tar -xf v2.9.0.tar.gz && cd flint-2.9.0
+    ./configure --prefix=$three_wise_flint_path
+    make -j $(nproc) && make install
+    rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
+
+    echo -e "\nFlint library setup complete\n"
+
+    # Setting up the 3WISE variations
+    for variation in "${three_wise_variations[@]}"; do
+
+        variation_dir_path="$three_wise_src_dir/$variation"
+        cd $variation_dir_path
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir_path/pqcsign" "$three_wise_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
     done
