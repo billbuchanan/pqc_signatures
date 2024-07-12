@@ -9,7 +9,9 @@ This is the development branch for the pqc_signatures project which evaluates th
 - [ ] Fully Functioning State
 - [ ] Up to date documentation
 
-> *IMPORTANT Dev branch Notice: The PERK algorithm variations is currently partially functional apart from perk-256-short-3 and perk-256-short-5. This is due to a memory issue causing a segmentation fault within the default reference code submitted for those variations. This will be reviewed further but for the time being the rest of the PERK variations function correctly. 
+> *IMPORTANT Dev branch Notice: The PERK algorithm variations is currently partially functional apart from perk-256-short-3 and perk-256-short-5. This is due to a memory issue causing a segmentation fault within the default reference code submitted for those variations. This will be reviewed further but for the time being the rest of the PERK variations function correctly.
+
+> *IMPORTANT Dev branch Notice: The SDitH algorithm variations is currently partially functional apart from the threshold variants. This is due to issues with the code that performs the signature verification for these variations. This will be reviewed further but for the time being the rest of the SDiTH-Hypercube variations function correctly. 
 
 
 <!-- As part of the development process of this branch, the `reference_code` directory contains the reference code files created by the varying teams behind the schemes submitted to the competition. It contains the following zip files:
