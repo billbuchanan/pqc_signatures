@@ -91,6 +91,34 @@ function create_alg_arrays() {
 }
 
 #------------------------------------------------------------------------------
+function determine_hufu_inclusion() {
+
+    # Notify user of HUFU test length Get choice to include HUFU in testing from user
+    echo -e "WARNGING! - HUFU benchmarking takes a considerable amount of time to complete, even on a high performance machine\n"
+
+    while true; do
+        read -p "Would you like to include HUFU in the benchmarking? (y/n): " hufu_choice
+        hufu_choice=$(echo $hufu_choice | tr '[:upper:]' '[:lower:]')
+        
+        if [ $hufu_choice == "y" ]; then
+            hufu_included=1
+            break
+
+        elif [ $hufu_choice == "n" ]; then
+            hufu_included=0
+            break
+        
+        else
+            echo -e "Invalid input. Please enter 'y' or 'n'\n"
+        fi
+
+    done
+
+}
+
+
+
+#------------------------------------------------------------------------------
 function cycles_test {
 
     for variation in "${raccoon_variations[@]}"; do
@@ -153,10 +181,16 @@ function cycles_test {
         $lib_dir/EHTv3v4/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
-    for variation in "${hufu_variations[@]}"; do
-        echo -e "\nRunning hufu test for $variation"
-        $lib_dir/hufu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
-    done
+    if [ $hufu_included == 1 ]; then
+
+        for variation in "${hufu_variations[@]}"; do
+            echo -e "\nRunning hufu test for $variation"
+            $lib_dir/hufu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        done
+
+    else
+        echo "Skipping HUFU benchmarking"
+    fi
 
     for variation in "${three_wise_variations[@]}"; do
         echo -e "\nRunning 3WISE test for $variation"
@@ -173,14 +207,16 @@ function cycles_test {
 #------------------------------------------------------------------------------
 function main() {
 
+    # Set up environment
     if [ -d $results_dir ]; then
         rm -rf $results_dir/*
     fi
-
-    
-
-
     create_alg_arrays
+    
+    # Determine if HUFU is to be included in testing
+    determine_hufu_inclusion
+
+    # Perform benchmarking
     cycles_test
 }
 main

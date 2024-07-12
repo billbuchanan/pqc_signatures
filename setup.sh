@@ -489,11 +489,11 @@ function variations_setup() {
 #------------------------------------------------------------------------------
 function main() {
 
+    # Configure setup environment
     echo "Performing Environment Setup"
     environment_setup
 
-    #echo -e "\nSetting up raccoon testing files"
-    #raccoon_setup
+    # Setup the various algorithms and their variations
     variations_setup
 
     echo -e "\nSetup complete, testing scripts can be found in the test_scripts directory"
