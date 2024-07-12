@@ -173,7 +173,11 @@ SNOVA-IV                             8,016                   80                 
 
 TUOV-I                              278,432             239,391                 112        1 (128-bit) Multivariate
 TUOV-III                          1,048,279           1,225,440                 184        3 (128-bit) Multivariate
-TUOV-V                            2,869,440           2,443,711                 244        5 (128-bit)  
+TUOV-V                            2,869,440           2,443,711                 244        5 (128-bit) Multivariate
+
+VOX-128                              9,104               35,120                 102       1 (128-bit) Multivariate
+VOX-192                             30,351              111,297                 184       3 (192-bit) Multivariate
+VOX-256                             82,400              292,160                 300       5 (256-bit) Multivariate
 ```
 
 And for performance in cycles (from papers):
@@ -291,6 +295,10 @@ SNOVA-V           59,367,845   186,358,881      90,472,932
 TUOV-I            10,682,834       220,792         127,722 Intel Core i5-10210U CPU at 1.60GHz
 TUOV-III          57,322,074       608,604         442,770
 TUOV-V           139,948,218     1,133,958         786,450
+
+VOX-128            2,350,064       679,237         396,311 Intel(R) Core(TM) i7-1185G7 at 3.00GHz
+VOX-192            9,334,246     2,937,318       1,548,342
+VOX-256           26,097,363    13,226,130       3,734,592 
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
