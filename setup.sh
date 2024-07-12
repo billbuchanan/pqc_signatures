@@ -8,7 +8,26 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4" "hufu" "3WISE" "MIRA" "perk" "ryde")
+sig_algs=(
+    "raccoon"
+    "biscuit"
+    "cross"
+    "FAEST"
+    "FuLecca"
+    "pqsigRM"
+    "SPHINCS-ALPHA"
+    "sqi"
+    "uov"
+    "MEDS-2023"
+    "hawk"
+    "EHTv3v4"
+    "hufu"
+    "3WISE"
+    "MIRA"
+    "perk"
+    "ryde"
+    "SDitH"
+)
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -98,6 +117,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         ryde_variations+=("$line")
     done < "$alg_list_dir/ryde_variations.txt"
+
+    sdith_hypercube_variations=()
+    while IFS= read -r line; do
+        sdith_hypercube_variations+=("$line")
+    done < "$alg_list_dir/sdith_hypercube_variations.txt"
 
 }
 
@@ -190,343 +214,368 @@ function set_build_cross_flags() {
 #------------------------------------------------------------------------------
 function variations_setup() {
 
-    # Setting up the variations of the raccoon signature algorithm
-    raccoon_src_dir=$src_dir/Raccoon/Reference_Implementation
-    raccoon_dst_dir=$lib_dir/raccoon
+    # # Setting up the variations of the raccoon signature algorithm
+    # raccoon_src_dir=$src_dir/Raccoon/Reference_Implementation
+    # raccoon_dst_dir=$lib_dir/raccoon
 
-    cd $raccoon_src_dir
+    # cd $raccoon_src_dir
 
-    # Loop through the variation dirs
-    for variation in "${raccoon_variations[@]}"; do
-        variation_dir="$raccoon_src_dir/$variation"
-        cd $variation_dir
-        make clean >> /dev/null
-        make -j $(nproc)
-        cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation
-        make clean >> /dev/null
-    done
+    # # Loop through the variation dirs
+    # for variation in "${raccoon_variations[@]}"; do
+    #     variation_dir="$raccoon_src_dir/$variation"
+    #     cd $variation_dir
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation
+    #     make clean >> /dev/null
+    # done
 
-    # Setting up the variations of the biscuit signature algorithm
-    biscuit_src_dir=$src_dir/biscuit/Reference_Implementation
-    biscuit_dst_dir=$lib_dir/biscuit
+    # # Setting up the variations of the biscuit signature algorithm
+    # biscuit_src_dir=$src_dir/biscuit/Reference_Implementation
+    # biscuit_dst_dir=$lib_dir/biscuit
 
-    cd $biscuit_src_dir
+    # cd $biscuit_src_dir
 
-    # Loop through the variation dirs
+    # # Loop through the variation dirs
 
-    for variation_dir in "${biscuit_variations[@]}"; do
-        variation_dir_path="$biscuit_src_dir/$variation_dir"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$biscuit_dst_dir/pqcsign_$variation_dir"
-        make clean >> /dev/null
-    done
+    # for variation_dir in "${biscuit_variations[@]}"; do
+    #     variation_dir_path="$biscuit_src_dir/$variation_dir"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$biscuit_dst_dir/pqcsign_$variation_dir"
+    #     make clean >> /dev/null
+    # done
 
-    # Setting up variations of the cross signing algorithm
-    cross_src_dir=$src_dir/cross/Reference_Implementation
-    cross_dst_dir=$lib_dir/cross
+    # # Setting up variations of the cross signing algorithm
+    # cross_src_dir=$src_dir/cross/Reference_Implementation
+    # cross_dst_dir=$lib_dir/cross
 
-    cd $cross_src_dir
+    # cd $cross_src_dir
 
-    for variation in "${cross_variations[@]}"; do
+    # for variation in "${cross_variations[@]}"; do
 
-        set_build_cross_flags
+    #     set_build_cross_flags
 
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag \
-            -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH" -j $(nproc)
+    #     # Compile and move pqcsign binary to lib directory
+    #     make clean >> /dev/null
+    #     make all CFLAGS="-Iinclude -std=c11 -g -Wall -D$algorithm_flag \
+    #         -D$security_level_flag -D$optimisation_flag -DAES_CTR_CSPRNG -DSHA3_HASH" -j $(nproc)
             
-        mv "$cross_src_dir/pqcsign" "$cross_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
+    #     mv "$cross_src_dir/pqcsign" "$cross_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
 
     
-    done
+    # done
 
-    # Setting up variations of the FAEST signature algorithm
-    FAEST_src_dir=$src_dir/FAEST/Reference_Implementation
-    FAEST_dst_dir=$lib_dir/FAEST
+    # # Setting up variations of the FAEST signature algorithm
+    # FAEST_src_dir=$src_dir/FAEST/Reference_Implementation
+    # FAEST_dst_dir=$lib_dir/FAEST
 
-    cd $FAEST_src_dir
+    # cd $FAEST_src_dir
 
-    for variation in "${FAEST_variations[@]}"; do
+    # for variation in "${FAEST_variations[@]}"; do
     
-        # Set directory path based on current variation
-        variation_dir_path="$FAEST_src_dir/$variation"
+    #     # Set directory path based on current variation
+    #     variation_dir_path="$FAEST_src_dir/$variation"
         
+    #     cd $variation_dir_path
+    
+    #     # Compile and move pqcsign binary to lib directory
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$FAEST_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    
+    # done
+
+    # # Setting up variations of the FuLecca signature algorithm
+    # FuLecca_src_dir=$src_dir/FuLecca/Reference_Implementation
+    # FuLecca_dst_dir=$lib_dir/FuLecca
+
+    # cd $FuLecca_src_dir
+
+    # for variation in "${FuLecca_variations[@]}"; do
+    
+    #     echo "current variation - $variation"
+    #     # Set directory path based on current variation
+    #     variation_dir_path="$FuLecca_src_dir/$variation"
+        
+    #     cd $variation_dir_path
+        
+    #     # Compile and move pqcsign binary to lib directory
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$FuLecca_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+    
+    # done
+
+    # # Setting up variations of the pqsigRM signature algorithm
+    # pqsigRM_src_dir=$src_dir/pqsigRM/Reference_Implementation
+    # pqsigRM_dst_dir=$lib_dir/pqsigRM
+
+    # cd $pqsigRM_src_dir
+
+    # for variation in "${pqsigRM_variations[@]}"; do
+    
+    #     echo "current variation - $variation"
+    #     # Set directory path based on current variation
+    #     variation_dir_path="$pqsigRM_src_dir/$variation"
+        
+    #     cd $variation_dir_path
+        
+    #     # Compile and move pqcsign binary to lib directory
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$pqsigRM_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+    
+    # done
+
+    # # Setting up variations of the SPHINCS-ALPHA signature algorithm
+    # SPHINCS_ALPHA_src_dir=$src_dir/SPHINCS-ALPHA/Reference_Implementation
+    # SPHINCS_ALPHA_dst_dir=$lib_dir/SPHINCS-ALPHA
+
+    # cd $SPHINCS_ALPHA_src_dir
+
+    # for variation in "${SPHINCS_ALPHA_variations[@]}"; do
+
+    #     echo "current variation - $variation"
+    #     # Set directory path based on current variation
+    #     variation_dir_path="$SPHINCS_ALPHA_src_dir/$variation"
+        
+    #     cd $variation_dir_path
+        
+    #     # Compile and move pqcsign binary to lib directory
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$SPHINCS_ALPHA_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    
+    # done
+
+    # # Setting up variations of the sqi signature algorithm
+    # sqi_src_dir=$src_dir/sqi/Reference_Implementation
+    # sqi_dst_dir=$lib_dir/sqi
+    # sqi_build_dir=$src_dir/sqi/Reference_Implementation/build
+    # sqi_apps_dir=$sqi_build_dir/apps
+
+    # cd $sqi_src_dir
+
+    # if [ ! -d build ]; then
+    #     mkdir build
+    # else
+    #     rm -rf build && mkdir build
+    # fi
+
+    # cd $sqi_build_dir
+    # cmake -DSQISIGN_BUILD_TYPE=ref -DCMAKE_BUILD_TYPE=Release ../ 
+    # make -j $(nproc)
+    # mv $sqi_apps_dir/pqcsign_* "$sqi_dst_dir/"
+    # make clean >> /dev/null && cd $sqi_src_dir && rm -rf build
+
+
+    # # Setting up variations of the uov signature algorithm
+    # uov_src_dir=$src_dir/uov/Reference_Implementation
+    # uov_dst_dir=$lib_dir/uov
+
+    # cd $uov_src_dir
+
+    # for variation in "${uov_variations[@]}"; do
+
+
+    #     variation_type=$(echo "$variation" | cut -d'_' -f2-)
+        
+    #     # Compile and move pqcsign binary to lib directory
+    #     make clean >> /dev/null
+    #     make "PROJ=$variation_type" -j $(nproc)
+    #     mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+    
+    # done
+
+    # # Setting up variations of the MED-2023 signature algorithm
+    # med_src_dir=$src_dir/MEDS-2023/Reference_Implementation
+    # med_dst_dir=$lib_dir/MEDS-2023
+
+    # cd $med_src_dir
+
+    # for variation in "${med_variations[@]}"; do
+
+    #     variation_dir_path="$med_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     # current_dir=$(pwd)
+    #     # echo -e "\ncurrent dir - $current_dir\n"
+    #     make clean >> /dev/null
+    #     make
+    #     mv "$variation_dir_path/pqcsign" "$med_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the hawk signature algorithm
+    # hawk_src_dir=$src_dir/hawk/Reference_Implementation
+    # hawk_dst_dir=$lib_dir/hawk
+
+    # cd $hawk_src_dir
+
+    # for variation in "${hawk_variations[@]}"; do
+
+    #     variation_dir_path="$hawk_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$hawk_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the eht3v4 signature algorithm
+    # ehtv3v4_src_dir=$src_dir/EHTv3v4/Reference_Implementation
+    # eht3v4_dst_dir=$lib_dir/EHTv3v4
+
+    # cd $ehtv3v4_src_dir
+
+    # for variation in "${eht3v4_variations[@]}"; do
+
+    #     variation_dir_path="$ehtv3v4_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$eht3v4_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the hufu signature algorithm
+    # hufu_src_dir=$src_dir/HuFu/Reference_Implementation
+    # hufu_dst_dir=$lib_dir/hufu
+
+    # for variation in "${hufu_variations[@]}"; do
+
+    #     variation_dir_path="$hufu_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$hufu_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the 3wise signature algorithm
+    # three_wise_src_dir=$src_dir/3WISE/Reference_Implementation
+    # three_wise_dst_dir=$lib_dir/3WISE
+    # three_wise_flint_path=$three_wise_src_dir/flint
+
+    # cd $three_wise_src_dir
+
+    # # Ensure there is no previous build of flint library
+    # if [ -d "$three_wise_flint_path" ]; then
+    #     rm -rf "$three_wise_flint_path"
+    #     rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
+    # fi
+
+    # mkdir $three_wise_flint_path
+
+    # # Setting up flint library dependency
+    # wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
+    # tar -xf v2.9.0.tar.gz && cd flint-2.9.0
+    # ./configure --prefix=$three_wise_flint_path
+    # make -j $(nproc) && make install
+    # rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
+
+    # echo -e "\nFlint library setup complete\n"
+
+    # # Setting up the 3WISE variations
+    # for variation in "${three_wise_variations[@]}"; do
+
+    #     variation_dir_path="$three_wise_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$three_wise_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the MIRA signature algorithm
+    # mira_src_dir=$src_dir/MIRA/Reference_Implementation
+    # mira_dst_dir=$lib_dir/MIRA
+
+    # cd $mira_src_dir
+
+    # for variation in "${mira_variations[@]}"; do
+
+    #     variation_dir_path="$mira_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make all -j $(nproc)
+    #     mv "$variation_dir_path/bin/pqcsign" "$mira_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the PERK signature algorithm
+    # perk_src_dir=$src_dir/perk/Reference_Implementation
+    # perk_dst_dir=$lib_dir/perk
+
+    # cd $perk_src_dir
+
+    # for variation in "${perk_variations[@]}"; do
+
+    #     variation_dir_path="$perk_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make all -j $(nproc)
+    #     mv "$variation_dir_path/pqcsign" "$perk_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # # Setting up variations of the ryde signature algorithm
+    # ryde_src_dir=$src_dir/ryde/Reference_Implementation
+    # ryde_dst_dir=$lib_dir/ryde
+
+    # cd $ryde_src_dir
+
+    # for variation in "${ryde_variations[@]}"; do
+
+    #     echo "current variation - $variation"
+
+    #     variation_dir_path="$ryde_src_dir/$variation"
+    #     cd $variation_dir_path
+    #     make clean >> /dev/null
+    #     make all -j $(nproc)
+    #     mv "$variation_dir_path/bin/pqcsign" "$ryde_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    # done
+
+    # Setting up variations of the sdith signature algorithm
+    sdith_src_dir=$src_dir/SDitH/Reference_Implementation
+    sdith_hybercube_src_dir="$sdith_src_dir/Hypercube_Variant"
+    sdith_threshold_src_dir="$sdith_src_dir/Threshold_Variant"
+    sdith_dst_dir=$lib_dir/SDitH
+
+    # Setting up the Hypercube variants
+    cd $sdith_hybercube_src_dir
+    # echo $sdith_hybercube_src_dir
+    # pwd
+
+    echo $sdith_hypercube_variations
+
+    for variation in "${sdith_hypercube_variations[@]}"; do
+
+        variation_dir_path="$sdith_hybercube_src_dir/$variation"
         cd $variation_dir_path
-    
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$FAEST_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    
-    done
-
-    # Setting up variations of the FuLecca signature algorithm
-    FuLecca_src_dir=$src_dir/FuLecca/Reference_Implementation
-    FuLecca_dst_dir=$lib_dir/FuLecca
-
-    cd $FuLecca_src_dir
-
-    for variation in "${FuLecca_variations[@]}"; do
-    
-        echo "current variation - $variation"
-        # Set directory path based on current variation
-        variation_dir_path="$FuLecca_src_dir/$variation"
-        
-        cd $variation_dir_path
-        
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$FuLecca_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-    
-    done
-
-    # Setting up variations of the pqsigRM signature algorithm
-    pqsigRM_src_dir=$src_dir/pqsigRM/Reference_Implementation
-    pqsigRM_dst_dir=$lib_dir/pqsigRM
-
-    cd $pqsigRM_src_dir
-
-    for variation in "${pqsigRM_variations[@]}"; do
-    
-        echo "current variation - $variation"
-        # Set directory path based on current variation
-        variation_dir_path="$pqsigRM_src_dir/$variation"
-        
-        cd $variation_dir_path
-        
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$pqsigRM_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-    
-    done
-
-    # Setting up variations of the SPHINCS-ALPHA signature algorithm
-    SPHINCS_ALPHA_src_dir=$src_dir/SPHINCS-ALPHA/Reference_Implementation
-    SPHINCS_ALPHA_dst_dir=$lib_dir/SPHINCS-ALPHA
-
-    cd $SPHINCS_ALPHA_src_dir
-
-    for variation in "${SPHINCS_ALPHA_variations[@]}"; do
-
-        echo "current variation - $variation"
-        # Set directory path based on current variation
-        variation_dir_path="$SPHINCS_ALPHA_src_dir/$variation"
-        
-        cd $variation_dir_path
-        
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$SPHINCS_ALPHA_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    
-    done
-
-    # Setting up variations of the sqi signature algorithm
-    sqi_src_dir=$src_dir/sqi/Reference_Implementation
-    sqi_dst_dir=$lib_dir/sqi
-    sqi_build_dir=$src_dir/sqi/Reference_Implementation/build
-    sqi_apps_dir=$sqi_build_dir/apps
-
-    cd $sqi_src_dir
-
-    if [ ! -d build ]; then
-        mkdir build
-    else
-        rm -rf build && mkdir build
-    fi
-
-    cd $sqi_build_dir
-    cmake -DSQISIGN_BUILD_TYPE=ref -DCMAKE_BUILD_TYPE=Release ../ 
-    make -j $(nproc)
-    mv $sqi_apps_dir/pqcsign_* "$sqi_dst_dir/"
-    make clean >> /dev/null && cd $sqi_src_dir && rm -rf build
-
-
-    # Setting up variations of the uov signature algorithm
-    uov_src_dir=$src_dir/uov/Reference_Implementation
-    uov_dst_dir=$lib_dir/uov
-
-    cd $uov_src_dir
-
-    for variation in "${uov_variations[@]}"; do
-
-
-        variation_type=$(echo "$variation" | cut -d'_' -f2-)
-        
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make "PROJ=$variation_type" -j $(nproc)
-        mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-    
-    done
-
-    # Setting up variations of the MED-2023 signature algorithm
-    med_src_dir=$src_dir/MEDS-2023/Reference_Implementation
-    med_dst_dir=$lib_dir/MEDS-2023
-
-    cd $med_src_dir
-
-    for variation in "${med_variations[@]}"; do
-
-        variation_dir_path="$med_src_dir/$variation"
-        cd $variation_dir_path
-        # current_dir=$(pwd)
-        # echo -e "\ncurrent dir - $current_dir\n"
         make clean >> /dev/null
         make
-        mv "$variation_dir_path/pqcsign" "$med_dst_dir/pqcsign_$variation"
+        mv "$variation_dir_path/pqcsign" "$sdith_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
-    done
-
-    # Setting up variations of the hawk signature algorithm
-    hawk_src_dir=$src_dir/hawk/Reference_Implementation
-    hawk_dst_dir=$lib_dir/hawk
-
-    cd $hawk_src_dir
-
-    for variation in "${hawk_variations[@]}"; do
-
-        variation_dir_path="$hawk_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$hawk_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Setting up variations of the eht3v4 signature algorithm
-    ehtv3v4_src_dir=$src_dir/EHTv3v4/Reference_Implementation
-    eht3v4_dst_dir=$lib_dir/EHTv3v4
-
-    cd $ehtv3v4_src_dir
-
-    for variation in "${eht3v4_variations[@]}"; do
-
-        variation_dir_path="$ehtv3v4_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$eht3v4_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Setting up variations of the hufu signature algorithm
-    hufu_src_dir=$src_dir/HuFu/Reference_Implementation
-    hufu_dst_dir=$lib_dir/hufu
-
-    for variation in "${hufu_variations[@]}"; do
-
-        variation_dir_path="$hufu_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$hufu_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Setting up variations of the 3wise signature algorithm
-    three_wise_src_dir=$src_dir/3WISE/Reference_Implementation
-    three_wise_dst_dir=$lib_dir/3WISE
-    three_wise_flint_path=$three_wise_src_dir/flint
-
-    cd $three_wise_src_dir
-
-    # Ensure there is no previous build of flint library
-    if [ -d "$three_wise_flint_path" ]; then
-        rm -rf "$three_wise_flint_path"
-        rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
-    fi
-
-    mkdir $three_wise_flint_path
-
-    # Setting up flint library dependency
-    wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
-    tar -xf v2.9.0.tar.gz && cd flint-2.9.0
-    ./configure --prefix=$three_wise_flint_path
-    make -j $(nproc) && make install
-    rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
-
-    echo -e "\nFlint library setup complete\n"
-
-    # Setting up the 3WISE variations
-    for variation in "${three_wise_variations[@]}"; do
-
-        variation_dir_path="$three_wise_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$three_wise_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Setting up variations of the MIRA signature algorithm
-    mira_src_dir=$src_dir/MIRA/Reference_Implementation
-    mira_dst_dir=$lib_dir/MIRA
-
-    cd $mira_src_dir
-
-    for variation in "${mira_variations[@]}"; do
-
-        variation_dir_path="$mira_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make all -j $(nproc)
-        mv "$variation_dir_path/bin/pqcsign" "$mira_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Setting up variations of the PERK signature algorithm
-    perk_src_dir=$src_dir/perk/Reference_Implementation
-    perk_dst_dir=$lib_dir/perk
-
-    cd $perk_src_dir
-
-    for variation in "${perk_variations[@]}"; do
-
-        variation_dir_path="$perk_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make all -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$perk_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Setting up variations of the ryde signature algorithm
-    ryde_src_dir=$src_dir/ryde/Reference_Implementation
-    ryde_dst_dir=$lib_dir/ryde
-
-    cd $ryde_src_dir
-
-    for variation in "${ryde_variations[@]}"; do
-
-        echo "current variation - $variation"
-
-        variation_dir_path="$ryde_src_dir/$variation"
-        cd $variation_dir_path
-        make clean >> /dev/null
-        make all -j $(nproc)
-        mv "$variation_dir_path/bin/pqcsign" "$ryde_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
 
     done
 

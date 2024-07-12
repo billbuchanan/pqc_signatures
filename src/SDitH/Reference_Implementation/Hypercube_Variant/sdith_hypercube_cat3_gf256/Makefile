@@ -40,8 +40,9 @@ CRYPTO_SRC = hash-sha3.c rng.c treeprg.c
 SDITH_SRC = sdith.c precomputed.c sign.c
 KAT_MAIN_SRC = generator/PQCgenKAT_sign.c generator/rng.c
 BENCH_MAIN_SRC = benchmark/bench.c benchmark/timing.c
+PQCSIGN_SRC = pqcsign.c
 
-all: sign bench
+all: sign bench pqcsign
 
 libhash:
 	$(HASH_MAKE_OPTIONS) make -C $(HASH_PATH)
@@ -52,6 +53,10 @@ sign: ${SRC} ${FIELD_SRC} ${CRYPTO_SRC} ${SDITH_SRC} ${KAT_MAIN_SRC} libhash
 bench: ${SRC} ${FIELD_SRC} ${CRYPTO_SRC} ${SDITH_SRC} ${BENCH_MAIN_SRC} libhash
 	-${CC} ${CFLAGS} ${AVXFLAGS} -DBENCHMARK_CYCLES -o $@ ${SRC} ${FIELD_SRC} ${CRYPTO_SRC} ${SDITH_SRC} ${BENCH_MAIN_SRC} -I. ${HASH_INCLUDE} -L${HASH_PATH} -lcrypto -lhash -lm
 
+pqcsign: ${SRC} ${FIELD_SRC} ${CRYPTO_SRC} ${SDITH_SRC} ${PQCSIGN_SRC} libhash
+	-${CC} ${CFLAGS} ${AVXFLAGS} -DSDITH -o $@ ${SRC} ${FIELD_SRC} ${CRYPTO_SRC} ${SDITH_SRC} ${PQCSIGN_SRC} -I. ${HASH_INCLUDE} -L${HASH_PATH} -lcrypto -lhash -lm
+
+
 clean:
-	-rm -f *.o *.a sign bench
+	-rm -rf *.o *.a sign bench pqcsign pqcsign.o
 	$(HASH_MAKE_OPTIONS) make -C $(HASH_PATH) clean

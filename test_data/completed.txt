@@ -16,12 +16,13 @@ HuFu
 MIRA
 perk
 ryde
+SDitH - hypercube variants
 hawk !!!! - fix hawk makefile clean statements
 
 
 -----------------------------------------------------------------------------------------------------
 in progress:
-SDitH
+
 
 ------------------------------------------------------------------------------------------------------
 in progress (leave till last):
@@ -30,6 +31,7 @@ EagleSign
 less
 WAVER1_1
 haetae
+SDitH - threshold variants
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
