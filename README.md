@@ -37,7 +37,10 @@ At present the code contains:
 *  HAWK. [HAWK](https://asecuritysite.com/pqc/hawk_sign). HAWK is a lattice-based signature method that creates signatures using the lattice isomorphism problem (LIP) [1,2]. It is faster than Dilithium for signing and verification. It also has a low memory footprint and is supported on a range of hardware. There is currently no masking function, which could be suspectable to side-channel analysis. There are some worries about the security proofs involved with HAWK.
 * HuFu. [HuFu](https://asecuritysite.com/pqc/hufu_sign). There are two main approaches to lattice-based signatures: Fiat-Shamir and Hash-and-sign. Overall, Dilithium uses a Fiat-Shamir approach, while Falcon takes a Hash-and-sign approach using the GPV lattice trapdoor framework [1]. A new proposed standard is HuFu (Hash-and-Sign Signatures From Powerful Gadgets) and which uses the hardness of standard worst-case problems on generic lattices. As with Falcon, it uses a hash-and-sign signature method with the GPV lattice trapdoor framework. Falcon uses an NTRU lattice approach [here], while HuFu uses a gadget approach to represent the lattice. With the gadget approach, the trapdoor is created using a linear relation between the public lattice and a gadget lattice (and which does not represent the full basis of the lattice). Unfortunately, the gadget approach leads to much larger public and secret keys, but can be the basis of other cryptographic primitives (such as for identity-based encryption and aggregate signatures).
 *  MiRitH. [MiRitH](https://asecuritysite.com/pqc/mirith_sign). MiRitH (MinRank in the Head) is a quantum robust digital signature method for MPC-in-the-Head Signatures. It is based on the hardness of the MinRank problem. This is a problem that must find a non-trivial low-rank linear combination of defined matrices over a finite field. Mirith uses a MPC-in-the-Head (MPCitH) based Zero-Knowledge Proof of Knowledge (ZKPoK) that relates to a solution of the MinRank problem, and then is converted to a non-interactive signature scheme using the Fiat–Shamir transform. For Level I-a, it has a relatively small public and private key of 129 and 145 bytes, and a resonable size of signature of 7,877 bytes.
-* PERK. [PERK](https://asecuritysite.com/pqc/perk_sign). PERK is a quantum robust digital signature method that uses a zero-knowledge proof based on a variant of the Permuted Kernel Problem (PKP) and with hash functions as random oracles. This is an MPC-in-the-head approach, and which is then converted into a Fiat-Shamir transform. PERK has a relatively small public and private key, and moderate signature sizes. It also uses symmetric key methods, and thus has good performance levels. 
+* PERK. [PERK](https://asecuritysite.com/pqc/perk_sign). PERK is a quantum robust digital signature method that uses a zero-knowledge proof based on a variant of the Permuted Kernel Problem (PKP) and with hash functions as random oracles. This is an MPC-in-the-head approach, and which is then converted into a Fiat-Shamir transform. PERK has a relatively small public and private key, and moderate signature sizes. It also uses symmetric key methods, and thus has good performance levels.
+*  Ryde. [Ryde](https://asecuritysite.com/pqc/ryde_sign). The Ryde signature method [1] uses the Rank Syndrome Decoding problem as a hard problem. With this, we can create a proof of knowledge of a witness to a Rank-SD instance [2], and then transform this with a Fiat-Shamir transform. It produces relatively short keys, but a larger signature companed with Dilithium.
+* PROV (PRovable unbalanced Oil and Vinegar). [PROV](https://asecuritysite.com/pqc/prov_sign)). PROV (PRovable unbalanced Oil and Vinegar) [1] uses a multivariate cryptography-based approach to create a Post Quantum Robust (PQC) digital signature. While there have been recent attacks on multivariate methods, PROV provides security proof. The proof is similar to the MAYO signature scheme where there is a larger oil space than the output of the scheme (defined often as UOV (Unbalanced Oil and Vinegar). The UOV approach was first defined by Kipnis, Patarin and Goubin [2] and integrates a hash-and-sign signature scheme into the GPV framework [3]. It was adapted in [4] for multivariate cryptography methods.
+* TUOV (Triangular Unbalanced Oil and Vinegar) . [TUOV](https://asecuritysite.com/pqc/touv_sign). Within Round 1 of the NIST PQC digital assessment, Rainbow was cracked [here] and took around 50 hours on an eight core laptop. Overall, Rainbow has a multivariate cryptograpphy approach, but did not have strong security proofs and a weak parameter set. TUOV (Triangular Unbalanced Oil and Vinegar) is a PQC signature method that is based on UOV.The UOV approach was first defined by Kipnis, Patarin and Goubin [2] and integrates a hash-and-sign signature scheme into the GPV framework [3]. It was adapted in [4] for multivariate cryptography methods. Generally multivariate cryptography generates relatively short signatures, but have relative long public and private keys. 
 
 
 
@@ -158,7 +161,19 @@ dme-3rnds-8vars-64bits-sign            2880                 721                 
 
 PROV-1                                68,326             203,752                160       1 (128-bit) Multivariate
 PROV-2                               215,694             666,216                232       3 (192-bit) Multivariate
-PROV-3                               524,192           1,597,568                304       5 (256-bit) Multivariate  
+PROV-3                               524,192           1,597,568                304       5 (256-bit) Multivariate
+
+QR-UOV-I                             20,657                 256                 331       1 (128-bit) Multivariate
+QR-UOV-III                           55,173                 385                 489       3 (192-bit) Multivariate
+QR-UOV-V                            135,439                 512                 662       5 (256-bit) Multivariate
+
+SNOVA-I                              1,016                   48                 240        1 (128-bit) Multivariate
+SNOVA-III                            4,104                   64                 376        3 (192-bit) Multivariate
+SNOVA-IV                             8,016                   80                 576        5 (256-bit) Multivariate
+
+TUOV-I                              278,432             239,391                 112        1 (128-bit) Multivariate
+TUOV-III                          1,048,279           1,225,440                 184        3 (128-bit) Multivariate
+TUOV-V                            2,869,440           2,443,711                 244        5 (128-bit)  
 ```
 
 And for performance in cycles (from papers):
@@ -263,7 +278,19 @@ SDitH-L5-hyp      22,750,000    22,680,000      54,400,000
 
 PROV-1         1,171,537,400    38,962,000      52,797,800  Intel Core i5-7260U CPU at 2.20GHz
 PROV-3         5,558,390,200   129,890,200     173,978,200
-PROV-5        16,845,708,000   300,641,000     401,456,000  
+PROV-5        16,845,708,000   300,641,000     401,456,000
+
+QR-UOV-I          96,380,000    64,885,000      13,607,000 AMD EPYC 7763 at 2.45GHz
+QR-UOV-III       370,704,000   245,199,000      45,522,000
+QR-UOV-V       1,172,189,000   755,475,000     104,209,000
+
+SNOVA-I            2,447,831    17,538,089       8,086,815 tel Core i7-6700 CPU at 3.40GHz
+SNOVA-III         15,315,591    68,739,319      31,084,401
+SNOVA-V           59,367,845   186,358,881      90,472,932
+
+TUOV-I            10,682,834       220,792         127,722 Intel Core i5-10210U CPU at 1.60GHz
+TUOV-III          57,322,074       608,604         442,770
+TUOV-V           139,948,218     1,133,958         786,450
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
