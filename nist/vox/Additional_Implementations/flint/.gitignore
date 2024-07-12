@@ -1,0 +1,6 @@
+.build
+test/PQCgenKAT_sign
+test/vox_demo
+tables/gen_embed_table
+PQCsignKAT_*.req
+PQCsignKAT_*.rsp

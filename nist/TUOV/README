@@ -1,0 +1,1087 @@
+
+
+Contents and file description:
+
+Optimized_Implementation                     
+README
+Reference_Implementation 
+KAT   
+
+./KAT
+download_address.txt                                      download address for the KAT data
+
+./Optimized_Implementation:                               AVX2 optimization
+generate_KAT.sh                                           script for generating KAT
+III
+III_pkc
+III_pkc_skc
+Ip
+Ip_pkc
+Ip_pkc_skc
+Is
+Is_pkc
+Is_pkc_skc
+Makefile
+nistkat                                                   Directory for KAT tools from NIST
+README.md
+tests                                                     Directory for Unit-test and Benchmark-test
+V
+V_pkc
+V_pkc_skc
+
+./Optimized_Implementation/III:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/III_pkc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/III_pkc_skc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/Ip:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/Ip_pkc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/Ip_pkc_skc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/Is:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/Is_pkc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/Is_pkc_skc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/V:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/V_pkc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/V_pkc_skc:     
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_avx2.h                                               Linear algebra functions, AVX2 implementations
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix_avx2.c                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix_avx2.h                                        Linear algebra functions for matrix operations, AVX2 implementations
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_sse.c                                         Linear algebra functions for matrix operations, SSE implementations
+blas_matrix_sse.h                                         Linear algebra functions for matrix operations, SSE implementations
+blas_sse.h                                                Linear algebra functions, SSE implemnetations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16_avx2.h                                               finte field arithmetic functions, AVX2 version
+gf16.h                                                    finte field arithmetic functions
+gf16_sse.h                                                finte field arithmetic functions, SSE version
+gf16_tabs.c                                               tables for finte field arithmetic functions
+gf16_tabs.h                                               tables for finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+gf256_tabs.c                                              tables finte field arithmetic functions
+gf256_tabs.h                                              tables finte field arithmetic functions
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+x86aesni.c                                                AES implementation for x86 AES-NI instruction set
+x86aesni.h                                                AES implementation for x86 AES-NI instruction set
+
+./Optimized_Implementation/nistkat:     
+PQCgenKAT_sign.c                                          the program for generating KATs from NIST
+rng.c                                                     KAT tools from NIST
+rng.h                                                     KAT tools from NIST
+
+./Optimized_Implementation/tests: 
+api_test.c                                                Unit-tester for api functions
+cpucycles.c                                               Performance Measurement Counters (PMC) to measure performance
+cpucycles.h                                               Performance Measurement Counters (PMC) to measure performance
+speed_print.c                                             Implementations for printing performance
+speed_print.h                                             Implementations for printing performance
+test_speed.c                                              Benchmark tester for api functions
+
+./Reference_Implementation:
+generate_KAT.sh                                           script for generating KAT
+III
+III_pkc
+III_pkc_skc
+Ip
+Ip_pkc
+Ip_pkc_skc
+Is
+Is_pkc
+Is_pkc_skc
+Makefile
+nistkat                                                   Directory for KAT tools from NIST
+README.md
+tests                                                     Directory for Unit-test and Benchmark-test
+V
+V_pkc
+V_pkc_skc
+
+./Reference_Implementation/III:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/III_pkc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/III_pkc_skc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/Ip:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/Ip_pkc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/Ip_pkc_skc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/Is:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/Is_pkc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/Is_pkc_skc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/V:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/V_pkc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/V_pkc_skc:
+aes128_4r_ffs.c                                           aes128 ref implementation of ffs method
+aes128_4r_ffs.h                                           aes128 ref implementation of ffs method
+api.h                                                     Defining API functions
+blas_comm.h                                               Common functions for linear algebra
+blas.h                                                    Basic linear algebra functions
+blas_matrix.c                                             Linear algebra functions for matrix operations
+blas_matrix.h                                             Linear algebra functions for matrix operations
+blas_matrix_ref.c                                         Linear algebra functions for matrix operations, ref implementations
+blas_matrix_ref.h                                         Linear algebra functions for matrix operations, ref implementations
+blas_u32.h                                                Linear algebra functions, u32 implementations
+blas_u64.h                                                Linear algebra functions, u32 implementations
+config.h                                                  Macros for configuring runtime options
+gf16.h                                                    finte field arithmetic functions
+gf16_u64.h                                                finte field arithmetic functions, u64 version
+parallel_matrix_op.c                                      the standard implementations for functions in parallel_matrix_op.h
+parallel_matrix_op.h                                      Librarys for operations of batched matrixes
+params.h                                                  Macros for defining parameters
+sign.c                                                    the implementations for functions in api.h
+tuov_blas.h                                               Wrappers for blas functions
+tuov.c                                                    Main functions for signing and verifying
+tuov.h                                                    Main functions for signing and verifying
+tuov_keypair.c                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair.h                                            Formats of key pairs and functions for generating key pairs
+tuov_keypair_computation.c                                Functions for computations of keypairs
+tuov_keypair_computation.h                                Functions for computations of keypairs
+tuov_publicmap.c                                          Implementations for evaluating public keys
+utils_hash.c                                              Wrappers for HASH functions
+utils_hash.h                                              Wrappers for HASH functions
+utils_malloc.h                                            Utilities for memory allocation functions
+utils_prng.c                                              Wrappers for PRNG functions
+utils_prng.h                                              Wrappers for PRNG functions
+utils_randombytes.c                                       Wrappers for randombytes()
+utils_randombytes.h                                       Wrappers for randombytes()
+
+./Reference_Implementation/nistkat:     
+PQCgenKAT_sign.c                                          the program for generating KATs from NIST
+rng.c                                                     KAT tools from NIST
+rng.h                                                     KAT tools from NIST
+
+./Reference_Implementation/tests: 
+api_test.c                                                Unit-tester for api functions
+cpucycles.c                                               Performance Measurement Counters (PMC) to measure performance
+cpucycles.h                                               Performance Measurement Counters (PMC) to measure performance
+speed_print.c                                             Implementations for printing performance
+speed_print.h                                             Implementations for printing performance
+test_speed.c                                              Benchmark tester for api functions
+
+./Supporting_Documentation
+coversheet.pdf                                            Cover Sheet for TUOV
+TUOV.pdf                                                  Main specification document for TUOV

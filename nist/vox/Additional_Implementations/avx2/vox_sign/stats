@@ -1,0 +1,559 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 27.99      0.96     0.96     1574     0.61     1.77  Solve_MQ
+ 19.53      1.63     0.67     1559     0.43     0.93  W_FGLM_new
+ 16.62      2.20     0.57   796649     0.00     0.00  apply2v
+ 11.08      2.58     0.38   138512     0.00     0.00  Fq_GetLinEqn
+  6.12      2.79     0.21   398978     0.00     0.00  mulop
+  5.54      2.98     0.19   325272     0.00     0.00  do_pivot_sparse
+  5.25      3.16     0.18    12557     0.01     0.01  rref_block_strict
+  4.96      3.33     0.17    12592     0.01     0.02  Fq_GetMQEqn
+  1.75      3.39     0.06     1574     0.04     0.04  rref_with_pivots
+  0.29      3.40     0.01    26316     0.00     0.00  Fqc_reduce
+  0.29      3.41     0.01     7819     0.00     0.00  KeccakF1600_StatePermute
+  0.29      3.42     0.01     1001     0.01     3.41  VOX_sign_core
+  0.29      3.43     0.01        1    10.00    11.20  VOX_ComposeST
+  0.00      3.43     0.00   246558     0.00     0.00  RejSample_Fq
+  0.00      3.43     0.00    35728     0.00     0.00  Fqc_to_block
+  0.00      3.43     0.00     5460     0.00     0.00  rejsample_update
+  0.00      3.43     0.00     5029     0.00     0.00  VOX_fips202_ref_shake256_absorb
+  0.00      3.43     0.00     4324     0.00     0.00  FqcX8_reduce
+  0.00      3.43     0.00     4217     0.00     0.00  VOX_fips202_ref_shake256_squeezeblocks
+  0.00      3.43     0.00     2288     0.00     0.00  Fqc_to_LowTriBlock
+  0.00      3.43     0.00     2010     0.00     0.00  VOX_fips202_ref_shake256_finalize
+  0.00      3.43     0.00     2010     0.00     0.00  VOX_fips202_ref_shake256_init
+  0.00      3.43     0.00     1580     0.00     0.00  VOX_fips202_ref_shake256_absorb_once
+  0.00      3.43     0.00     1574     0.00     0.00  VOX_GenVinegar
+  0.00      3.43     0.00     1559     0.00     0.13  fraction
+  0.00      3.43     0.00     1446     0.00     0.00  randombytes
+  0.00      3.43     0.00     1365     0.00     0.00  VOX_fips202x4_avx2_KeccakP1600times4_PermuteAll_24rounds
+  0.00      3.43     0.00     1365     0.00     0.00  VOX_fips202x4_avx2_shake256x4_squeezeblocks
+  0.00      3.43     0.00     1009     0.00     0.00  VOX_GenM
+  0.00      3.43     0.00     1001     0.00     0.00  Fq_GetOilVars
+  0.00      3.43     0.00     1001     0.00     0.00  Fq_InjectS
+  0.00      3.43     0.00     1001     0.00     0.00  Fq_InjectT
+  0.00      3.43     0.00     1001     0.00     0.00  VOX_fips202_ref_shake256_squeeze
+  0.00      3.43     0.00     1001     0.00     0.00  encode_sig
+  0.00      3.43     0.00     1000     0.00     3.41  VOX_sign_cachedSK
+  0.00      3.43     0.00      182     0.00     0.00  Fqc_EvalMQSystem
+  0.00      3.43     0.00      160     0.00     0.00  decode_PK_oil
+  0.00      3.43     0.00       78     0.00     0.00  VOX_fips202x4_avx2_shake256x4_absorb
+  0.00      3.43     0.00       69     0.00     0.00  Rejsample_FqcBlock_x4.constprop.0
+  0.00      3.43     0.00       25     0.00     0.00  VOX_GenPK_vin_x4
+  0.00      3.43     0.00        9     0.00     0.00  Rejsample_FqcBlock_x4
+  0.00      3.43     0.00        8     0.00     0.00  decode_sig
+  0.00      3.43     0.00        6     0.00     0.00  VOX_fips202_ref_shake256
+  0.00      3.43     0.00        5     0.00     0.00  VOX_GenPK_oil_x4
+  0.00      3.43     0.00        4     0.00     0.00  AES256_CTR_DRBG_Update
+  0.00      3.43     0.00        4     0.00     0.07  VOX_verify_cachedPK
+  0.00      3.43     0.00        4     0.00     0.07  crypto_sign_open
+  0.00      3.43     0.00        3     0.00     0.02  VOX_GenS
+  0.00      3.43     0.00        3     0.00     0.02  VOX_GenT
+  0.00      3.43     0.00        2     0.00     0.00  VOX_GenPK_template
+  0.00      3.43     0.00        2     0.00     0.00  VOX_clear_cached_sk
+  0.00      3.43     0.00        2     0.00     0.04  VOX_expand_sk
+  0.00      3.43     0.00        2     0.00     0.00  decode_SK_expand
+  0.00      3.43     0.00        2     0.00     0.00  print_verify_res
+  0.00      3.43     0.00        1     0.00     3.68  VOX_CompletePetzoldPubkey
+  0.00      3.43     0.00        1     0.00     0.00  VOX_clear_cached_pk
+  0.00      3.43     0.00        1     0.00     0.00  VOX_expand_pk
+  0.00      3.43     0.00        1     0.00     3.45  crypto_sign
+  0.00      3.43     0.00        1     0.00    14.92  crypto_sign_keypair
+  0.00      3.43     0.00        1     0.00     0.00  encode_PK
+  0.00      3.43     0.00        1     0.00     0.00  encode_SK
+  0.00      3.43     0.00        1     0.00     0.00  print_bench
+  0.00      3.43     0.00        1     0.00     0.00  randombytes_init
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.29% of 3.43 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00    3.43                 main [1]
+                0.00    3.41    1000/1000        VOX_sign_cachedSK [3]
+                0.00    0.01       1/1           crypto_sign_keypair [14]
+                0.00    0.00       1/1           crypto_sign [23]
+                0.00    0.00       4/4           crypto_sign_open [29]
+                0.00    0.00       4/4           VOX_verify_cachedPK [30]
+                0.00    0.00       1/2           VOX_expand_sk [31]
+                0.00    0.00       1/1           VOX_expand_pk [35]
+                0.00    0.00       2/2           print_verify_res [59]
+                0.00    0.00       1/1           randombytes_init [64]
+                0.00    0.00       1/1446        randombytes [42]
+                0.00    0.00       1/2           VOX_clear_cached_sk [57]
+                0.00    0.00       1/1           VOX_clear_cached_pk [60]
+                0.00    0.00       1/1           print_bench [63]
+-----------------------------------------------
+                0.00    0.00       1/1001        crypto_sign [23]
+                0.01    3.40    1000/1001        VOX_sign_cachedSK [3]
+[2]     99.5    0.01    3.40    1001         VOX_sign_core [2]
+                0.96    1.82    1574/1574        Solve_MQ [4]
+                0.35    0.00  125920/138512      Fq_GetLinEqn [7]
+                0.17    0.03   12592/12592       Fq_GetMQEqn [10]
+                0.06    0.00    1574/1574        rref_with_pivots [13]
+                0.00    0.01    1574/1574        VOX_GenVinegar [20]
+                0.00    0.00    1001/1001        Fq_InjectT [21]
+                0.00    0.00    1001/1009        VOX_GenM [24]
+                0.00    0.00    1001/1001        VOX_fips202_ref_shake256_squeeze [27]
+                0.00    0.00    2002/5029        VOX_fips202_ref_shake256_absorb [26]
+                0.00    0.00    1001/2010        VOX_fips202_ref_shake256_init [41]
+                0.00    0.00    1001/2010        VOX_fips202_ref_shake256_finalize [40]
+                0.00    0.00    1001/1001        Fq_InjectS [46]
+                0.00    0.00    1001/1001        Fq_GetOilVars [45]
+-----------------------------------------------
+                0.00    3.41    1000/1000        main [1]
+[3]     99.4    0.00    3.41    1000         VOX_sign_cachedSK [3]
+                0.01    3.40    1000/1001        VOX_sign_core [2]
+                0.00    0.00    1000/1001        encode_sig [47]
+-----------------------------------------------
+                0.96    1.82    1574/1574        VOX_sign_core [2]
+[4]     81.0    0.96    1.82    1574         Solve_MQ [4]
+                0.67    0.78    1559/1559        W_FGLM_new [5]
+                0.19    0.00  325272/325272      do_pivot_sparse [11]
+                0.18    0.00   12557/12557       rref_block_strict [12]
+-----------------------------------------------
+                0.67    0.78    1559/1559        Solve_MQ [4]
+[5]     42.3    0.67    0.78    1559         W_FGLM_new [5]
+                0.57    0.00  796649/796649      apply2v [6]
+                0.00    0.21    1559/1559        fraction [9]
+-----------------------------------------------
+                0.57    0.00  796649/796649      W_FGLM_new [5]
+[6]     16.6    0.57    0.00  796649         apply2v [6]
+-----------------------------------------------
+                0.03    0.00   12592/138512      Fq_GetMQEqn [10]
+                0.35    0.00  125920/138512      VOX_sign_core [2]
+[7]     11.1    0.38    0.00  138512         Fq_GetLinEqn [7]
+-----------------------------------------------
+                0.21    0.00  398978/398978      fraction [9]
+[8]      6.1    0.21    0.00  398978         mulop [8]
+-----------------------------------------------
+                0.00    0.21    1559/1559        W_FGLM_new [5]
+[9]      6.1    0.00    0.21    1559         fraction [9]
+                0.21    0.00  398978/398978      mulop [8]
+-----------------------------------------------
+                0.17    0.03   12592/12592       VOX_sign_core [2]
+[10]     6.0    0.17    0.03   12592         Fq_GetMQEqn [10]
+                0.03    0.00   12592/138512      Fq_GetLinEqn [7]
+-----------------------------------------------
+                0.19    0.00  325272/325272      Solve_MQ [4]
+[11]     5.5    0.19    0.00  325272         do_pivot_sparse [11]
+-----------------------------------------------
+                0.18    0.00   12557/12557       Solve_MQ [4]
+[12]     5.2    0.18    0.00   12557         rref_block_strict [12]
+-----------------------------------------------
+                0.06    0.00    1574/1574        VOX_sign_core [2]
+[13]     1.7    0.06    0.00    1574         rref_with_pivots [13]
+-----------------------------------------------
+                0.00    0.01       1/1           main [1]
+[14]     0.4    0.00    0.01       1         crypto_sign_keypair [14]
+                0.01    0.00       1/1           VOX_ComposeST [15]
+                0.00    0.00       1/1           VOX_CompletePetzoldPubkey [22]
+                0.00    0.00       1/3           VOX_GenT [32]
+                0.00    0.00       1/3           VOX_GenS [33]
+                0.00    0.00       1/6           VOX_fips202_ref_shake256 [34]
+                0.00    0.00       2/1446        randombytes [42]
+                0.00    0.00       1/2           VOX_GenPK_template [56]
+                0.00    0.00       1/1           encode_PK [61]
+                0.00    0.00       1/1           encode_SK [62]
+-----------------------------------------------
+                0.01    0.00       1/1           crypto_sign_keypair [14]
+[15]     0.3    0.01    0.00       1         VOX_ComposeST [15]
+                0.00    0.00    3168/26316       Fqc_reduce [16]
+                0.00    0.00    1056/4324        FqcX8_reduce [38]
+-----------------------------------------------
+                0.00    0.00    1456/26316       Fqc_EvalMQSystem [28]
+                0.00    0.00    3168/26316       VOX_ComposeST [15]
+                0.00    0.00    9680/26316       VOX_CompletePetzoldPubkey [22]
+                0.00    0.00   12012/26316       Fq_InjectT [21]
+[16]     0.3    0.01    0.00   26316         Fqc_reduce [16]
+-----------------------------------------------
+                                2796             KeccakF1600_StatePermute [17]
+                0.00    0.00      12/7819        VOX_fips202_ref_shake256 [34]
+                0.00    0.00    1001/7819        VOX_fips202_ref_shake256_squeeze [27]
+                0.00    0.00    1009/7819        VOX_fips202_ref_shake256_absorb [26]
+                0.00    0.00    1580/7819        VOX_fips202_ref_shake256_absorb_once [25]
+                0.01    0.00    4217/7819        VOX_fips202_ref_shake256_squeezeblocks [19]
+[17]     0.3    0.01    0.00    7819+2796    KeccakF1600_StatePermute [17]
+                                2796             KeccakF1600_StatePermute [17]
+-----------------------------------------------
+                0.00    0.00    1920/246558      VOX_GenS [33]
+                0.00    0.00    3168/246558      VOX_GenT [32]
+                0.00    0.00   88792/246558      VOX_GenM [24]
+                0.00    0.00  152678/246558      VOX_GenVinegar [20]
+[18]     0.2    0.00    0.01  246558         RejSample_Fq [18]
+                0.00    0.01    4217/4217        VOX_fips202_ref_shake256_squeezeblocks [19]
+-----------------------------------------------
+                0.00    0.01    4217/4217        RejSample_Fq [18]
+[19]     0.2    0.00    0.01    4217         VOX_fips202_ref_shake256_squeezeblocks [19]
+                0.01    0.00    4217/7819        KeccakF1600_StatePermute [17]
+-----------------------------------------------
+                0.00    0.01    1574/1574        VOX_sign_core [2]
+[20]     0.2    0.00    0.01    1574         VOX_GenVinegar [20]
+                0.00    0.00  152678/246558      RejSample_Fq [18]
+                0.00    0.00    1574/1580        VOX_fips202_ref_shake256_absorb_once [25]
+-----------------------------------------------
+                0.00    0.00    1001/1001        VOX_sign_core [2]
+[21]     0.1    0.00    0.00    1001         Fq_InjectT [21]
+                0.00    0.00   12012/26316       Fqc_reduce [16]
+-----------------------------------------------
+                0.00    0.00       1/1           crypto_sign_keypair [14]
+[22]     0.1    0.00    0.00       1         VOX_CompletePetzoldPubkey [22]
+                0.00    0.00    9680/26316       Fqc_reduce [16]
+                0.00    0.00    2904/4324        FqcX8_reduce [38]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[23]     0.1    0.00    0.00       1         crypto_sign [23]
+                0.00    0.00       1/1001        VOX_sign_core [2]
+                0.00    0.00       1/2           VOX_expand_sk [31]
+                0.00    0.00       1/2           VOX_clear_cached_sk [57]
+                0.00    0.00       1/1001        encode_sig [47]
+-----------------------------------------------
+                0.00    0.00       4/1009        crypto_sign_open [29]
+                0.00    0.00       4/1009        VOX_verify_cachedPK [30]
+                0.00    0.00    1001/1009        VOX_sign_core [2]
+[24]     0.1    0.00    0.00    1009         VOX_GenM [24]
+                0.00    0.00   88792/246558      RejSample_Fq [18]
+                0.00    0.00    3027/5029        VOX_fips202_ref_shake256_absorb [26]
+                0.00    0.00    1009/2010        VOX_fips202_ref_shake256_init [41]
+                0.00    0.00    1009/2010        VOX_fips202_ref_shake256_finalize [40]
+-----------------------------------------------
+                0.00    0.00       3/1580        VOX_GenS [33]
+                0.00    0.00       3/1580        VOX_GenT [32]
+                0.00    0.00    1574/1580        VOX_GenVinegar [20]
+[25]     0.1    0.00    0.00    1580         VOX_fips202_ref_shake256_absorb_once [25]
+                0.00    0.00    1580/7819        KeccakF1600_StatePermute [17]
+-----------------------------------------------
+                0.00    0.00    2002/5029        VOX_sign_core [2]
+                0.00    0.00    3027/5029        VOX_GenM [24]
+[26]     0.0    0.00    0.00    5029         VOX_fips202_ref_shake256_absorb [26]
+                0.00    0.00    1009/7819        KeccakF1600_StatePermute [17]
+-----------------------------------------------
+                0.00    0.00    1001/1001        VOX_sign_core [2]
+[27]     0.0    0.00    0.00    1001         VOX_fips202_ref_shake256_squeeze [27]
+                0.00    0.00    1001/7819        KeccakF1600_StatePermute [17]
+-----------------------------------------------
+                0.00    0.00      91/182         crypto_sign_open [29]
+                0.00    0.00      91/182         VOX_verify_cachedPK [30]
+[28]     0.0    0.00    0.00     182         Fqc_EvalMQSystem [28]
+                0.00    0.00    1456/26316       Fqc_reduce [16]
+                0.00    0.00     364/4324        FqcX8_reduce [38]
+-----------------------------------------------
+                0.00    0.00       4/4           main [1]
+[29]     0.0    0.00    0.00       4         crypto_sign_open [29]
+                0.00    0.00      91/182         Fqc_EvalMQSystem [28]
+                0.00    0.00       4/1009        VOX_GenM [24]
+                0.00    0.00       4/6           VOX_fips202_ref_shake256 [34]
+                0.00    0.00      80/160         decode_PK_oil [48]
+                0.00    0.00      25/69          Rejsample_FqcBlock_x4.constprop.0 [50]
+                0.00    0.00      25/25          VOX_GenPK_vin_x4 [51]
+                0.00    0.00       5/9           Rejsample_FqcBlock_x4 [52]
+                0.00    0.00       5/5           VOX_GenPK_oil_x4 [54]
+                0.00    0.00       4/8           decode_sig [53]
+-----------------------------------------------
+                0.00    0.00       4/4           main [1]
+[30]     0.0    0.00    0.00       4         VOX_verify_cachedPK [30]
+                0.00    0.00      91/182         Fqc_EvalMQSystem [28]
+                0.00    0.00       4/1009        VOX_GenM [24]
+                0.00    0.00       4/8           decode_sig [53]
+-----------------------------------------------
+                0.00    0.00       1/2           main [1]
+                0.00    0.00       1/2           crypto_sign [23]
+[31]     0.0    0.00    0.00       2         VOX_expand_sk [31]
+                0.00    0.00       2/3           VOX_GenT [32]
+                0.00    0.00       2/3           VOX_GenS [33]
+                0.00    0.00       2/2           decode_SK_expand [58]
+-----------------------------------------------
+                0.00    0.00       1/3           crypto_sign_keypair [14]
+                0.00    0.00       2/3           VOX_expand_sk [31]
+[32]     0.0    0.00    0.00       3         VOX_GenT [32]
+                0.00    0.00    3168/246558      RejSample_Fq [18]
+                0.00    0.00       3/1580        VOX_fips202_ref_shake256_absorb_once [25]
+-----------------------------------------------
+                0.00    0.00       1/3           crypto_sign_keypair [14]
+                0.00    0.00       2/3           VOX_expand_sk [31]
+[33]     0.0    0.00    0.00       3         VOX_GenS [33]
+                0.00    0.00    1920/246558      RejSample_Fq [18]
+                0.00    0.00       3/1580        VOX_fips202_ref_shake256_absorb_once [25]
+-----------------------------------------------
+                0.00    0.00       1/6           crypto_sign_keypair [14]
+                0.00    0.00       1/6           VOX_expand_pk [35]
+                0.00    0.00       4/6           crypto_sign_open [29]
+[34]     0.0    0.00    0.00       6         VOX_fips202_ref_shake256 [34]
+                0.00    0.00      12/7819        KeccakF1600_StatePermute [17]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[35]     0.0    0.00    0.00       1         VOX_expand_pk [35]
+                0.00    0.00       1/6           VOX_fips202_ref_shake256 [34]
+                0.00    0.00      80/160         decode_PK_oil [48]
+                0.00    0.00       1/2           VOX_GenPK_template [56]
+-----------------------------------------------
+                0.00    0.00   35728/35728       decode_SK_expand [58]
+[36]     0.0    0.00    0.00   35728         Fqc_to_block [36]
+-----------------------------------------------
+                0.00    0.00     216/5460        Rejsample_FqcBlock_x4 [52]
+                0.00    0.00    5244/5460        Rejsample_FqcBlock_x4.constprop.0 [50]
+[37]     0.0    0.00    0.00    5460         rejsample_update [37]
+-----------------------------------------------
+                0.00    0.00     364/4324        Fqc_EvalMQSystem [28]
+                0.00    0.00    1056/4324        VOX_ComposeST [15]
+                0.00    0.00    2904/4324        VOX_CompletePetzoldPubkey [22]
+[38]     0.0    0.00    0.00    4324         FqcX8_reduce [38]
+-----------------------------------------------
+                0.00    0.00    2288/2288        decode_SK_expand [58]
+[39]     0.0    0.00    0.00    2288         Fqc_to_LowTriBlock [39]
+-----------------------------------------------
+                0.00    0.00    1001/2010        VOX_sign_core [2]
+                0.00    0.00    1009/2010        VOX_GenM [24]
+[40]     0.0    0.00    0.00    2010         VOX_fips202_ref_shake256_finalize [40]
+-----------------------------------------------
+                0.00    0.00    1001/2010        VOX_sign_core [2]
+                0.00    0.00    1009/2010        VOX_GenM [24]
+[41]     0.0    0.00    0.00    2010         VOX_fips202_ref_shake256_init [41]
+-----------------------------------------------
+                0.00    0.00       1/1446        main [1]
+                0.00    0.00       2/1446        crypto_sign_keypair [14]
+                0.00    0.00      63/1446        Rejsample_FqcBlock_x4 [52]
+                0.00    0.00    1380/1446        Rejsample_FqcBlock_x4.constprop.0 [50]
+[42]     0.0    0.00    0.00    1446         randombytes [42]
+                0.00    0.00    1365/1365        VOX_fips202x4_avx2_KeccakP1600times4_PermuteAll_24rounds [43]
+                0.00    0.00       3/4           AES256_CTR_DRBG_Update [55]
+-----------------------------------------------
+                0.00    0.00    1365/1365        randombytes [42]
+[43]     0.0    0.00    0.00    1365         VOX_fips202x4_avx2_KeccakP1600times4_PermuteAll_24rounds [43]
+-----------------------------------------------
+                0.00    0.00      54/1365        Rejsample_FqcBlock_x4 [52]
+                0.00    0.00    1311/1365        Rejsample_FqcBlock_x4.constprop.0 [50]
+[44]     0.0    0.00    0.00    1365         VOX_fips202x4_avx2_shake256x4_squeezeblocks [44]
+-----------------------------------------------
+                0.00    0.00    1001/1001        VOX_sign_core [2]
+[45]     0.0    0.00    0.00    1001         Fq_GetOilVars [45]
+-----------------------------------------------
+                0.00    0.00    1001/1001        VOX_sign_core [2]
+[46]     0.0    0.00    0.00    1001         Fq_InjectS [46]
+-----------------------------------------------
+                0.00    0.00       1/1001        crypto_sign [23]
+                0.00    0.00    1000/1001        VOX_sign_cachedSK [3]
+[47]     0.0    0.00    0.00    1001         encode_sig [47]
+-----------------------------------------------
+                0.00    0.00      80/160         crypto_sign_open [29]
+                0.00    0.00      80/160         VOX_expand_pk [35]
+[48]     0.0    0.00    0.00     160         decode_PK_oil [48]
+-----------------------------------------------
+                0.00    0.00       9/78          Rejsample_FqcBlock_x4 [52]
+                0.00    0.00      69/78          Rejsample_FqcBlock_x4.constprop.0 [50]
+[49]     0.0    0.00    0.00      78         VOX_fips202x4_avx2_shake256x4_absorb [49]
+-----------------------------------------------
+                0.00    0.00      25/69          crypto_sign_open [29]
+                0.00    0.00      44/69          VOX_GenPK_template [56]
+[50]     0.0    0.00    0.00      69         Rejsample_FqcBlock_x4.constprop.0 [50]
+                0.00    0.00    5244/5460        rejsample_update [37]
+                0.00    0.00    1380/1446        randombytes [42]
+                0.00    0.00    1311/1365        VOX_fips202x4_avx2_shake256x4_squeezeblocks [44]
+                0.00    0.00      69/78          VOX_fips202x4_avx2_shake256x4_absorb [49]
+-----------------------------------------------
+                0.00    0.00      25/25          crypto_sign_open [29]
+[51]     0.0    0.00    0.00      25         VOX_GenPK_vin_x4 [51]
+-----------------------------------------------
+                0.00    0.00       4/9           VOX_GenPK_template [56]
+                0.00    0.00       5/9           crypto_sign_open [29]
+[52]     0.0    0.00    0.00       9         Rejsample_FqcBlock_x4 [52]
+                0.00    0.00     216/5460        rejsample_update [37]
+                0.00    0.00      63/1446        randombytes [42]
+                0.00    0.00      54/1365        VOX_fips202x4_avx2_shake256x4_squeezeblocks [44]
+                0.00    0.00       9/78          VOX_fips202x4_avx2_shake256x4_absorb [49]
+-----------------------------------------------
+                0.00    0.00       4/8           crypto_sign_open [29]
+                0.00    0.00       4/8           VOX_verify_cachedPK [30]
+[53]     0.0    0.00    0.00       8         decode_sig [53]
+-----------------------------------------------
+                0.00    0.00       5/5           crypto_sign_open [29]
+[54]     0.0    0.00    0.00       5         VOX_GenPK_oil_x4 [54]
+-----------------------------------------------
+                0.00    0.00       1/4           randombytes_init [64]
+                0.00    0.00       3/4           randombytes [42]
+[55]     0.0    0.00    0.00       4         AES256_CTR_DRBG_Update [55]
+-----------------------------------------------
+                0.00    0.00       1/2           crypto_sign_keypair [14]
+                0.00    0.00       1/2           VOX_expand_pk [35]
+[56]     0.0    0.00    0.00       2         VOX_GenPK_template [56]
+                0.00    0.00      44/69          Rejsample_FqcBlock_x4.constprop.0 [50]
+                0.00    0.00       4/9           Rejsample_FqcBlock_x4 [52]
+-----------------------------------------------
+                0.00    0.00       1/2           main [1]
+                0.00    0.00       1/2           crypto_sign [23]
+[57]     0.0    0.00    0.00       2         VOX_clear_cached_sk [57]
+-----------------------------------------------
+                0.00    0.00       2/2           VOX_expand_sk [31]
+[58]     0.0    0.00    0.00       2         decode_SK_expand [58]
+                0.00    0.00   35728/35728       Fqc_to_block [36]
+                0.00    0.00    2288/2288        Fqc_to_LowTriBlock [39]
+-----------------------------------------------
+                0.00    0.00       2/2           main [1]
+[59]     0.0    0.00    0.00       2         print_verify_res [59]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[60]     0.0    0.00    0.00       1         VOX_clear_cached_pk [60]
+-----------------------------------------------
+                0.00    0.00       1/1           crypto_sign_keypair [14]
+[61]     0.0    0.00    0.00       1         encode_PK [61]
+-----------------------------------------------
+                0.00    0.00       1/1           crypto_sign_keypair [14]
+[62]     0.0    0.00    0.00       1         encode_SK [62]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[63]     0.0    0.00    0.00       1         print_bench [63]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[64]     0.0    0.00    0.00       1         randombytes_init [64]
+                0.00    0.00       1/4           AES256_CTR_DRBG_Update [55]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [55] AES256_CTR_DRBG_Update [51] VOX_GenPK_vin_x4        [5] W_FGLM_new
+   [7] Fq_GetLinEqn           [33] VOX_GenS                [6] apply2v
+  [10] Fq_GetMQEqn            [32] VOX_GenT               [23] crypto_sign
+  [45] Fq_GetOilVars          [20] VOX_GenVinegar         [14] crypto_sign_keypair
+  [46] Fq_InjectS             [60] VOX_clear_cached_pk    [29] crypto_sign_open
+  [21] Fq_InjectT             [57] VOX_clear_cached_sk    [48] decode_PK_oil
+  [38] FqcX8_reduce           [35] VOX_expand_pk          [58] decode_SK_expand
+  [28] Fqc_EvalMQSystem       [31] VOX_expand_sk          [53] decode_sig
+  [16] Fqc_reduce             [34] VOX_fips202_ref_shake256 [11] do_pivot_sparse
+  [39] Fqc_to_LowTriBlock     [26] VOX_fips202_ref_shake256_absorb [61] encode_PK
+  [36] Fqc_to_block           [25] VOX_fips202_ref_shake256_absorb_once [62] encode_SK
+  [17] KeccakF1600_StatePermute [40] VOX_fips202_ref_shake256_finalize [47] encode_sig
+  [18] RejSample_Fq           [41] VOX_fips202_ref_shake256_init [9] fraction
+  [52] Rejsample_FqcBlock_x4  [27] VOX_fips202_ref_shake256_squeeze [8] mulop
+  [50] Rejsample_FqcBlock_x4.constprop.0 [19] VOX_fips202_ref_shake256_squeezeblocks [63] print_bench
+   [4] Solve_MQ               [43] VOX_fips202x4_avx2_KeccakP1600times4_PermuteAll_24rounds [59] print_verify_res
+  [22] VOX_CompletePetzoldPubkey [49] VOX_fips202x4_avx2_shake256x4_absorb [42] randombytes
+  [15] VOX_ComposeST          [44] VOX_fips202x4_avx2_shake256x4_squeezeblocks [64] randombytes_init
+  [24] VOX_GenM                [3] VOX_sign_cachedSK      [37] rejsample_update
+  [54] VOX_GenPK_oil_x4        [2] VOX_sign_core          [12] rref_block_strict
+  [56] VOX_GenPK_template     [30] VOX_verify_cachedPK    [13] rref_with_pivots
