@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS:= -std=c99 -pedantic -Wall -Wextra -O3 -funroll-all-loops -march=native -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Wno-newline-eof
 LDFLAGS:= -lcrypto
 ADDITIONAL_CFLAGS:= -Wno-missing-prototypes -Wno-sign-compare -Wno-unused-but-set-variable -Wno-unused-parameter
-
+PERK_ALGNAME:=perk-256-fast-5
 # Directories
 BUILD_DIR:=build
 BIN_DIR:=$(BUILD_DIR)/bin
@@ -14,10 +14,12 @@ MAIN_PERK_SRC:=$(SRC_DIR)/main.c
 MAIN_KAT_SRC:=$(SRC_DIR)/PQCgenKAT_sign.c
 MAIN_PERK_EXEC:=$(BIN_DIR)/perk-256-fast-5$(EXT)
 MAIN_KAT_EXEC:=$(BIN_DIR)/perk-256-fast-5-PQCgenKAT_sign
+PQCSIGN_SRC:=$(SRC_DIR)/pqcsign.c
 
 # exclude sources from "find"
 EXCL_SRC:=! -name $(notdir $(MAIN_PERK_SRC)) \
-          ! -name $(notdir $(MAIN_KAT_SRC))
+          ! -name $(notdir $(MAIN_KAT_SRC)) \
+		  ! -name $(notdir $(PQCSIGN_SRC))
 
 # PERK sources
 PERK_SRC:= $(shell find $(SRC_DIR) -name "*.c" $(EXCL_SRC))
@@ -39,7 +41,7 @@ LIB_INCLUDE:=-I $(LIB_DIR)/cryptocode -I $(LIB_DIR)/XKCP -I $(LIB_DIR)/randombyt
 PERK_INCLUDE:=-I $(SRC_DIR) $(LIB_INCLUDE)
 
 .PHONY: all
-all: perk-256-fast-5 perk-256-fast-5-verbose perk-256-fast-5-kat
+all: perk-256-fast-5 perk-256-fast-5-verbose perk-256-fast-5-kat pqcsign
 
 # build rules
 $(LIB_COBJS): $(BUILD_DIR)/%.o: %.c
@@ -67,6 +69,12 @@ $(MAIN_KAT_EXEC): $(MAIN_KAT_SRC)  $(PERK_OBJS) $(LIB_OBJS)
 	@echo -e "\n### Compiling PERK PQCgenKAT_sign\n"
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -Wno-strict-prototypes -Wno-unused-result $^ $(PERK_INCLUDE) -o $@ $(LDFLAGS)
+
+pqcsign: $(PQCSIGN_SRC) $(PERK_OBJS) $(LIB_OBJS)
+	@echo -e "\n### Compiling pqcsign\n"
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -DPERK_ALGNAME=\"$(PERK_ALGNAME)\" $^ $(PERK_INCLUDE) -o $@ $(LDFLAGS)
+
 
 .PHONY: perk-256-fast-5
 perk-256-fast-5: $(MAIN_PERK_EXEC)

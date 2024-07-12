@@ -88,6 +88,11 @@ function create_alg_arrays() {
         mira_variations+=("$line")
     done < "$alg_list_dir/MIRA_variations.txt"
 
+    perk_variations=()
+    while IFS= read -r line; do
+        perk_variations+=("$line")
+    done < "$alg_list_dir/perk_variations.txt"
+
 }
 
 #------------------------------------------------------------------------------
@@ -115,7 +120,6 @@ function determine_hufu_inclusion() {
     done
 
 }
-
 
 
 #------------------------------------------------------------------------------
@@ -200,6 +204,11 @@ function cycles_test {
     for variation in "${mira_variations[@]}"; do
         echo -e "\nRunning MIRA test for $variation"
         $lib_dir/MIRA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
+    for variation in "${perk_variations[@]}"; do
+        echo -e "\nRunning PERK test for $variation"
+        $lib_dir/perk/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }

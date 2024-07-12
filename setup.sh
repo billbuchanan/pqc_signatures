@@ -8,7 +8,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
 
-sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4" "hufu" "3WISE" "MIRA")
+sig_algs=("raccoon" "biscuit" "cross" "FAEST" "FuLecca" "pqsigRM" "SPHINCS-ALPHA" "sqi" "uov" "MEDS-2023" "hawk" "EHTv3v4" "hufu" "3WISE" "MIRA" "perk")
 
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
@@ -88,6 +88,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         mira_variations+=("$line")
     done < "$alg_list_dir/MIRA_variations.txt"
+
+    perk_variations=()
+    while IFS= read -r line; do
+        perk_variations+=("$line")
+    done < "$alg_list_dir/perk_variations.txt"
 
 }
 
@@ -480,6 +485,23 @@ function variations_setup() {
         make clean >> /dev/null
         make all -j $(nproc)
         mv "$variation_dir_path/bin/pqcsign" "$mira_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Setting up variations of the PERK signature algorithm
+    perk_src_dir=$src_dir/perk/Reference_Implementation
+    perk_dst_dir=$lib_dir/perk
+
+    cd $perk_src_dir
+
+    for variation in "${perk_variations[@]}"; do
+
+        variation_dir_path="$perk_src_dir/$variation"
+        cd $variation_dir_path
+        make clean >> /dev/null
+        make all -j $(nproc)
+        mv "$variation_dir_path/pqcsign" "$perk_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
     done
