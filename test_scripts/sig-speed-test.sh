@@ -83,6 +83,11 @@ function create_alg_arrays() {
         three_wise_variations+=("$line")
     done < "$alg_list_dir/3WISE_variations.txt"
 
+    mira_variations=()
+    while IFS= read -r line; do
+        mira_variations+=("$line")
+    done < "$alg_list_dir/MIRA_variations.txt"
+
 }
 
 #------------------------------------------------------------------------------
@@ -158,6 +163,11 @@ function cycles_test {
         $lib_dir/3WISE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
+    for variation in "${mira_variations[@]}"; do
+        echo -e "\nRunning MIRA test for $variation"
+        $lib_dir/MIRA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
 }
 
 #------------------------------------------------------------------------------
@@ -166,6 +176,8 @@ function main() {
     if [ -d $results_dir ]; then
         rm -rf $results_dir/*
     fi
+
+    
 
 
     create_alg_arrays

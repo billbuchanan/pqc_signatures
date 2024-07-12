@@ -26,6 +26,7 @@ INCLUDE:=-I src $(FFI_INCLUDE) $(WRAPPER_INCLUDE) $(XKCP_INCLUDE) $(RANDOMBYTES_
 
 MAIN_MIRA:=src/main_mira.c
 MAIN_KAT:=src/PQCgenKAT_sign.c
+PQCSIGN:=src/pqcsign.c
 
 MIRA_OBJS:=finite_fields.o keygen.o sign.o verify.o nist_sign.o mpc.o parsing.o tree.o
 MIRA_VERBOSE_OBJS:=finite_fields.o keygen-verbose.o sign-verbose.o verify-verbose.o nist_sign.o mpc.o parsing.o tree.o
@@ -68,7 +69,7 @@ finite_fields.o: $(FFI_SRC)/finite_fields.c | folders
 
 
 
-all: mira128s-main mira128s-kat mira128s-verbose ##@Build Build all the project
+all: mira128s-main mira128s-kat mira128s-verbose pqcsign ##@Build Build all the project
 
 
 .PHONY: mira128s-main
@@ -86,7 +87,10 @@ mira128s-verbose: $(MIRA_VERBOSE_OBJS) $(LIB_OBJS) | xkcp folders ##@Build Gener
 	@echo -e "\n### Compiling MIRA-128S (verbose mode)\n"
 	$(CC) $(C_FLAGS_VERBOSE) $(MAIN_MIRA) $(addprefix $(BUILD)/, $^) $(INCLUDE) $(XKCP_LINKER) -o $(BIN)/$@
 
-
+.PHONY: pqcsign
+pqcsign: $(MIRA_OBJS) $(LIB_OBJS) | xkcp folders ##@Build a single example
+	@echo -e "\n### Compiling pqcsign\n"
+	$(CC) $(C_FLAGS) $(PQCSIGN) $(addprefix $(BUILD)/, $^) $(INCLUDE) $(XKCP_LINKER) -o $(BIN)/$@
 
 .PHONY: clean
 clean:
