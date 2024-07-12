@@ -26,6 +26,7 @@ INCLUDE:=-I src $(RBC_INCLUDE) $(WRAPPER_INCLUDE) $(XKCP_INCLUDE) $(RANDOMBYTES_
 
 MAIN_RYDE:=src/main.c
 KAT_RYDE:=src/PQCgenKAT_sign.c
+PQCSIGN_SRC:=src/pqcsign.c
 
 RYDE_OBJS:=rbc_37_elt.o rbc_37_vec.o rbc_37_qpoly.o rbc_37_vspace.o rbc_37_mat.o keypair.o signature.o verification.o mpc.o parsing.o tree.o sign.o
 RYDE_OBJS_VERBOSE:=rbc_37_elt.o rbc_37_vec.o rbc_37_qpoly.o rbc_37_vspace.o rbc_37_mat.o keypair-verbose.o signature-verbose.o verification-verbose.o mpc.o parsing.o tree.o sign.o
@@ -68,7 +69,7 @@ rbc_%.o: $(RBC_SRC)/rbc_%.c | folders
 
 
 
-all: ryde192s-main ryde192s-kat ryde192s-verbose ##@Build Build all the project
+all: ryde192s-main ryde192s-kat ryde192s-verbose pqcsign ##@Build Build all the project
 
 
 
@@ -87,7 +88,10 @@ ryde192s-verbose: $(RYDE_OBJS_VERBOSE) $(LIB_OBJS) | xkcp folders ##@Build Gener
 	@echo -e "\n### Compiling RYDE-192S (verbose mode)\n"
 	$(CC) $(C_FLAGS_VERBOSE) $(MAIN_RYDE) $(addprefix $(BUILD)/, $^) $(INCLUDE) $(XKCP_LINKER) -o $(BIN)/$@
 
-
+.PHONY: pqcsign
+pqcsign: $(RYDE_OBJS) $(LIB_OBJS) | xkcp folders
+	@echo -e "\n### Compiling pqcsign\n"
+	$(CC) $(C_FLAGS) $(PQCSIGN_SRC) $(addprefix $(BUILD)/, $^) $(INCLUDE) $(XKCP_LINKER) -o $(BIN)/$@
 
 .PHONY: clean
 clean: ##@Miscellaneous Clean data

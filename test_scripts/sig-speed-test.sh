@@ -93,6 +93,11 @@ function create_alg_arrays() {
         perk_variations+=("$line")
     done < "$alg_list_dir/perk_variations.txt"
 
+    ryde_variations=()
+    while IFS= read -r line; do
+        ryde_variations+=("$line")
+    done < "$alg_list_dir/ryde_variations.txt"
+
 }
 
 #------------------------------------------------------------------------------
@@ -209,6 +214,11 @@ function cycles_test {
     for variation in "${perk_variations[@]}"; do
         echo -e "\nRunning PERK test for $variation"
         $lib_dir/perk/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    done
+
+    for variation in "${ryde_variations[@]}"; do
+        echo -e "\nRunning RYDE test for $variation"
+        $lib_dir/ryde/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }
