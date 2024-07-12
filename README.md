@@ -27,6 +27,7 @@ This is the development branch for the pqc_signatures project which evaluates th
 - [ ] Create basic setup script and makefiles to compile various algorithm source code that can later be used within performance measuring scripts
 - [ ] Determine if possible to remove redundant copies of the reference-code and instead create the security variations through combined Makefiles 
 - [ ] Determine the cause and resolve memory issue with perk-256-short-3 and perk-256-short-5 variations
+- [ ] Determine the cause and resolve signature verification issue with perk-256-short-3 and perk-256-short-5 variations
 
 
 ### Algorithms Still to be Implemented based of Main Branch
