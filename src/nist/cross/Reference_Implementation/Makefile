@@ -1,0 +1,28 @@
+TARGET = pqcsign
+LIBS = -lm
+CC = gcc
+CFLAGS = -g -Wall -Iinclude
+LDFLAGS =
+
+SRC_DIR = lib
+OBJ_DIR = obj
+BIN_DIR = bin
+
+SOURCES = $(wildcard $(SRC_DIR)/*.c)
+OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
+HEADERS = $(wildcard include/*.h)
+
+.PHONY: default all clean
+
+default: $(TARGET)
+all: default
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) $(LDFLAGS) $(LIBS) -o $(TARGET)
+
+clean:
+	-rm -rf $(OBJ_DIR) $(BIN_DIR)

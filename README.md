@@ -5,7 +5,7 @@
 ### Description:
 This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project. It may not be in a fully functioning state and documentation may still need updated. The checkboxes below indicates whether the current development version is in a basic/fully functioning state and if the documentation is accurate for its current functionality. Regardless please keep this in mind and use the main branch if possible, thank you.
 
-- [x] Basic Functioning State*
+- [ ] Basic Functioning State*
 - [ ] Fully Functioning State
 - [ ] Up to date documentation
 

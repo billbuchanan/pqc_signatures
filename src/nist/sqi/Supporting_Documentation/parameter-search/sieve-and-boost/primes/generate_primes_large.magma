@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+//
+// This Magma script was used to generate the primes between 2^24 and 2^25.
+// They are stored in the files primes_from_2pow24_to_2pow25.csv.
+// For smoothness bounds beyond 2^25, please generate the primes yourself.
+
+// Generate primes between B0 and B1.
+logB0 := 24;
+logB1 := 25;
+B0 := 2^logB0;
+B1 := 2^logB1;
+
+B := B0;
+
+// Print to a csv file.
+file := "primes_from_2pow" cat IntegerToString(logB0);
+file := file cat "_to_2pow" cat IntegerToString(logB1) cat ".csv";
+
+// ppr: primes per row in the file.
+ppr := 6;
+
+p := NextPrime(B);
+nps := 0;
+str := "";
+
+repeat
+    nps +:= 1;
+    inrow := nps mod ppr;
+    if inrow eq 1 then
+        str := Sprintf("%o", p);
+    else
+        str := str cat Sprintf(", %o", p);
+        if inrow eq 0 then
+            Write(file, str);
+        end if;
+    end if;
+    if nps mod 1000 eq 0 then
+        "Current log(p): ", Log(2,p), ", #primes: ", nps;
+    end if;
+    p := NextPrime(p);
+until p ge B1;
+Write(file, str);
+
+"Primes between 2^", logB0, "and 2^", logB1, ": ", nps;
