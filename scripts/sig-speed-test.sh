@@ -13,10 +13,10 @@ sig_algs=("raccoon")
 function array_util_call() {
 
     # Call the array utility script to export the variation arrays
-    "$root_dir/scripts/variation_array_util.sh" "export" "$alg_list_dir"
+    source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_list_dir"
 
     # Import the variation arrays from environment variables
-    IFS=',' read -r -a raccon_variations <<< "$RACCON_VARIATIONS"
+    IFS=',' read -r -a raccoon_variations <<< "$RACCON_VARIATIONS"
     IFS=',' read -r -a biscuit_variations <<< "$BISCUIT_VARIATIONS"
     IFS=',' read -r -a cross_variations <<< "$CROSS_VARIATIONS"
     IFS=',' read -r -a faest_variations <<< "$FAEST_VARIATIONS"
@@ -36,7 +36,7 @@ function array_util_call() {
     IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
 
     # Call the array utility script to clear environment variables
-    "$root_dir/scripts/variation_array_util.sh" "clear"
+    source "$root_dir/scripts/variation_array_util.sh" "clear"
 
 }
 
@@ -72,7 +72,8 @@ function cycles_test {
 
     for variation in "${raccoon_variations[@]}"; do
         echo -e "\nRunning raccoon test for $variation"
-        $lib_dir/raccoon/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        variation_lower="${variation,,}"
+        $lib_dir/raccoon/pqcsign_$variation_lower >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${biscuit_variations[@]}"; do
@@ -117,7 +118,7 @@ function cycles_test {
 
     for variation in "${med_variations[@]}"; do
         echo -e "\nRunning MEDS-2023 test for $variation"
-        $lib_dir/MEDS-2023/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $lib_dir/MEDS_2023/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${hawk_variations[@]}"; do
@@ -134,11 +135,11 @@ function cycles_test {
 
         for variation in "${hufu_variations[@]}"; do
             echo -e "\nRunning hufu test for $variation"
-            $lib_dir/hufu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+            $lib_dir/HuFu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
         done
 
     else
-        echo "Skipping HUFU benchmarking"
+        echo -e "\nSkipping HUFU benchmarking"
     fi
 
     for variation in "${three_wise_variations[@]}"; do

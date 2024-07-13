@@ -2,7 +2,7 @@
 
 #------------------------------------------------------------------------------
 function export_env_vars() {
-    # Convert arrays to comma-separated strings and export
+    # # Convert arrays to comma-separated strings and export
     RACCON_VARIATIONS=$(IFS=,; echo "${RACCON_VARIATIONS[*]}")
     export RACCON_VARIATIONS
 
@@ -107,7 +107,7 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         FULECCA_VARIATIONS+=("$line")
-    done < "$alg_list_dir/FuLeeca_variations.txt"
+    done < "$alg_list_dir/FuLecca_variations.txt"
 
     while IFS= read -r line; do
         PQSIGRM_VARIATIONS+=("$line")
@@ -115,7 +115,7 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         SPHINCS_ALPHA_VARIATIONS+=("$line")
-    done < "$alg_list_dir/SPHINCS-ALPHA_variations.txt"
+    done < "$alg_list_dir/SPHINCS_ALPHA_variations.txt"
 
     while IFS= read -r line; do
         SQI_VARIATIONS+=("$line")
@@ -127,7 +127,7 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         MED_VARIATIONS+=("$line")
-    done < "$alg_list_dir/MED-alg_list_dir0alg_list_dir3_variations.txt"
+    done < "$alg_list_dir/MEDS_2023_variations.txt"
 
     while IFS= read -r line; do
         HAWK_VARIATIONS+=("$line")
@@ -135,11 +135,11 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         EHTV3V4_VARIATIONS+=("$line")
-    done < "$alg_list_dir/ehtv3v4_variations.txt"
+    done < "$alg_list_dir/EHTv3v4_variations.txt"
 
     while IFS= read -r line; do
         HUFU_VARIATIONS+=("$line")
-    done < "$alg_list_dir/hufu_variations.txt"
+    done < "$alg_list_dir/HuFu_variations.txt"
 
     while IFS= read -r line; do
         THREE_WISE_VARIATIONS+=("$line")
@@ -159,7 +159,7 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         SDITH_HYPERCUBE_VARIATIONS+=("$line")
-    done < "$alg_list_dir/sdith_hypercube_variations.txt"
+    done < "$alg_list_dir/SDitH_hypercube_variations.txt"
 
 }
 
@@ -181,6 +181,10 @@ function main() {
         
     elif [ "$1" == "clear" ]; then
         clear_env_vars
+    
+    else
+        echo -e "\nInvalid argument passed from calling script. Args passed to script must be either 'set' or 'clear'"
+        echo -e "Args passed: arg-1: $1, arg-2: $2\n" 
     fi
 
 }

@@ -34,10 +34,10 @@ sig_algs=(
 function array_util_call() {
 
     # Call the array utility script to export the variation arrays
-    "$root_dir/scripts/variation_array_util.sh" "export" "$alg_list_dir"
+    source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_list_dir"
 
     # Import the variation arrays from environment variables
-    IFS=',' read -r -a raccon_variations <<< "$RACCON_VARIATIONS"
+    IFS=',' read -r -a raccoon_variations <<< "$RACCON_VARIATIONS"
     IFS=',' read -r -a biscuit_variations <<< "$BISCUIT_VARIATIONS"
     IFS=',' read -r -a cross_variations <<< "$CROSS_VARIATIONS"
     IFS=',' read -r -a faest_variations <<< "$FAEST_VARIATIONS"
@@ -57,7 +57,7 @@ function array_util_call() {
     IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
 
     # Call the array utility script to clear environment variables
-    "$root_dir/scripts/variation_array_util.sh" "clear"
+    source "$root_dir/scripts/variation_array_util.sh" "clear"
 
 }
 
@@ -146,6 +146,8 @@ function variations_setup() {
     # Setting up the variations of the raccoon signature algorithm
     raccoon_src_dir=$nist_src_dir/Raccoon/Reference_Implementation
     raccoon_dst_dir=$lib_dir/raccoon
+
+    echo "raccon_variatios array call from a diferent funciton: ${raccon_variations[@]}"
     
     # Loop through the variation dirs
     for variation in "${raccoon_variations[@]}"; do
@@ -158,7 +160,6 @@ function variations_setup() {
         make clean >> /dev/null
     done
 
-
     # Setting up the variations of the biscuit signature algorithm
     biscuit_src_dir=$nist_src_dir/biscuit/Reference_Implementation
     biscuit_dst_dir=$lib_dir/biscuit
@@ -166,7 +167,6 @@ function variations_setup() {
     cd $biscuit_src_dir
 
     # Loop through the variation dirs
-
     for variation_dir in "${biscuit_variations[@]}"; do
         variation_dir_path="$biscuit_src_dir/$variation_dir"
         cd $variation_dir_path
@@ -199,89 +199,89 @@ function variations_setup() {
     done
 
     # Setting up variations of the FAEST signature algorithm
-    FAEST_src_dir=$nist_src_dir/FAEST/Reference_Implementation
-    FAEST_dst_dir=$lib_dir/FAEST
+    faest_src_dir=$nist_src_dir/FAEST/Reference_Implementation
+    faest_dst_dir=$lib_dir/FAEST
 
-    cd $FAEST_src_dir
+    cd $faest_src_dir
 
-    for variation in "${FAEST_variations[@]}"; do
+    for variation in "${faest_variations[@]}"; do
     
         # Set directory path based on current variation
-        variation_dir_path="$FAEST_src_dir/$variation"
+        variation_dir_path="$faest_src_dir/$variation"
         
         cd $variation_dir_path
     
         # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
         make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$FAEST_dst_dir/pqcsign_$variation"
+        mv "$variation_dir_path/pqcsign" "$faest_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
     
     done
 
     # Setting up variations of the FuLecca signature algorithm
-    FuLecca_src_dir=$nist_src_dir/FuLecca/Reference_Implementation
-    FuLecca_dst_dir=$lib_dir/FuLecca
+    fulecca_src_dir=$nist_src_dir/FuLecca/Reference_Implementation
+    fulecca_dst_dir=$lib_dir/FuLecca
 
     cd $FuLecca_src_dir
 
-    for variation in "${FuLecca_variations[@]}"; do
+    for variation in "${fulecca_variations[@]}"; do
     
         echo "current variation - $variation"
         # Set directory path based on current variation
-        variation_dir_path="$FuLecca_src_dir/$variation"
+        variation_dir_path="$fulecca_src_dir/$variation"
         
         cd $variation_dir_path
         
         # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
         make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$FuLecca_dst_dir/pqcsign_$variation"
+        mv "$variation_dir_path/pqcsign" "$fulecca_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
     
     done
 
     # Setting up variations of the pqsigRM signature algorithm
-    pqsigRM_src_dir=$nist_src_dir/pqsigRM/Reference_Implementation
-    pqsigRM_dst_dir=$lib_dir/pqsigRM
+    pqsigrm_src_dir=$nist_src_dir/pqsigRM/Reference_Implementation
+    pqsigrm_dst_dir=$lib_dir/pqsigRM
 
-    cd $pqsigRM_src_dir
+    cd $pqsigrm_src_dir
 
-    for variation in "${pqsigRM_variations[@]}"; do
+    for variation in "${pqsigrm_variations[@]}"; do
     
         echo "current variation - $variation"
         # Set directory path based on current variation
-        variation_dir_path="$pqsigRM_src_dir/$variation"
+        variation_dir_path="$pqsigrm_src_dir/$variation"
         
         cd $variation_dir_path
         
         # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
         make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$pqsigRM_dst_dir/pqcsign_$variation"
+        mv "$variation_dir_path/pqcsign" "$pqsigrm_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
     
     done
 
     # Setting up variations of the SPHINCS-ALPHA signature algorithm
-    SPHINCS_ALPHA_src_dir=$nist_src_dir/SPHINCS_ALPHA/Reference_Implementation
-    SPHINCS_ALPHA_dst_dir=$lib_dir/SPHINCS_ALPHA
+    sphincs_alpha_src_dir=$nist_src_dir/SPHINCS_ALPHA/Reference_Implementation
+    sphincs_alpha_dst_dir=$lib_dir/SPHINCS_ALPHA
 
-    cd $SPHINCS_ALPHA_src_dir
+    cd $sphincs_alpha_src_dir
 
-    for variation in "${SPHINCS_ALPHA_variations[@]}"; do
+    for variation in "${sphincs_alpha_variations[@]}"; do
 
         echo "current variation - $variation"
         # Set directory path based on current variation
-        variation_dir_path="$SPHINCS_ALPHA_src_dir/$variation"
+        variation_dir_path="$sphincs_alpha_src_dir/$variation"
         
         cd $variation_dir_path
         
         # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
         make -j $(nproc)
-        mv "$variation_dir_path/pqcsign" "$SPHINCS_ALPHA_dst_dir/pqcsign_$variation"
+        mv "$variation_dir_path/pqcsign" "$sphincs_alpha_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
     
@@ -328,7 +328,7 @@ function variations_setup() {
     done
 
     # Setting up variations of the MED-2023 signature algorithm
-    med_src_dir=$nist_src_dir/MEDS_2023/Reference_Implementation
+    med_src_dir=$nist_src_dir/MEDS-2023/Reference_Implementation
     med_dst_dir=$lib_dir/MEDS_2023
 
     cd $med_src_dir
@@ -369,7 +369,7 @@ function variations_setup() {
 
     cd $ehtv3v4_src_dir
 
-    for variation in "${eht3v4_variations[@]}"; do
+    for variation in "${ehtv3v4_variations[@]}"; do
 
         variation_dir_path="$ehtv3v4_src_dir/$variation"
         cd $variation_dir_path
@@ -492,10 +492,6 @@ function variations_setup() {
 
     # Setting up the Hypercube variants
     cd $sdith_hybercube_src_dir
-    # echo $sdith_hybercube_src_dir
-    # pwd
-
-    echo $sdith_hypercube_variations
 
     for variation in "${sdith_hypercube_variations[@]}"; do
 
