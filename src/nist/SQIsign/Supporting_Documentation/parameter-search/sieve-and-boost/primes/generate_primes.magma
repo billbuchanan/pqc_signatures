@@ -1,0 +1,35 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+//
+// This script was used to generate all primes up to 2^24.
+// They are stored in the file primes_upto_2pow24.csv.
+
+// Generate primes up to B.
+logB := 24;
+B := 2^logB;
+PB := PrimesUpTo(B-1);
+nB := #PB;
+
+// Print to a csv file.
+file := "primes_upto_2pow" cat IntegerToString(logB) cat ".csv";
+// ppr: primes per row in the file.
+ppr := 8;
+
+nrows := nB div ppr + 1;
+nrest := nB mod ppr;
+assert nB eq nrest + (nrows-1)*ppr;
+
+for n in [1..nrows-1] do
+    str := "";
+    for i in [1..ppr-1] do
+        str := str cat Sprintf("%o,", PB[i + (n-1)*ppr]);
+    end for;
+    str := str cat Sprintf("%o", PB[n*ppr]);
+    Write(file, str);
+end for;
+str := "";
+for i in [1..nrest-1] do
+    str := str cat Sprintf("%o,", PB[i + (nrows-1)*ppr]);
+end for;
+str := str cat Sprintf("%o", PB[nB]);
+Write(file, str);

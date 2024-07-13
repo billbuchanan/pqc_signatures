@@ -1,0 +1,100 @@
+/*! \mainpage RYDE: a Digital Signature scheme
+ *
+ *  1. SUBMISSION OVERVIEW
+ *  ----------------------
+ *
+ * Both reference implementation and optimized implementation provided for this submission are the same. The six parameters sets denoted respectively RYDE-128F, RYDE-128S, RYDE-192F, RYDE-192S, RYDE-256F and RYDE-256S are provided as explained in the supporting documentation. Each parameter set folder is organized as follows:
+ * 
+ *  - <b>bin/</b>: Files generated during compilation
+ *  - <b>doc/</b>: Technical documentation of the scheme
+ *  - <b>lib/</b>: Third party libraries used 
+ *  - <b>src/</b>: Source code of the scheme  
+ *  - <b>doxygen.conf</b>: Documentation configuration file
+ *  - <b>Makefile</b>: Makefile
+ *  
+ *  <br />
+ *  
+ *  2. INSTALLATION INSTRUCTIONS
+ *  ----------------------------
+ *  
+ *  <h3>2.1 Requirements</h3>
+ *
+ *  The following softwares and librairies are required: <b>gcc</b> and <b>openssl</b>.
+ *
+ *  <h3>2.2 Compilation Step</h3>
+ *
+ *  Let <b>X</b> denotes <b>128</b>, <b>192</b> or <b>256</b> depending on the parameter set considered. RYDE can be compiled in three differents ways:
+ *  - Execute <b>make rydeX-main</b> to compile a working example of the scheme. Run <b>bin/rydeX-main</b> to execute the scheme and display its performances.
+ *  - Execute <b>make rydeX-bench</b> to compile a working example of the scheme. Run <b>bin/rydeX-bench</b> to execute the scheme and display its performances.
+ *  - Execute <b>make rydeX-kat</b> to compile the NIST KAT generator. Run <b>bin/rydeX-kat</b> to generate KAT files.
+ *  - Execute <b>make rydeX-verbose</b> to compile a working example of the scheme in verbose mode. Run <b>bin/rydeX-verbose</b> to generate intermediate values.
+ *
+ *  During compilation, the following files are created inside the <b>bin/build</b> folder:
+ *  - <b>SimpleFIPS202.o</b>: SHAKE implementation (from XKCP project)
+ *  - <b>KeccakHash.o</b>: SHAKE/SHA3 implementation (from XKCP project)
+ *  - <b>KeccakSponge.o</b>: Sponge construction required in SHAKE/SHA3 implementation (from XKCP project)
+ *  - <b>KeccakHashtimes4.o</b>: SHAKE/SHA3 (4 in parallel) implementation (from XKCP project)
+  *  - <b>KeccakSpongetimes4.o</b>: Sponge construction required in SHAKE/SHA3 (4 in parallel) implementation (from XKCP project)
+ *  - <b>randombytes.o</b>: NIST randombytes implementation
+ *  - <b>seedexpander.o</b>: SHAKE-based seed expander implementation
+ *  - <b>rbc_elt.o</b>: Functions to manipulate finite fields elements.
+ *  - <b>rbc_mat.o</b>: Functions to manipulate matrices.
+ *  - <b>rbc_qpoly.o</b>: Functions to manipulate q-polynomials.
+ *  - <b>rbc_vec.o</b>: Functions to manipulate vectors.
+ *  - <b>rbc_vspace.o</b>: Functions to manipulate vector spaces.
+ *  - <b>mpc.o</b>: Functions to perform the Multi-Party-Computation (MPC) using the Hypercube technique.
+ *  - <b>parsing.o</b>: Functions to parse public key, secret key and signature of the scheme.
+ *  - <b>tree.o</b>: Functions to construct seed trees and partial trees.
+ *  - <b>keypair.o</b>: The RYDE key pair generation (either in normal mode or verbose mode).
+ *  - <b>signature.o</b>: The RYDE signing procedure (either in normal mode or verbose mode).
+ *  - <b>verification.o</b>: The RYDE verifying procedure (either in normal mode or verbose mode).
+ *  - <b>sign.o</b>: The RYDE DS scheme (either in normal mode or verbose mode).
+ *
+ * <br />
+ *
+ *  3. DOCUMENTATION GENERATION
+ *  ---------------------------
+ *
+ *  <h3>3.1 Requirements</h3>
+ *
+ *  The following softwares are required: <b>doxygen</b> and <b>bibtex</b>.
+ *
+ *  <h3>3.2 Generation Step</h3>
+ * 
+ *  - Run <b>doxygen doxygen.conf</b> to generate the code documentation
+ *  - Browse <b>doc/html/index.html</b> to read the documentation
+ *
+ * <br />
+ *
+ *  4. ADDITIONAL INFORMATIONS
+ *  --------------------------
+ *
+ *  <h3>4.1 Implementation overview</h3>
+ *
+ *  The <b>RYDE</b> scheme is defined in the api.h and parameters.h files and implemented in sign.c.
+ *  The latter is based on the MPC construction of \cite cryptoeprint:2022:1512 using the Hypercube techniques from \cite cryptoeprint:2022:1645, which is defined in mpc.h and implemented in mpc.c.
+ *  The files rbc.h, rbc_elt.h, rbc_mat.h, rbc_qpoly.h, rbc_vec.h, rbc_vspace.h, rbc_elt.c, rbc_mat.c, rbc_qpoly.c, rbc_vec.c and rbc_vspace.c provide the functions performing the various operations over finite fields required by the scheme.
+ *  As public key, secret key and signature can manipulated either with theirs mathematical representations or as bit strings, the files parsing.h and parsing.c provide functions to switch between these two representations.
+ *  Finally, the files hash_fips202.h and seedexpander_shake.h (inside the src/wrapper), randombytes.h, randombytes.c, along with the files in the XKCP folder (inside the lib/ folder), provides SHAKE and SHA3 implementations as well as the NIST random functions.
+ *
+ *  <h3>4.2 Finite field interface</h3>
+ *
+ *  RYDE is a rank-based scheme and as such heavily relies on finite field arithmetic. 
+ *  We have provided an interface for finite fields (through files rbc.h, rbc_elt.h, mat.h, rbc_qpoly.h, rbc_vec.h and rbc_vspace.h) describing the various operations required by the scheme.
+ *  In the context of our ffi interface, a finite field always describes an extension of a binary field namely a finite field of the form GF(2^m).
+ *
+ *  - <b>rbc.h</b>: Constants that defines the considered finite field ;
+ *  - <b>rbc_elt.h</b>: Functions to manipulate elements of GF(2^m) ;
+ *  - <b>rbc_mat.h</b>: Functions to manipulate matrices over GF(2^m);
+ *  - <b>rbc_qpoly.h</b>: Functions to manipulate q-polynomials over GF(2^m) ;
+ *  - <b>rbc_vec.h</b>: Functions to manipulate vectors over GF(2^m) ;
+ *  - <b>rbc_vspace.h</b>: Functions to manipulate subspaces of GF(2^m) ;
+ *  
+ *  In our reference implementation, the considered fields are GF(2^31), GF(2^37) and GF(2^43) for RYDE-128, RYDE-192 and RYDE-256.
+ *
+ *  <h3>4.3 Public key, secret key, signature and shared secret</h3>
+ *
+ *  The public key, secret key and signature are respectively composed of (<b>h</b>, <b>y</b>), (<b>x</b>) and (<b>sm</b>, <b>m</b>).
+ *  In order to shorten the keys, the public key is stored as (<b>seed1</b>, <b>y</b>) and the secret key is stored as (<b>seed2</b>).
+ *
+ */

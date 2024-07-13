@@ -2,12 +2,10 @@
 #------------------------------------------------------------------------------
 root_dir=$(dirname $(pwd))
 src_dir=$root_dir/src
-lib_dir=$root_dir/lib
+bin_dir=$root_dir/bin
 test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 alg_list_dir=$test_data_dir/alg_lists
-
-sig_algs=("raccoon")
 
 #------------------------------------------------------------------------------
 function array_util_call() {
@@ -73,69 +71,69 @@ function cycles_test {
     for variation in "${raccoon_variations[@]}"; do
         echo -e "\nRunning raccoon test for $variation"
         variation_lower="${variation,,}"
-        $lib_dir/raccoon/pqcsign_$variation_lower >> $results_dir/sig_speed_results.txt
+        $bin_dir/Raccoon/pqcsign_$variation_lower >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${biscuit_variations[@]}"; do
         echo -e "\nRunning biscuit test for $variation"
-        $lib_dir/biscuit/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/Biscuit/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${cross_variations[@]}"; do
         echo -e "\nRunning cross test for $variation"
-        $lib_dir/cross/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/CROSS/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${FAEST_variations[@]}"; do
         echo -e "\nRunning FAEST test for $variation"
-        $lib_dir/FAEST/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/FAEST/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${FuLecca_variations[@]}"; do
         echo -e "\nRunning FuLecca test for $variation"
-        $lib_dir/FuLecca/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/FuLecca/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${pqsigRM_variations[@]}"; do
         echo -e "\nRunning pqsigRM test for $variation"
-        $lib_dir/pqsigRM/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/Enhanced_pqsigRM/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${SPHINCS_ALPHA_variations[@]}"; do
         echo -e "\nRunning SPHINCS-ALPHA test for $variation"
-        $lib_dir/SPHINCS-ALPHA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/SPHINCS_alpha/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${sqi_variations[@]}"; do
         echo -e "\nRunning sqi test for $variation"
-        $lib_dir/sqi/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/SQIsign/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${uov_variations[@]}"; do
         echo -e "\nRunning uov test for $variation"
-        $lib_dir/uov/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/UOV/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${med_variations[@]}"; do
         echo -e "\nRunning MEDS-2023 test for $variation"
-        $lib_dir/MEDS_2023/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/MEDS/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${hawk_variations[@]}"; do
         echo -e "\nRunning hawk test for $variation"
-        $lib_dir/hawk/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/HAWK/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
     
     for variation in "${ehtv3v4_variations[@]}"; do
         echo -e "\nRunning EHTv3v4 test for $variation"
-        $lib_dir/EHTv3v4/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/EHTv3v4/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     if [ $hufu_included == 1 ]; then
 
         for variation in "${hufu_variations[@]}"; do
             echo -e "\nRunning hufu test for $variation"
-            $lib_dir/HuFu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+            $bin_dir/HuFu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
         done
 
     else
@@ -144,27 +142,27 @@ function cycles_test {
 
     for variation in "${three_wise_variations[@]}"; do
         echo -e "\nRunning 3WISE test for $variation"
-        $lib_dir/3WISE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/3WISE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${mira_variations[@]}"; do
         echo -e "\nRunning MIRA test for $variation"
-        $lib_dir/MIRA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/MIRA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${perk_variations[@]}"; do
         echo -e "\nRunning PERK test for $variation"
-        $lib_dir/perk/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/PERK/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${ryde_variations[@]}"; do
         echo -e "\nRunning RYDE test for $variation"
-        $lib_dir/ryde/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/RYDE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
     for variation in "${sdith_hypercube_variations[@]}"; do
         echo -e "\nRunning SDITH-Hypercube test for $variation"
-        $lib_dir/SDitH/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/SDitH/pqcsign_$variation >> $results_dir/sig_speed_results.txt
     done
 
 }

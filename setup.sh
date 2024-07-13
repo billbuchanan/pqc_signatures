@@ -4,37 +4,20 @@
 root_dir=$(pwd)
 src_dir=$root_dir/src
 nist_src_dir=$src_dir/nist
-lib_dir=$root_dir/lib
+bin_dir=$root_dir/bin
 test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
-alg_list_dir=$test_data_dir/alg_lists
+algs_list_dir=$test_data_dir/sig_algs_list
+alg_variations_dir=$test_data_dir/alg_variation_lists
 
-sig_algs=(
-    "raccoon"
-    "biscuit"
-    "cross"
-    "FAEST"
-    "FuLecca"
-    "pqsigRM"
-    "SPHINCS_ALPHA"
-    "sqi"
-    "uov"
-    "MEDS_2023"
-    "hawk"
-    "EHTv3v4"
-    "HuFu"
-    "3WISE"
-    "MIRA"
-    "perk"
-    "ryde"
-    "SDitH"
-)
+
+
 
 #------------------------------------------------------------------------------
 function array_util_call() {
 
     # Call the array utility script to export the variation arrays
-    source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_list_dir"
+    source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_variations_dir"
 
     # Import the variation arrays from environment variables
     IFS=',' read -r -a raccoon_variations <<< "$RACCON_VARIATIONS"
@@ -65,7 +48,7 @@ function array_util_call() {
 function environment_setup() {
 
     # Check if the base required directories exist
-    required_dirs=($lib_dir $results_dir)
+    required_dirs=($bin_dir $results_dir)
 
     for dir in "${required_dirs[@]}"; do
 
@@ -80,10 +63,10 @@ function environment_setup() {
     # Check if the required lib directories exist for the various signature algorithms
     for sig_alg in "${sig_algs[@]}"; do
 
-        if [ ! -d $lib_dir/$sig_alg ]; then
-            mkdir -p $lib_dir/$sig_alg
+        if [ ! -d $bin_dir/$sig_alg ]; then
+            mkdir -p $bin_dir/$sig_alg
         else
-            rm -rf $lib_dir/$sig_alg && mkdir -p $lib_dir/$sig_alg
+            rm -rf $bin_dir/$sig_alg && mkdir -p $bin_dir/$sig_alg
         fi
 
     done
@@ -107,6 +90,11 @@ function environment_setup() {
 
     # Call the array utility script to get the alg variation arrays
     array_util_call
+
+    # Read in all algs list file to create the sig_algs array
+    while IFS= read -r line; do
+        sig_algs+=("$line")
+    done < "$algs_list_dir/sig_algs.txt"
 
 }
 
@@ -140,12 +128,12 @@ function set_build_cross_flags() {
 
 }
 
-#------------------------------------------------------------------------------
-function copy_modifed_src_files() {
+# #------------------------------------------------------------------------------
+# function copy_modifed_src_files() {
 
     
 
-}
+# }
 
 
 #------------------------------------------------------------------------------
@@ -155,7 +143,7 @@ function variations_setup() {
 
     # Setting up the variations of the raccoon signature algorithm
     raccoon_src_dir=$nist_src_dir/Raccoon/Reference_Implementation
-    raccoon_dst_dir=$lib_dir/raccoon
+    raccoon_dst_dir=$bin_dir/Raccoon
 
     echo "raccon_variatios array call from a diferent funciton: ${raccon_variations[@]}"
     
@@ -171,8 +159,8 @@ function variations_setup() {
     done
 
     # Setting up the variations of the biscuit signature algorithm
-    biscuit_src_dir=$nist_src_dir/biscuit/Reference_Implementation
-    biscuit_dst_dir=$lib_dir/biscuit
+    biscuit_src_dir=$nist_src_dir/Biscuit/Reference_Implementation
+    biscuit_dst_dir=$bin_dir/Biscuit
 
     cd $biscuit_src_dir
 
@@ -188,8 +176,8 @@ function variations_setup() {
 
 
     # Setting up variations of the cross signing algorithm
-    cross_src_dir=$nist_src_dir/cross/Reference_Implementation
-    cross_dst_dir=$lib_dir/cross
+    cross_src_dir=$nist_src_dir/CROSS/Reference_Implementation
+    cross_dst_dir=$bin_dir/CROSS
 
     cd $cross_src_dir
 
@@ -210,7 +198,7 @@ function variations_setup() {
 
     # Setting up variations of the FAEST signature algorithm
     faest_src_dir=$nist_src_dir/FAEST/Reference_Implementation
-    faest_dst_dir=$lib_dir/FAEST
+    faest_dst_dir=$bin_dir/FAEST
 
     cd $faest_src_dir
 
@@ -232,13 +220,12 @@ function variations_setup() {
 
     # Setting up variations of the FuLecca signature algorithm
     fulecca_src_dir=$nist_src_dir/FuLecca/Reference_Implementation
-    fulecca_dst_dir=$lib_dir/FuLecca
+    fulecca_dst_dir=$bin_dir/FuLecca
 
-    cd $FuLecca_src_dir
+    cd $fulecca_src_dir
 
     for variation in "${fulecca_variations[@]}"; do
     
-        echo "current variation - $variation"
         # Set directory path based on current variation
         variation_dir_path="$fulecca_src_dir/$variation"
         
@@ -253,8 +240,8 @@ function variations_setup() {
     done
 
     # Setting up variations of the pqsigRM signature algorithm
-    pqsigrm_src_dir=$nist_src_dir/pqsigRM/Reference_Implementation
-    pqsigrm_dst_dir=$lib_dir/pqsigRM
+    pqsigrm_src_dir=$nist_src_dir/Enhanced_pqsigRM/Reference_Implementation
+    pqsigrm_dst_dir=$bin_dir/Enhanced_pqsigRM
 
     cd $pqsigrm_src_dir
 
@@ -275,8 +262,8 @@ function variations_setup() {
     done
 
     # Setting up variations of the SPHINCS-ALPHA signature algorithm
-    sphincs_alpha_src_dir=$nist_src_dir/SPHINCS_ALPHA/Reference_Implementation
-    sphincs_alpha_dst_dir=$lib_dir/SPHINCS_ALPHA
+    sphincs_alpha_src_dir=$nist_src_dir/SPHINCS_alpha/Reference_Implementation
+    sphincs_alpha_dst_dir=$bin_dir/SPHINCS_alpha
 
     cd $sphincs_alpha_src_dir
 
@@ -298,9 +285,9 @@ function variations_setup() {
     done
 
     # Setting up variations of the sqi signature algorithm
-    sqi_src_dir=$nist_src_dir/sqi/Reference_Implementation
-    sqi_dst_dir=$lib_dir/sqi
-    sqi_build_dir=$nist_src_dir/sqi/Reference_Implementation/build
+    sqi_src_dir=$nist_src_dir/SQIsign/Reference_Implementation
+    sqi_dst_dir=$bin_dir/SQIsign
+    sqi_build_dir=$nist_src_dir/SQIsign/Reference_Implementation/build
     sqi_apps_dir=$sqi_build_dir/apps
 
     cd $sqi_src_dir
@@ -319,8 +306,8 @@ function variations_setup() {
 
 
     # Setting up variations of the uov signature algorithm
-    uov_src_dir=$nist_src_dir/uov/Reference_Implementation
-    uov_dst_dir=$lib_dir/uov
+    uov_src_dir=$nist_src_dir/UOV/Reference_Implementation
+    uov_dst_dir=$bin_dir/UOV
 
     cd $uov_src_dir
 
@@ -338,8 +325,8 @@ function variations_setup() {
     done
 
     # Setting up variations of the MED-2023 signature algorithm
-    med_src_dir=$nist_src_dir/MEDS-2023/Reference_Implementation
-    med_dst_dir=$lib_dir/MEDS_2023
+    med_src_dir=$nist_src_dir/MEDS/Reference_Implementation
+    med_dst_dir=$bin_dir/MEDS
 
     cd $med_src_dir
 
@@ -357,8 +344,8 @@ function variations_setup() {
     done
 
     # Setting up variations of the hawk signature algorithm
-    hawk_src_dir=$nist_src_dir/hawk/Reference_Implementation
-    hawk_dst_dir=$lib_dir/hawk
+    hawk_src_dir=$nist_src_dir/HAWK/Reference_Implementation
+    hawk_dst_dir=$bin_dir/HAWK
 
     cd $hawk_src_dir
 
@@ -375,7 +362,7 @@ function variations_setup() {
 
     # Setting up variations of the eht3v4 signature algorithm
     ehtv3v4_src_dir=$nist_src_dir/EHTv3v4/Reference_Implementation
-    eht3v4_dst_dir=$lib_dir/EHTv3v4
+    eht3v4_dst_dir=$bin_dir/EHTv3v4
 
     cd $ehtv3v4_src_dir
 
@@ -392,7 +379,7 @@ function variations_setup() {
 
     # Setting up variations of the hufu signature algorithm
     hufu_src_dir=$nist_src_dir/HuFu/Reference_Implementation
-    hufu_dst_dir=$lib_dir/HuFu
+    hufu_dst_dir=$bin_dir/HuFu
 
     for variation in "${hufu_variations[@]}"; do
 
@@ -407,7 +394,7 @@ function variations_setup() {
 
     # Setting up variations of the 3wise signature algorithm
     three_wise_src_dir=$nist_src_dir/3WISE/Reference_Implementation
-    three_wise_dst_dir=$lib_dir/3WISE
+    three_wise_dst_dir=$bin_dir/3WISE
     three_wise_flint_path=$three_wise_src_dir/flint
 
     cd $three_wise_src_dir
@@ -443,7 +430,7 @@ function variations_setup() {
 
     # Setting up variations of the MIRA signature algorithm
     mira_src_dir=$nist_src_dir/MIRA/Reference_Implementation
-    mira_dst_dir=$lib_dir/MIRA
+    mira_dst_dir=$bin_dir/MIRA
 
     cd $mira_src_dir
 
@@ -459,8 +446,8 @@ function variations_setup() {
     done
 
     # Setting up variations of the PERK signature algorithm
-    perk_src_dir=$nist_src_dir/perk/Reference_Implementation
-    perk_dst_dir=$lib_dir/perk
+    perk_src_dir=$nist_src_dir/PERK/Reference_Implementation
+    perk_dst_dir=$bin_dir/PERK
 
     cd $perk_src_dir
 
@@ -476,14 +463,12 @@ function variations_setup() {
     done
 
     # Setting up variations of the ryde signature algorithm
-    ryde_src_dir=$nist_src_dir/ryde/Reference_Implementation
-    ryde_dst_dir=$lib_dir/ryde
+    ryde_src_dir=$nist_src_dir/RYDE/Reference_Implementation
+    ryde_dst_dir=$bin_dir/RYDE
 
     cd $ryde_src_dir
 
     for variation in "${ryde_variations[@]}"; do
-
-        echo "current variation - $variation"
 
         variation_dir_path="$ryde_src_dir/$variation"
         cd $variation_dir_path
@@ -498,7 +483,7 @@ function variations_setup() {
     sdith_src_dir=$nist_src_dir/SDitH/Reference_Implementation
     sdith_hybercube_src_dir="$sdith_src_dir/Hypercube_Variant"
     sdith_threshold_src_dir="$sdith_src_dir/Threshold_Variant"
-    sdith_dst_dir=$lib_dir/SDitH
+    sdith_dst_dir=$bin_dir/SDitH
 
     # Setting up the Hypercube variants
     cd $sdith_hybercube_src_dir

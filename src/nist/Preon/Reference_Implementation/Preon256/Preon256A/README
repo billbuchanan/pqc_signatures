@@ -1,0 +1,34 @@
+# Preon
+
+Preon C implementation
+
+## Dependencies
+
+Make sure you have `openssl` installed
+
+### Debian and Ubuntu
+
+```bash
+sudo apt update
+sudo apt insatll libssl-dev -y
+```
+
+## To Build
+
+```bash
+make
+```
+
+## To Clean Up
+
+```bash
+make clean
+```
+
+## To Run
+
+```bash
+./PQCgenKAT_sign
+```
+
+Then it will generate .rsp and .req KAT files.

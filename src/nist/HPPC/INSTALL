@@ -1,0 +1,41 @@
+Debian uses FLINT version 2.6.3 and 2.8.2 for Ubuntu. These versions dont't have required fmpz_mod_mat functions (rank and inverse) between others.
+These were aggregated later, so version 2.9.0 is required.
+
+Tested OS:
+
+Fresh Debian GNU/LINUX 11 (Bullseye)
+Fresh Ubuntu Desktop 22.04.2 LTS
+
+Remark: You can use multiple threads to compile e:g make -j16 for sixteen threads. 
+
+Installation steps (Ubuntu & Debian)
+
+1) Install basic packages like C/C++ compilers, OpenSSL, NTL and M4ri plus FLINT dependencies
+
+sudo apt install make gcc g++ libssl-dev libntl-dev libm4ri-dev libgmp-dev libmpfr-dev libgf2x-dev libm4ri-0.0.20200125
+
+2) Fetch & Install Flint 2.9.0
+
+wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
+tar xfz v2.9.0.tar.gz
+cd flint2-2.9.0
+./configure
+make
+sudo make install
+sudo cp /usr/local/lib/libflint.so.17.0.0 /usr/lib/
+sudo ln /usr/lib/libflint.so.17.0.0 /usr/lib/libflint.so.17
+
+(You can find more info about tuning and installing flint at https://github.com/flintlib/flint2/blob/trunk/INSTALL)
+
+Arch Linux & Kali Linux:
+
+Install all dependencies from package manager (pacman, apt) as FLINT is present at version 2.9.0 
+
+On OpenBSD ARM64 (Raspberry PI 4b):
+
+OpenBSD comes with a basic toolchain for C/C++ compiling with Clang, yet some GNU features like make, autoreconf ...
+For installing flint use gmake instead of make and follow same steps (cp and ln commands)
+libntl is inside the ports system
+libm4ri must be manually compiled
+To compile follow this example using clang:
+cc -I /usr/local/include -L /usr/local/lib test.c $(HEADERS) $(SOURCES) $(LDFLAGS) $(OPTIMIZED) -std=c99

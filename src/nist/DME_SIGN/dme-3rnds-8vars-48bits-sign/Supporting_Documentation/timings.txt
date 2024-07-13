@@ -1,0 +1,9 @@
+Timings
+-------
+
+CPU: Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz
+OS : Linux Mint 21 x86_64
+
+keypair: 262 usec
+sign   :  35 usec (mlen = 200 bytes)
+open   :  11 usec (mlen = 200 bytes)

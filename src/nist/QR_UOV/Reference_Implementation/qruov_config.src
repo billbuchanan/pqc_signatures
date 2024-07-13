@@ -1,0 +1,44 @@
+-DQRUOV_dir=qruov1q127L3v156m54 -DQRUOV_security_strength_category=1 -DQRUOV_q=127 -DQRUOV_L=3 -DQRUOV_v=156 -DQRUOV_m=54 -DQRUOV_fc=1 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov1q31L10v600m70 -DQRUOV_security_strength_category=1 -DQRUOV_q=31 -DQRUOV_L=10 -DQRUOV_v=600 -DQRUOV_m=70 -DQRUOV_fc=5 -DQRUOV_fe=3 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov1q31L3v165m60 -DQRUOV_security_strength_category=1 -DQRUOV_q=31 -DQRUOV_L=3 -DQRUOV_v=165 -DQRUOV_m=60 -DQRUOV_fc=1 -DQRUOV_fe=1 -DQRUOV_fc0=1
+
+-DQRUOV_dir=qruov3q127L3v228m78 -DQRUOV_security_strength_category=3 -DQRUOV_q=127 -DQRUOV_L=3 -DQRUOV_v=228 -DQRUOV_m=78 -DQRUOV_fc=1 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q31L10v890m100 -DQRUOV_security_strength_category=3 -DQRUOV_q=31 -DQRUOV_L=10 -DQRUOV_v=890 -DQRUOV_m=100 -DQRUOV_fc=5 -DQRUOV_fe=3 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q31L3v246m87 -DQRUOV_security_strength_category=3 -DQRUOV_q=31 -DQRUOV_L=3 -DQRUOV_v=246 -DQRUOV_m=87 -DQRUOV_fc=1 -DQRUOV_fe=1 -DQRUOV_fc0=1
+
+-DQRUOV_dir=qruov5q127L3v306m105 -DQRUOV_security_strength_category=5 -DQRUOV_q=127 -DQRUOV_L=3 -DQRUOV_v=306 -DQRUOV_m=105 -DQRUOV_fc=1 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q31L10v1120m120 -DQRUOV_security_strength_category=5 -DQRUOV_q=31 -DQRUOV_L=10 -DQRUOV_v=1120 -DQRUOV_m=120 -DQRUOV_fc=5 -DQRUOV_fe=3 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q31L3v324m114 -DQRUOV_security_strength_category=5 -DQRUOV_q=31 -DQRUOV_L=3 -DQRUOV_v=324 -DQRUOV_m=114 -DQRUOV_fc=1 -DQRUOV_fe=1 -DQRUOV_fc0=1
+
+# (Apr 26 2023) deplecated
+
+-DQRUOV_dir=qruov1q127L10v550m60 -DQRUOV_security_strength_category=1 -DQRUOV_q=127 -DQRUOV_L=10 -DQRUOV_v=550 -DQRUOV_m=60 -DQRUOV_fc=5 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q127L10v830m90 -DQRUOV_security_strength_category=3 -DQRUOV_q=127 -DQRUOV_L=10 -DQRUOV_v=830 -DQRUOV_m=90 -DQRUOV_fc=5 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q127L10v1120m120 -DQRUOV_security_strength_category=5 -DQRUOV_q=127 -DQRUOV_L=10 -DQRUOV_v=1120 -DQRUOV_m=120 -DQRUOV_fc=5 -DQRUOV_fe=1 -DQRUOV_fc0=1
+
+# (Apr 5 2023) new
+
+-DQRUOV_dir=qruov1q7L10v740m100 -DQRUOV_security_strength_category=1 -DQRUOV_q=7 -DQRUOV_L=10 -DQRUOV_v=740 -DQRUOV_m=100 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q7L10v1100m140 -DQRUOV_security_strength_category=3 -DQRUOV_q=7 -DQRUOV_L=10 -DQRUOV_v=1150 -DQRUOV_m=140 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q7L10v1490m190 -DQRUOV_security_strength_category=5 -DQRUOV_q=7 -DQRUOV_L=10 -DQRUOV_v=1490 -DQRUOV_m=190 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+
+# (Apr 5 2023) deplecated
+
+-DQRUOV_dir=qruov1q127L24v1440m72 -DQRUOV_security_strength_category=1 -DQRUOV_q=127 -DQRUOV_L=24 -DQRUOV_v=1440 -DQRUOV_m=72 -DQRUOV_fc=12 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov1q31L26v1664m78 -DQRUOV_security_strength_category=1 -DQRUOV_q=31 -DQRUOV_L=26 -DQRUOV_v=1664 -DQRUOV_m=78 -DQRUOV_fc=6 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q127L36v3348m108 -DQRUOV_security_strength_category=3 -DQRUOV_q=127 -DQRUOV_L=36 -DQRUOV_v=3348 -DQRUOV_m=108 -DQRUOV_fc=10 -DQRUOV_fe=5 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q31L39v3783m117 -DQRUOV_security_strength_category=3 -DQRUOV_q=31 -DQRUOV_L=39 -DQRUOV_v=3783 -DQRUOV_m=117 -DQRUOV_fc=6 -DQRUOV_fe=2 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q127L48v6000m144 -DQRUOV_security_strength_category=5 -DQRUOV_q=127 -DQRUOV_L=48 -DQRUOV_v=6000 -DQRUOV_m=144 -DQRUOV_fc=16 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q31L37v4699m148 -DQRUOV_security_strength_category=5 -DQRUOV_q=31 -DQRUOV_L=37 -DQRUOV_v=4699 -DQRUOV_m=148 -DQRUOV_fc=22 -DQRUOV_fe=1 -DQRUOV_fc0=1
+
+# (Apr 5 2023) obsolete
+
+-DQRUOV_dir=qruov1q7L3v189m72 -DQRUOV_security_strength_category=1 -DQRUOV_q=7 -DQRUOV_L=3 -DQRUOV_v=189 -DQRUOV_m=72 -DQRUOV_fc=3 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov1q7L10v650m80 -DQRUOV_security_strength_category=1 -DQRUOV_q=7 -DQRUOV_L=10 -DQRUOV_v=650 -DQRUOV_m=80 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov1q7L33v2409m99 -DQRUOV_security_strength_category=1 -DQRUOV_q=7 -DQRUOV_L=33 -DQRUOV_v=2409 -DQRUOV_m=99 -DQRUOV_fc=3 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q7L3v291m111 -DQRUOV_security_strength_category=3 -DQRUOV_q=7 -DQRUOV_L=3 -DQRUOV_v=291 -DQRUOV_m=111 -DQRUOV_fc=3 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q7L10v1050m130 -DQRUOV_security_strength_category=3 -DQRUOV_q=7 -DQRUOV_L=10 -DQRUOV_v=1050 -DQRUOV_m=130 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov3q7L40v4640m160 -DQRUOV_security_strength_category=3 -DQRUOV_q=7 -DQRUOV_L=40 -DQRUOV_v=4640 -DQRUOV_m=160 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q7L3v411m162 -DQRUOV_security_strength_category=5 -DQRUOV_q=7 -DQRUOV_L=3 -DQRUOV_v=411 -DQRUOV_m=162 -DQRUOV_fc=3 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q7L10v1450m180 -DQRUOV_security_strength_category=5 -DQRUOV_q=7 -DQRUOV_L=10 -DQRUOV_v=1450 -DQRUOV_m=180 -DQRUOV_fc=2 -DQRUOV_fe=1 -DQRUOV_fc0=1
+-DQRUOV_dir=qruov5q7L45v7335m225 -DQRUOV_security_strength_category=5 -DQRUOV_q=7 -DQRUOV_L=45 -DQRUOV_v=7335 -DQRUOV_m=225 -DQRUOV_fc=1 -DQRUOV_fe=16 -DQRUOV_fc0=1

@@ -86,80 +86,80 @@ function clear_env_vars(){
 #------------------------------------------------------------------------------
 function create_alg_arrays() {
 
-    local alg_list_dir=$1
+    local alg_variations_dir=$1
 
     # Create arrays for algorithm variations
     while IFS= read -r line; do
         RACCON_VARIATIONS+=("$line")
-    done < "$alg_list_dir/raccoon_variations.txt"
+    done < "$alg_variations_dir/Raccoon_variations.txt"
 
     while IFS= read -r line; do
         BISCUIT_VARIATIONS+=("$line")
-    done < "$alg_list_dir/biscuit_variations.txt"
+    done < "$alg_variations_dir/Biscuit_variations.txt"
 
     while IFS= read -r line; do
         CROSS_VARIATIONS+=("$line")
-    done < "$alg_list_dir/cross_variations.txt"
+    done < "$alg_variations_dir/CROSS_variations.txt"
 
     while IFS= read -r line; do
         FAEST_VARIATIONS+=("$line")
-    done < "$alg_list_dir/FAEST_variations.txt"
+    done < "$alg_variations_dir/FAEST_variations.txt"
 
     while IFS= read -r line; do
         FULECCA_VARIATIONS+=("$line")
-    done < "$alg_list_dir/FuLecca_variations.txt"
+    done < "$alg_variations_dir/FuLecca_variations.txt"
 
     while IFS= read -r line; do
         PQSIGRM_VARIATIONS+=("$line")
-    done < "$alg_list_dir/pqsigRM_variations.txt"
+    done < "$alg_variations_dir/Enhanced_pqsigRM_variations.txt"
 
     while IFS= read -r line; do
         SPHINCS_ALPHA_VARIATIONS+=("$line")
-    done < "$alg_list_dir/SPHINCS_ALPHA_variations.txt"
+    done < "$alg_variations_dir/SPHINCS_alpha_variations.txt"
 
     while IFS= read -r line; do
         SQI_VARIATIONS+=("$line")
-    done < "$alg_list_dir/sqi_variations.txt"
+    done < "$alg_variations_dir/SQIsign_variations.txt"
 
     while IFS= read -r line; do
         UOV_VARIATIONS+=("$line")
-    done < "$alg_list_dir/uov_variations.txt"
+    done < "$alg_variations_dir/UOV_variations.txt"
 
     while IFS= read -r line; do
         MED_VARIATIONS+=("$line")
-    done < "$alg_list_dir/MEDS_2023_variations.txt"
+    done < "$alg_variations_dir/MEDS_variations.txt"
 
     while IFS= read -r line; do
         HAWK_VARIATIONS+=("$line")
-    done < "$alg_list_dir/hawk_variations.txt"
+    done < "$alg_variations_dir/HAWK_variations.txt"
 
     while IFS= read -r line; do
         EHTV3V4_VARIATIONS+=("$line")
-    done < "$alg_list_dir/EHTv3v4_variations.txt"
+    done < "$alg_variations_dir/EHTv3v4_variations.txt"
 
     while IFS= read -r line; do
         HUFU_VARIATIONS+=("$line")
-    done < "$alg_list_dir/HuFu_variations.txt"
+    done < "$alg_variations_dir/HuFu_variations.txt"
 
     while IFS= read -r line; do
         THREE_WISE_VARIATIONS+=("$line")
-    done < "$alg_list_dir/3WISE_variations.txt"
+    done < "$alg_variations_dir/3WISE_variations.txt"
 
     while IFS= read -r line; do
         MIRA_VARIATIONS+=("$line")
-    done < "$alg_list_dir/MIRA_variations.txt"
+    done < "$alg_variations_dir/MIRA_variations.txt"
 
     while IFS= read -r line; do
         PERK_VARIATIONS+=("$line")
-    done < "$alg_list_dir/perk_variations.txt"
+    done < "$alg_variations_dir/PERK_variations.txt"
 
     while IFS= read -r line; do
         RYDE_VARIATIONS+=("$line")
-    done < "$alg_list_dir/ryde_variations.txt"
+    done < "$alg_variations_dir/RYDE_variations.txt"
 
     while IFS= read -r line; do
         SDITH_HYPERCUBE_VARIATIONS+=("$line")
-    done < "$alg_list_dir/SDitH_hypercube_variations.txt"
+    done < "$alg_variations_dir/SDitH_hypercube_variations.txt"
 
 }
 
@@ -169,9 +169,9 @@ function main() {
     # Set or clear depending on the argument passed
     if [ "$1" == "set" ]; then
 
-        # Ensure alg_list_dir arugment passed is a dir and exists
+        # Ensure alg_variations_dir arugment passed is a dir and exists
         if [ ! -d "$2" ]; then
-            echo "Alg Array Creator Util Script Error: $alg_list_dir passed as argument in script is not a directory or does not exist"
+            echo "Alg Array Creator Util Script Error: alg_variation_lists directory variables passed as argument in script is not a directory or does not exist"
             exit 1
         fi
 

@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{xcolor}
+\usetikzlibrary{cd}
+
+
+\begin{document}
+\begin{gather*}
+\tilde{L}_2=(L_{21},\dots,L_{2n}),\quad
+L_{2k}:\mathbb{F}_q^m\to\mathbb{F}_q^m\\
+L_{2k}(\underline{y}_k)=\underline{y}_k B_{2k},\quad
+B_{2k}=(B_{ij}^k)\in\operatorname{M}_{m\times m}(\mathbb{F}_q),\quad
+|B_{2k}|\neq 0
+\end{gather*}
+
+\begin{gather*}
+L_3=\rho\circ\tilde{L}_3\circ\tilde{\pi}_2,\quad
+\tilde{L}_3=(L_{31},\dots,L_{3n}),\\
+L_{3k}(\underline{z}_k)=\underline{z}_k C_{3k},\quad
+C_{3k}=(C_{ij}^k)\in\operatorname{M}_{n\times n}(\mathbb{F}_q),\quad
+|C_{3k}|\neq 0
+\end{gather*}
+
+\begin{gather*}
+A_1\in\operatorname{M}_{m\times m}(\mathbb{Z}_{q^n-1}),\quad \gcd(|A_1|,q^n-1)=1\\
+G_1:(\mathbb{F}_{q^n})^m\to(\mathbb{F}_{q^n})^m,\quad
+G_1(u_1,\dots,u_m)=(u_1^{a_{11}}\dots u_m^{a_{1m}},\dots,u_1^{a_{m1}}\dots u_m^{a_{mm}})
+\end{gather*}
+
+\begin{gather*}
+A_1^{-1}\in\operatorname{M}_{m\times m}(\mathbb{Z}_{q^n-1}),\quad 
+(\mathbb{F}_{q^n}\setminus\{0\})^n
+\end{gather*}
+
+\begin{gather*}
+A_2\in\operatorname{M}_{n\times n}(\mathbb{Z}_{q^m-1}),\quad\gcd(|A_2|,q^m-1)=1\\
+G_2:(\mathbb{F}_{q^m})^n\to(\mathbb{F}_{q^m})^n,\quad
+G_2(v_1,\dots,v_n)=(v_1^{b_{11}}\dots v_n^{b_{1n}},\dots,v_1^{b_{n1}}\dots v_n^{b_{nn}})
+\end{gather*}
+
+\begin{gather*}
+F(x_{1},\dots,x_{nm})=(z_{1},\dots,z_{mn}),\quad F_k(\underline{x})\in\mathbb{F}_q[x_{1},\dots,x_{nm}]\\
+DM:\mathbb{F}_q^N\to\mathbb{F}_q^{nm}\quad
+F^{-1}(\underline{z})=L_1^{-1}\circ G_1^{-1}\circ L_2^{-1}\circ G_2^{-1}\circ L_3^{-1}(\underline{z})
+\end{gather*}
+
+\begin{gather*}
+\overline{x}_1,\dots,\overline{x}_k\in\mathbb{F}_q^N,\quad
+\underline{x}_i=H(\overline{x}_i)\in\mathbb{F}_q^{nm}
+\end{gather*}
+
+\begin{gather*}
+\underline{z}_i,\quad (\underline{z}_i)_j=F_j(\underline{x}_i)=\sum_u f_{u,j} M_u(\underline{x}_i)
+\end{gather*}
+
+\begin{gather*}
+\underline{z}=DM(\overline{x}),\quad \underline{z}\in\mathbb{F}_q^{nm}
+\end{gather*}
+
+\begin{gather*}
+h_1:\{1,\dots,N\}\to\{1,\dots,nm\}\\
+s=\operatorname{sig}(\overline{z})=(\overline{z},\overline{x},h_1)\\
+\overline{y}=DM_B(\overline{x}),\quad \overline{z}=DM_A^{-1}(\overline{y})
+\end{gather*}
+
+\begin{gather*}
+HAS:\mathbb{F}_2^e\to\mathbb{F}_2^b,\quad q=2^e\quad b<e\cdot N,\quad w=HAS(x)
+\end{gather*}
+
+
+
+
+\end{document}
