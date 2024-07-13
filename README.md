@@ -32,23 +32,23 @@ The following is a set of checklists which detail the algorithm currently implem
 
 ### Implemented
 - 3WISE
-- biscuit
-- cross
+- Biscuit
+- CROSS
 - EHTv3v4
 - FAEST
 - FuLeeca
-- hawk
-- HuFu†
-- MEDS_2023
+- HAWK
+- HuFu †
+- MEDS
 - MIRA
-- perk††
-- pqsigRM
+- PERK ††
+- Enhanced_pqsigRM
 - Raccoon
-- ryde
-- SDitH†††
-- SPHINCS_ALPHA
-- sqi
-- uov
+- RYDE
+- SDitH - Hypercube Variations †††
+- SPHINCS_alpha
+- SQIsign
+- UOV
 
 > † IMPORTANT Dev branch Notice: Benchmarking HuFU can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the HuFU algorithm and its respective variations will be presented when executing the automated benchmarking script.  
 
@@ -57,14 +57,36 @@ The following is a set of checklists which detail the algorithm currently implem
 > ††† IMPORTANT Dev branch Notice: The SDitH algorithm variations is currently partially functional apart from the threshold variants. This is due to issues with the code that performs the signature verification for these variations. This will be reviewed further but for the time being the rest of the SDiTH-Hypercube variations function correctly. 
 
 
-### Still to Implement
-
+### Still to be Implemented
+- AIMer
+- ALTEQ
+- Ascon_Sign
+- DME_Sign
+- EagleSign
+- eMLE_Sig_2.0
+- HAETAE
+- HPPC
+- KAZ_SIGN
+- LESS
+- MAYO
+- MiRitH
+- MQOM
+- Preon
+- PROV
+- QR_UOV
+- SDitH - Threshold Variations
+- SNOVA
+- SQUIRRELS
+- TUOV
+- VOX
+- Wave
+- Xifrat1_Sign_I
 
 ### Currently being Implemented 
-- N/A
+- SQUIRRELS
 
 
-**NOTE to Project Developers**
+#### **NOTE to Project Developers**
 
 When integrating any algorithm within the development branch and the relevant automated bash scripts, please refer to the implementation convention found here:
 
