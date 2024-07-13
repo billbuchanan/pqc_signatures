@@ -141,7 +141,17 @@ function set_build_cross_flags() {
 }
 
 #------------------------------------------------------------------------------
+function copy_modifed_src_files() {
+
+    
+
+}
+
+
+#------------------------------------------------------------------------------
 function variations_setup() {
+
+    mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
 
     # Setting up the variations of the raccoon signature algorithm
     raccoon_src_dir=$nist_src_dir/Raccoon/Reference_Implementation
