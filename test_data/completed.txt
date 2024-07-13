@@ -1,59 +1,58 @@
 -----------------------------------------------------------------------------------------------------
 Completed
-Biscuit
-Cross
-FAEST
-FuLecca
-pqsigRM
-Raccoon
-SPHINCS-ALPHA
-Sqi
-Uov
-MEDS-2023
-EHTv3v4
-HuFu
-3wise
-MIRA
-perk
-ryde
-SDitH - hypercube variants
-hawk !!!! - fix hawk makefile clean statements
-
+- 3WISE
+- Biscuit
+- CROSS
+- EHTv3v4
+- FAEST
+- FuLeeca
+- HAWK !!!! - fix hawk makefile clean statements
+- HuFu †
+- MEDS
+- MIRA
+- PERK ††
+- Enhanced_pqsigRM
+- Raccoon
+- RYDE
+- SDitH - Hypercube Variations †††
+- SPHINCS_alpha
+- SQIsign
+- UOV
 
 -----------------------------------------------------------------------------------------------------
 in progress:
-squirrels
+- SQUIRRELS
 
-
-------------------------------------------------------------------------------------------------------
-in progress (leave till last):
-AIMer
-EagleSign
-less
-WAVER1_1
-haetae
-SDitH - threshold variants
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-mirith
-MAYO
-HPPC
-QR_UOV
-SNOVA
-prov
-DME-SIGN_nist-pqc-2023
 
+- ALTEQ
+- Ascon_Sign
+- DME_Sign
+- eMLE_Sig_2.0
+- HPPC
+- KAZ_SIGN
+- MAYO
+- MiRitH
+- MQOM
+- Preon
+- PROV
+- QR_UOV
+- SNOVA
+- SQUIRRELS
+- TUOV
+- VOX
+- Xifrat1_Sign_I
 
-falcon 
-dilithium
-SPHINCS
-
-
-
-
-
-
+------------------------------------------------------------------------------------------------------
+in progress (leave till last):
+- AIMer
+- EagleSign
+- LESS
+- Wave
+- HAETAE
+- SDitH - Threshold Variations
 
 
 
