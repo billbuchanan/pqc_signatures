@@ -178,11 +178,15 @@ TUOV-V                            2,869,440           2,443,711                 
 VOX-128                              9,104               35,120                 102       1 (128-bit) Multivariate
 VOX-192                             30,351              111,297                 184       3 (192-bit) Multivariate
 VOX-256                             82,400              292,160                 300       5 (256-bit) Multivariate
+
+ALTEQ-I (balanced)                   8,024                   16              15,896       1 (128-bit) Other
+ALTEQ-III (balanced)                31,944                   24              49,000       3 (192-bit) Other
+ALTEQ-V (balanced)                  73,632                   32             122,336       5 (256-bit) Other
+
 ```
 
 And for performance in cycles (from papers):
 ```
-Method               Keygen           Sign         Verify
 ------------------------------------------------------------
 Dilithium 2          300,751        1,081,174      327,362 (Unoptimized, Ref, Skylake)
 Dilithium 3          544,232        1,713,783      522,267 
@@ -296,9 +300,13 @@ TUOV-I            10,682,834       220,792         127,722 Intel Core i5-10210U 
 TUOV-III          57,322,074       608,604         442,770
 TUOV-V           139,948,218     1,133,958         786,450
 
-VOX-128            2,350,064       679,237         396,311 Intel(R) Core(TM) i7-1185G7 at 3.00GHz
+VOX-128            2,350,064       679,237         396,311 intel(R) Core(TM) i7-1185G7 at 3.00GHz
 VOX-192            9,334,246     2,937,318       1,548,342
-VOX-256           26,097,363    13,226,130       3,734,592 
+VOX-256           26,097,363    13,226,130       3,734,592
+
+ALTEQ-I              385,015     2,847,138       4,226,834
+ALTEQ-III          1,964,572    36,460,660      46,054,633
+ALTEQ-V            4,859,458    59,708,622     103,463,869   
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
