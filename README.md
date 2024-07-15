@@ -184,10 +184,15 @@ ALTEQ-I (balanced)                   8,024                   16              15,
 ALTEQ-III (balanced)                31,944                   24              49,000       3 (192-bit) Other
 ALTEQ-V (balanced)                  73,632                   32             122,336       5 (256-bit) Other
 
+EMLE-I                                 416                  800                 280       1 (128-bit) Other
+EMLE-III                               672                1,200                 456       3 (192-bit) Other
+EMLE-V                                 960                1,600                 640       5 (256-bit) Other
+
 ```
 
 And for performance in cycles (from papers):
 ```
+Method               Keygen           Sign         Verify
 ------------------------------------------------------------
 Dilithium 2          300,751        1,081,174      327,362 (Unoptimized, Ref, Skylake)
 Dilithium 3          544,232        1,713,783      522,267 
@@ -251,7 +256,7 @@ WAVE-822       14,468,000,043   1,160,793,621    205,829,565  Intel i5-1135G7 at
 WAVE-1249      47,222,134,806   3,507,016,206    464,110,855
 WAVE-1612     108,642,333,507   7,936,541,947    813,301,900
 
-EagleSign3          1,020,723       1,283,454        955,956  1Intel Core i7-1260P  at 2.40GGz  
+EagleSign3          1,020,723       1,283,454        955,956  Intel Core i7-1260P  at 2.40GGz  
 EagleSign5          3,443,617       2,358,603      1,602,340
 
 EHTv3 Level 1     465,600,000   181,920,000      1,968,000    Intel Core(TM) i7-12800H at 2.40GGz  
@@ -273,7 +278,7 @@ Mirith IIIa-fast      246,740   22,485,807      18,431,919
 Mirith Va-fast        508,607   36,361,915      36,665,342
 
 
-PERK-I-fast3           79,000    7,300,000       5,100,000  Intel® Core i9-13900K at 3.00 GHz     
+PERK-I-fast3           79,000    7,300,000       5,100,000  Intel Core i9-13900K at 3.00 GHz     
 PERK-III-fast3        169,000   15,000,000      12,000,000
 PERK-V-fast3          297,000   34,000,000      27,000,000
 
@@ -301,13 +306,18 @@ TUOV-I            10,682,834       220,792         127,722 Intel Core i5-10210U 
 TUOV-III          57,322,074       608,604         442,770
 TUOV-V           139,948,218     1,133,958         786,450
 
-VOX-128            2,350,064       679,237         396,311 intel(R) Core(TM) i7-1185G7 at 3.00GHz
+VOX-128            2,350,064       679,237         396,311 Intel(R) Core(TM) i7-1185G7 at 3.00GHz
 VOX-192            9,334,246     2,937,318       1,548,342
 VOX-256           26,097,363    13,226,130       3,734,592
 
-ALTEQ-I              385,015     2,847,138       4,226,834
+ALTEQ-I              385,015     2,847,138       4,226,834 Intel(R) Core(TM) i7-1270P, 2.2GHz,
 ALTEQ-III          1,964,572    36,460,660      46,054,633
-ALTEQ-V            4,859,458    59,708,622     103,463,869   
+ALTEQ-V            4,859,458    59,708,622     103,463,869
+
+EMLE-I               272,630       192,723          21,755
+EMLE-III             375,701       272,574          38,175
+EMLE-V               455,837       343,007          63,110
+  
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
