@@ -42,7 +42,9 @@ At present the code contains:
 * PROV (PRovable unbalanced Oil and Vinegar). [PROV](https://asecuritysite.com/pqc/prov_sign)). PROV (PRovable unbalanced Oil and Vinegar) [1] uses a multivariate cryptography-based approach to create a Post Quantum Robust (PQC) digital signature. While there have been recent attacks on multivariate methods, PROV provides security proof. The proof is similar to the MAYO signature scheme where there is a larger oil space than the output of the scheme (defined often as UOV (Unbalanced Oil and Vinegar). The UOV approach was first defined by Kipnis, Patarin and Goubin [2] and integrates a hash-and-sign signature scheme into the GPV framework [3]. It was adapted in [4] for multivariate cryptography methods.
 * TUOV (Triangular Unbalanced Oil and Vinegar) . [TUOV](https://asecuritysite.com/pqc/touv_sign). Within Round 1 of the NIST PQC digital assessment, Rainbow was cracked [here] and took around 50 hours on an eight core laptop. Overall, Rainbow has a multivariate cryptograpphy approach, but did not have strong security proofs and a weak parameter set. TUOV (Triangular Unbalanced Oil and Vinegar) is a PQC signature method that is based on UOV.The UOV approach was first defined by Kipnis, Patarin and Goubin [2] and integrates a hash-and-sign signature scheme into the GPV framework [3]. It was adapted in [4] for multivariate cryptography methods. Generally multivariate cryptography generates relatively short signatures, but have relative long public and private keys.
 * VOX. [VOX](https://asecuritysite.com/pqc/vox_sign). VOX implements a UOV (Unblanced Oil and Vinegar)-based hash-and-sign signature scheme using Multivariate Quadratic (MQ) methods. It uses the Faugère, Macario-Rat, Patarin, and Perret method [1] which an UOV approach with a QR (Quotient Ring). Overall, for VOX-128, it produces a small signature size of 102 bytes, and public key of 9,104 bytes and a private key of 35,120 bytes. Gernally UOV methods produce short signatures, are fairly fast, and are fairly simple to implement.
-* ALTEQ. [ALTEQ](https://asecuritysite.com/pqc/alteq_sign). ALTEQ [3] is a post quantum cryptography signature methods which uses the hardness of the Alternating Trilinear Form Equivalence (ATFE) problem. It uses two steps. The first uses the Goldreich–Micali–Wigderson (GMW) motif [1] to create a zero knowledge proof using the hardness of ATFE. Next the Fiat–Shamir (FS) transformation converts the zero knowledge proof into a non-interactive method, and from this we can create a digital signature. 
+* ALTEQ. [ALTEQ](https://asecuritysite.com/pqc/alteq_sign). ALTEQ [3] is a post quantum cryptography signature methods which uses the hardness of the Alternating Trilinear Form Equivalence (ATFE) problem. It uses two steps. The first uses the Goldreich–Micali–Wigderson (GMW) motif [1] to create a zero knowledge proof using the hardness of ATFE. Next the Fiat–Shamir (FS) transformation converts the zero knowledge proof into a non-interactive method, and from this we can create a digital signature.
+*  eMLE-Sig 2.0. [eMLE-Sig 2.0](https://asecuritysite.com/pqc/emle_sign). eMLE-Sig (Embedded Multilayer Equations with Heavy Layer Randomization) 2.0 [1] is a quantum robust signature method that uses the Embedded Multilayer Equations (eMLE) problem. It produces relatively small keys and signatures.
+*  KAZ-Sign. [KAZ-Sign](https://asecuritysite.com/pqc/kaz_sign). Kriptografi Atasi Zarah Digital Signature (KAZ-SIGN) translated literally to "cryptographic techniques overcoming particles". Overall, it uses the Second Order Discrete Logarithm Problem (2-DLP) and involves the reconstruction of Discrete Logarithm Problem (DLP) from a parameter, and then uses this to identify a secrete parameter. It is post quantum robust, and could act as a drop-in replacement for existing public key methods. 
 
 
 ## Key sizes
@@ -188,6 +190,14 @@ EMLE-I                                 416                  800                 
 EMLE-III                               672                1,200                 456       3 (192-bit) Other
 EMLE-V                                 960                1,600                 640       5 (256-bit) Other
 
+KAZ-458                                 59                   77                 32       1 (128-bit) Other
+KAZ-738                                 94                  120                 32       3 (192-bit) Other
+KAZ-970                                123                  156                 32       5 (256-bit) Other
+
+PREON-128                               32                   16            178,432       1 (128-bit) Other
+PREON-192                               56                   24            385,665       3 (192-bit) Other
+PREON-256                               64                   32            688,578       5 (256-bit) Other
+
 ```
 
 And for performance in cycles (from papers):
@@ -317,7 +327,14 @@ ALTEQ-V            4,859,458    59,708,622     103,463,869
 EMLE-I               272,630       192,723          21,755
 EMLE-III             375,701       272,574          38,175
 EMLE-V               455,837       343,007          63,110
-  
+
+KAZ-458           35,150,000   248,875,000       67,400,000 Intel Core(TM) i7-4710HQ CPU at 2.50GHz 
+KAZ-738          107,000,000   520,550,000      257,649,999
+KAZ-970          206,900,000 1,082,975,000      566,250,000
+
+PREON-128              7,000 266,234,499,999  1,389,500,000    AMD EPYC 73F3 at 3.5GHz 
+PREON-192              7,000 463,438,500,000  7,637,000,000      
+PREON-256              7,000 1,451,495,500,000  40,432,000,000   
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
