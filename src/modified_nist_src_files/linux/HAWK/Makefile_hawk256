@@ -64,4 +64,4 @@ pqcsign.o: pqcsign.c $(PQC_HEADERS)
 
 clean:
 	-rm -f $(OBJCORE) $(OBJAPI) $(OBJEXTRA) PQCgenKAT_sign PQCgenKAT_sign.o
-	-rm -rf pqcsign pqcsign.o
+	-rm -rf pqcsign pqcsign.o rng.o

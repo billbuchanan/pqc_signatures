@@ -11,8 +11,6 @@ algs_list_dir=$test_data_dir/sig_algs_list
 alg_variations_dir=$test_data_dir/alg_variation_lists
 
 
-
-
 #------------------------------------------------------------------------------
 function array_util_call() {
 
