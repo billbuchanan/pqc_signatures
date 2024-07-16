@@ -1,10 +1,20 @@
 #!/bin/bash
+# This utility script is used to load in the algorithm variations from the text files in the alg_variation_lists directory
+# These arrays are then converted to comma-separated strings and exported as environment variables which can be imported
+# into the calling script. Once the arrays have been imported into the calling script, the environment variables are cleared
+# The script is passed the following arguments when called:
+#
+#   - arg-1: 'set' or 'clear' - determines if the environment variables are to be set or cleared
+#   - arg-2: The path to the alg_variation_lists directory containing the algorithm variation text files
 
-#------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------------------------
 function export_env_vars() {
-    # # Convert arrays to comma-separated strings and export
-    RACCON_VARIATIONS=$(IFS=,; echo "${RACCON_VARIATIONS[*]}")
-    export RACCON_VARIATIONS
+    # Function for converting the arrays to comma-separated strings and export to environment variables
+
+    # Export the created variation arrays to environment variables
+    RACCOON_VARIATIONS=$(IFS=,; echo "${RACCOON_VARIATIONS[*]}")
+    export RACCOON_VARIATIONS
 
     BISCUIT_VARIATIONS=$(IFS=,; echo "${BISCUIT_VARIATIONS[*]}")
     export BISCUIT_VARIATIONS
@@ -15,8 +25,8 @@ function export_env_vars() {
     FAEST_VARIATIONS=$(IFS=,; echo "${FAEST_VARIATIONS[*]}")
     export FAEST_VARIATIONS
 
-    FULECCA_VARIATIONS=$(IFS=,; echo "${FULECCA_VARIATIONS[*]}")
-    export FULECCA_VARIATIONS
+    FULEECA_VARIATIONS=$(IFS=,; echo "${FULEECA_VARIATIONS[*]}")
+    export FULEECA_VARIATIONS
 
     PQSIGRM_VARIATIONS=$(IFS=,; echo "${PQSIGRM_VARIATIONS[*]}")
     export PQSIGRM_VARIATIONS
@@ -56,18 +66,19 @@ function export_env_vars() {
 
     SDITH_HYPERCUBE_VARIATIONS=$(IFS=,; echo "${SDITH_HYPERCUBE_VARIATIONS[*]}")
     export SDITH_HYPERCUBE_VARIATIONS
+
 }
 
-
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 function clear_env_vars(){
+    # Function for clearing the enviroment variables after they have been loaded into the calling script
 
     # Clear environment variables
-    unset RACCON_VARIATIONS
+    unset RACCOON_VARIATIONS
     unset BISCUIT_VARIATIONS
     unset CROSS_VARIATIONS
     unset FAEST_VARIATIONS
-    unset FULECCA_VARIATIONS
+    unset FULEECA_VARIATIONS
     unset PQSIGRM_VARIATIONS
     unset SPHINCS_ALPHA_VARIATIONS
     unset SQI_VARIATIONS
@@ -81,16 +92,19 @@ function clear_env_vars(){
     unset PERK_VARIATIONS
     unset RYDE_VARIATIONS
     unset SDITH_HYPERCUBE_VARIATIONS
+
 }
 
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 function create_alg_arrays() {
+    # Function for creating the algorithm variation arrays from the text files in the alg_variation_lists directory
 
+    # Declare the alg_variation array
     local alg_variations_dir=$1
 
     # Create arrays for algorithm variations
     while IFS= read -r line; do
-        RACCON_VARIATIONS+=("$line")
+        RACCOON_VARIATIONS+=("$line")
     done < "$alg_variations_dir/Raccoon_variations.txt"
 
     while IFS= read -r line; do
@@ -106,8 +120,8 @@ function create_alg_arrays() {
     done < "$alg_variations_dir/FAEST_variations.txt"
 
     while IFS= read -r line; do
-        FULECCA_VARIATIONS+=("$line")
-    done < "$alg_variations_dir/FuLecca_variations.txt"
+        FULEECA_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/FuLeeca_variations.txt"
 
     while IFS= read -r line; do
         PQSIGRM_VARIATIONS+=("$line")
@@ -163,19 +177,20 @@ function create_alg_arrays() {
 
 }
 
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 function main() {
+    # Main function for setting or clearing the environment variables for the algorithm variations
 
     # Set or clear depending on the argument passed
     if [ "$1" == "set" ]; then
 
-        # Ensure alg_variations_dir arugment passed is a dir and exists
+        # Ensure alg_variations_dir argument passed is a dir and exists
         if [ ! -d "$2" ]; then
             echo "Alg Array Creator Util Script Error: alg_variation_lists directory variables passed as argument in script is not a directory or does not exist"
             exit 1
         fi
 
-        # Set the enviroment algorithm variations variables and export
+        # Set the environment algorithm variations variables and export
         create_alg_arrays "$2"
         export_env_vars
         

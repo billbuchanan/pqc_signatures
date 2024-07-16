@@ -1,24 +1,35 @@
 #!/bin/bash
-#------------------------------------------------------------------------------
+# This script is used to run the signature speed tests for all algorithms and variations in the benchmarking suite
+# The script will run the tests for the number of runs specified by the user and output the results to a 
+# txt file to later be parsed by the python parser script
+# The script will also prompt the user to determine if HuFu is to be included in the benchmarking due to its high run time
+
+
+#---------------------------------------------------------------------------------------------------
+# Set global path variables
 root_dir=$(dirname $(pwd))
 src_dir=$root_dir/src
 bin_dir=$root_dir/bin
 test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
-alg_list_dir=$test_data_dir/alg_lists
+algs_list_dir=$test_data_dir/sig_algs_list
+alg_variations_dir=$test_data_dir/alg_variation_lists
+num_runs=0
 
-#------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------------------------
 function array_util_call() {
+    # Function for calling the array utility script to set the variation arrays used in the script
 
     # Call the array utility script to export the variation arrays
-    source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_list_dir"
+    source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_variations_dir"
 
     # Import the variation arrays from environment variables
-    IFS=',' read -r -a raccoon_variations <<< "$RACCON_VARIATIONS"
+    IFS=',' read -r -a raccoon_variations <<< "$RACCOON_VARIATIONS"
     IFS=',' read -r -a biscuit_variations <<< "$BISCUIT_VARIATIONS"
     IFS=',' read -r -a cross_variations <<< "$CROSS_VARIATIONS"
     IFS=',' read -r -a faest_variations <<< "$FAEST_VARIATIONS"
-    IFS=',' read -r -a fulecca_variations <<< "$FULECCA_VARIATIONS"
+    IFS=',' read -r -a fuleeca_variations <<< "$FULEECA_VARIATIONS"
     IFS=',' read -r -a pqsigrm_variations <<< "$PQSIGRM_VARIATIONS"
     IFS=',' read -r -a sphincs_alpha_variations <<< "$SPHINCS_ALPHA_VARIATIONS"
     IFS=',' read -r -a sqi_variations <<< "$SQI_VARIATIONS"
@@ -38,17 +49,21 @@ function array_util_call() {
 
 }
 
-
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 function determine_hufu_inclusion() {
+    # Function to determine if HUFU is to be included in the benchmarking
 
     # Notify user of HUFU test length Get choice to include HUFU in testing from user
     echo -e "WARNGING! - HUFU benchmarking takes a considerable amount of time to complete, even on a high performance machine\n"
 
+    # Loop until valid input is received
     while true; do
+
+        # Get user choice to include HUFU in benchmarking
         read -p "Would you like to include HUFU in the benchmarking? (y/n): " hufu_choice
         hufu_choice=$(echo $hufu_choice | tr '[:upper:]' '[:lower:]')
         
+        # Check if input is valid and set choice flag
         if [ $hufu_choice == "y" ]; then
             hufu_included=1
             break
@@ -65,110 +80,159 @@ function determine_hufu_inclusion() {
 
 }
 
-#------------------------------------------------------------------------------
-function cycles_test {
+#---------------------------------------------------------------------------------------------------
+function determine_run_nums() {
+    # Function to determine the number of runs to be performed set by the user
 
+    # Loop until valid input is received
+    while true; do
+
+        # Get user input for number of runs
+        read -p "Enter the number of runs to be performed: " num_runs
+
+        # Check if input is valid and set number of runs
+        if [[ $num_runs =~ ^[0-9]+$ ]]; then
+            break
+        else
+            echo -e "Invalid input. Please enter a positive integer\n"
+        fi
+
+    done
+
+}
+
+#---------------------------------------------------------------------------------------------------
+function cycles_test() {
+    # Function to run the signature speed tests for each algorithm variation for current run
+
+    # Set the output filename based on current run
+    local output_file="sig_speed_results_run_$1.txt"
+
+    # Ensure that the output file is empty and remove if present
+    if [ -f $output_file ]; then
+        rm $output_file
+    fi
+
+    # Raccon variation testing
     for variation in "${raccoon_variations[@]}"; do
         echo -e "\nRunning raccoon test for $variation"
         variation_lower="${variation,,}"
-        $bin_dir/Raccoon/pqcsign_$variation_lower >> $results_dir/sig_speed_results.txt
+        $bin_dir/Raccoon/pqcsign_$variation_lower >> $results_dir/$output_file
     done
 
+    # Biscuit variation testing
     for variation in "${biscuit_variations[@]}"; do
         echo -e "\nRunning biscuit test for $variation"
-        $bin_dir/Biscuit/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/Biscuit/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # CROSS variation testing
     for variation in "${cross_variations[@]}"; do
         echo -e "\nRunning cross test for $variation"
-        $bin_dir/CROSS/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/CROSS/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # FAEST variation testing
     for variation in "${FAEST_variations[@]}"; do
         echo -e "\nRunning FAEST test for $variation"
-        $bin_dir/FAEST/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/FAEST/pqcsign_$variation >> $results_dir/$output_file
     done
 
-    for variation in "${FuLecca_variations[@]}"; do
-        echo -e "\nRunning FuLecca test for $variation"
-        $bin_dir/FuLecca/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+    # FuLeeca variation testing
+    for variation in "${FuLeeca_variations[@]}"; do
+        echo -e "\nRunning FuLeeca test for $variation"
+        $bin_dir/FuLeeca/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # Enhanced_pqsigRM variation testing
     for variation in "${pqsigRM_variations[@]}"; do
         echo -e "\nRunning pqsigRM test for $variation"
-        $bin_dir/Enhanced_pqsigRM/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/Enhanced_pqsigRM/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # SPHINCS_ALPHA variation testing
     for variation in "${SPHINCS_ALPHA_variations[@]}"; do
         echo -e "\nRunning SPHINCS-ALPHA test for $variation"
-        $bin_dir/SPHINCS_alpha/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/SPHINCS_alpha/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # SQIsign variation testing
     for variation in "${sqi_variations[@]}"; do
         echo -e "\nRunning sqi test for $variation"
-        $bin_dir/SQIsign/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/SQIsign/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # UOV variation testing
     for variation in "${uov_variations[@]}"; do
         echo -e "\nRunning uov test for $variation"
-        $bin_dir/UOV/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/UOV/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # MEDS variation testing
     for variation in "${med_variations[@]}"; do
         echo -e "\nRunning MEDS-2023 test for $variation"
-        $bin_dir/MEDS/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/MEDS/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # HAWK variation testing
     for variation in "${hawk_variations[@]}"; do
         echo -e "\nRunning hawk test for $variation"
-        $bin_dir/HAWK/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/HAWK/pqcsign_$variation >> $results_dir/$output_file
     done
     
+    # EHTv3v4 variation testing
     for variation in "${ehtv3v4_variations[@]}"; do
         echo -e "\nRunning EHTv3v4 test for $variation"
-        $bin_dir/EHTv3v4/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/EHTv3v4/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # HUFU variation testing if included is true
     if [ $hufu_included == 1 ]; then
 
         for variation in "${hufu_variations[@]}"; do
             echo -e "\nRunning hufu test for $variation"
-            $bin_dir/HuFu/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+            $bin_dir/HuFu/pqcsign_$variation >> $results_dir/$output_file
         done
 
     else
         echo -e "\nSkipping HUFU benchmarking"
     fi
 
+    # 3WISE variation testing
     for variation in "${three_wise_variations[@]}"; do
         echo -e "\nRunning 3WISE test for $variation"
-        $bin_dir/3WISE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/3WISE/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # MIRA variation testing
     for variation in "${mira_variations[@]}"; do
         echo -e "\nRunning MIRA test for $variation"
-        $bin_dir/MIRA/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/MIRA/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # PERK variation testing
     for variation in "${perk_variations[@]}"; do
         echo -e "\nRunning PERK test for $variation"
-        $bin_dir/PERK/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/PERK/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # RYDE variation testing
     for variation in "${ryde_variations[@]}"; do
         echo -e "\nRunning RYDE test for $variation"
-        $bin_dir/RYDE/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/RYDE/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # SDITH-Hypercube variation testing
     for variation in "${sdith_hypercube_variations[@]}"; do
         echo -e "\nRunning SDITH-Hypercube test for $variation"
-        $bin_dir/SDitH/pqcsign_$variation >> $results_dir/sig_speed_results.txt
+        $bin_dir/SDitH/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }
 
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
 function main() {
+    # Main function to control the signature speed test runs
 
     # Set up environment
     if [ -d $results_dir ]; then
@@ -176,10 +240,18 @@ function main() {
     fi
     array_util_call
     
-    # Determine if HUFU is to be included in testing
+    # Determine if HUFU is to be included in testing and number of test runs
     determine_hufu_inclusion
+    determine_run_nums
 
-    # Perform benchmarking
-    cycles_test
+    # Perform benchmarking for number of specified runs
+    for run_num in $(seq 1 $number_of_runs); do
+        echo "Performing Run $run_num"
+        cycles_test "$run_num"
+    done
+
+    # Output that benchmarking has completed to user
+    echo -e "\nBenchmarking has completed. Results can be found in the test_data/results directory\n"
+    
 }
 main

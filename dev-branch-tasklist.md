@@ -3,6 +3,8 @@
 
 - [x] Review signature scheme source code to identify best method of integration within performance evaluation scripts
 
+- [ ] Create functionality to ensure default source code files are always present, even if setup script is stopped halfway through before restoring the default files after the modified version has been implemented.
+
 - [ ] Create basic setup script and makefiles to compile various algorithm source code that can later be used within performance measuring scripts
 
 - [ ] Determine the cause and resolve memory issue with perk-256-short-3 and perk-256-short-5 variations
