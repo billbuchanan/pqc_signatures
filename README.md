@@ -194,6 +194,10 @@ KAZ-458                                 59                   77                 
 KAZ-738                                 94                  120                 32       3 (192-bit) Other
 KAZ-970                                123                  156                 32       5 (256-bit) Other
 
+PREON-128                               32                   16            178,432       1 (128-bit) Other
+PREON-192                               56                   24            385,665       3 (192-bit) Other
+PREON-256                               64                   32            688,578       5 (256-bit) Other
+
 ```
 
 And for performance in cycles (from papers):
@@ -327,7 +331,10 @@ EMLE-V               455,837       343,007          63,110
 KAZ-458           35,150,000   248,875,000       67,400,000 Intel Core(TM) i7-4710HQ CPU at 2.50GHz 
 KAZ-738          107,000,000   520,550,000      257,649,999
 KAZ-970          206,900,000 1,082,975,000      566,250,000
-  
+
+PREON-128              7,000 266,234,499,999  1,389,500,000    AMD EPYC 73F3 at 3.5GHz 
+PREON-192              7,000 463,438,500,000  7,637,000,000      
+PREON-256              7,000 1,451,495,500,000  40,432,000,000   
 ```
 † Intel Xeon E3-1230L v3 1.80GHz (Haswell)
 †† Intel Core i7-12700 clocked at 5.0 GHz (from CROSS paper).
