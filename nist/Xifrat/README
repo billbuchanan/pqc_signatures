@@ -1,0 +1,52 @@
+File listing
+============
+
+"README"
+--------
+
+This file.
+
+"KAT"
+-----
+
+Known answer tests test vectors.
+
+"Reference_Implementation"
+--------------------------
+
+The reference implementation. In "xifrat-funcs.c", there is a demonstrative
+implementation of the `Blk` function.
+
+Under this folder:
+
+- "xifrat-*.[ch]": the Xifrat implementation.
+- "{sponge,shake}.[ch]", "keccak*": the FIPS-202 SHAKE implementation.
+- "endian.[ch]": byte-order conversion functions.
+- "*common.h": other cryptographic source codes.
+- "Makefile", "PQCgenKAT_sign.c", "api.h", "rng.[ch]", "sign.c",
+  NIST and submission requirement adaptation codes.
+
+"Optimized_Implementation"
+--------------------------
+
+The optimized implementation. In "xifrat-funcs.c", there is a
+"production-grade" implementation of the `Blk` function which had been
+protected against timing side channel.
+
+Most of the "shared" codes are omitted, and are referenced from that in
+"Reference_Implementation". What's in this folder are:
+
+- "xifrat-*.[ch]": the Xifrat implementation.
+- "common.h": miscellaneous cryptographic source codes.
+- "Makefile",
+
+"ReduceSec_Implementation"
+--------------------------
+
+Largely similar to "Optimized_Implementation", except it implements the
+"Reduced-Security" variant intended for cryptanalysis and benchmarking.
+
+"Supporting_Documentation"
+--------------------------
+
+Specifications, "meta" codes and scripts, and other paper works.

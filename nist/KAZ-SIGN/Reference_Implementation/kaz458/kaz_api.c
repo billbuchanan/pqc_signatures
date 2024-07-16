@@ -749,7 +749,7 @@ int KAZ_DS_VERIFICATION(unsigned char *m,
 
 	return -4;
 }
-
+/*
 void KAZ_DS_RANDOM(int lb,
                    int ub,
                    mpz_t out){
@@ -781,8 +781,8 @@ void KAZ_DS_RANDOM(int lb,
 	// empty the memory location for the random generator state
     //gmp_randclear(gmpRandState);
 }
-
-/*void KAZ_DS_RANDOM(int lb,
+ */
+void KAZ_DS_RANDOM(int lb,
                    int ub,
                    mpz_t out){
     time_t seed;
@@ -808,4 +808,4 @@ void KAZ_DS_RANDOM(int lb,
 
 	// empty the memory location for the random generator state
     gmp_randclear(gmpRandState);
-}*/
+}
