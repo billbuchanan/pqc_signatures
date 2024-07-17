@@ -1,3 +1,4 @@
+#modified-flag
 PARAMS = sphincs-a-shake-128s
 THASH = simple
 

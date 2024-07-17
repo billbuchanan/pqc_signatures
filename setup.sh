@@ -647,6 +647,11 @@ function variations_setup() {
 function main() {
     # Main function for setting up the required environment and compiling the various signature algorithms
 
+    # Remove error log from any previous runs
+    if [ -f "last_setup_error.log" ]; then
+        rm last_setup_error.log
+    fi
+
     # Configure setup environment
     echo "Performing Environment Setup"
     environment_setup
@@ -656,6 +661,11 @@ function main() {
 
     # Output to the user that setup is complete
     echo -e "\nSetup complete, testing scripts can be found in the test_scripts directory"
+
+    # If the error log file is present, inform user of potential issues
+    if [ -f "last_setup_error.log" ]; then
+        echo -e "\nIssues detected during setup, please check the last_setup_error.log file for any critical issues"
+    fi
 
 }
 main

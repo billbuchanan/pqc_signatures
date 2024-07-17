@@ -1,3 +1,4 @@
+#modified-flag
 SHELL := /bin/bash
 
 LIBS = -lssl -lcrypto

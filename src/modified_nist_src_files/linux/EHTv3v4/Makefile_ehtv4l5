@@ -1,3 +1,4 @@
+#modified-flag
 CC = /usr/bin/gcc
 CFLAGS = -g -O3 -std=c99
 LDFLAGS = -static-libgcc -lssl -lcrypto -lm

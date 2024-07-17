@@ -1,3 +1,4 @@
+//modified-flag
 /**
  *
  * Reference ISO-C11 Implementation of CROSS.

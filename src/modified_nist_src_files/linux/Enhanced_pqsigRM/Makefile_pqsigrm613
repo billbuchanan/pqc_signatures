@@ -1,3 +1,4 @@
+#modified-flag
 CC = gcc
 
 LDFLAGS =  -L/usr/local/lib

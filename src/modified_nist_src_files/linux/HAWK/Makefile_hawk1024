@@ -1,3 +1,4 @@
+#modified-flag
 CC = c99
 CFLAGS = -Wall -Wextra -Wshadow -Wundef -O2
 LD = $(CC)

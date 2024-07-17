@@ -1,3 +1,4 @@
+#modified-flag
 SHA3_ASM = $(wildcard sha3/*.s) $(wildcard sha3/$(SHA3_TARGET)/*.s)
 SHA3_SRC = $(wildcard sha3/*.c) $(wildcard sha3/$(SHA3_TARGET)/*.c)
 

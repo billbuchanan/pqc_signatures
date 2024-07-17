@@ -1,3 +1,4 @@
+#modified-flag
 CC=clang
 ifeq "$(CC)" "gcc"
     COMPILER=gcc

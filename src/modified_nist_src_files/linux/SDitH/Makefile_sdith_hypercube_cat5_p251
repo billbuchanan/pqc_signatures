@@ -1,3 +1,4 @@
+#modified-flag
 # This Makefile builds sdith_hypercube_<SEC_LEVEL>_<FIELD>_<VARIANT>.
 # SEC_LEVEL: CAT_1|CAT_3|CAT_5
 # FIELD: GF256|P251

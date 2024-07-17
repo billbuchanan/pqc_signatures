@@ -1,3 +1,4 @@
+#modified-flag
 TARGET = pqcsign
 LIBS = -lm
 CC = gcc

@@ -1,3 +1,4 @@
+#modified-flag
 SOURCES=rng.c sign.c serializer.c gen.c
 HEADERS=rng.h serializer.h gen.h api.h
 INCLUDES=-I$(CURDIR)/../flint/include/

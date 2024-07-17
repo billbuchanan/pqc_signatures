@@ -1,3 +1,4 @@
+#modified-flag
 CC ?= /usr/bin/cc
 CFLAGS += -std=c11 -Wall -Wextra -Wpedantic -Wmissing-prototypes -Wredundant-decls \
   -Wshadow -Wpointer-arith -Wreturn-local-addr -O3 -mtune=native -march=native

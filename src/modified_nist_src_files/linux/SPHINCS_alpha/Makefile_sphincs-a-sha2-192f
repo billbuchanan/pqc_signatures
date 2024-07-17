@@ -1,3 +1,4 @@
+#modified-flag
 PARAMS = sphincs-a-sha2-192f
 THASH = simple
 

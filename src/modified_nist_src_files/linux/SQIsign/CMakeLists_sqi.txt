@@ -1,3 +1,4 @@
+#modified-flag
 # DEVELOPER NOTICE!!!!
 # This is not the main CMakeLists files for the SQI source code, this one must be copied to the apps dir for the automated compile to work
 
