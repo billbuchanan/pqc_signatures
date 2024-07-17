@@ -67,6 +67,9 @@ function export_env_vars() {
     SDITH_HYPERCUBE_VARIATIONS=$(IFS=,; echo "${SDITH_HYPERCUBE_VARIATIONS[*]}")
     export SDITH_HYPERCUBE_VARIATIONS
 
+    ASCON_SIGN_VARIATIONS=$(IFS=,; echo "${ASCON_SIGN_VARIATIONS[*]}")
+    export ASCON_SIGN_VARIATIONS
+
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -92,6 +95,7 @@ function clear_env_vars(){
     unset PERK_VARIATIONS
     unset RYDE_VARIATIONS
     unset SDITH_HYPERCUBE_VARIATIONS
+    unset ASCON_SIGN_VARIATIONS
 
 }
 
@@ -174,6 +178,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         SDITH_HYPERCUBE_VARIATIONS+=("$line")
     done < "$alg_variations_dir/SDitH_hypercube_variations.txt"
+
+    while IFS= read -r line; do
+        ASCON_SIGN_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/Ascon_sign_variations.txt"
 
 }
 

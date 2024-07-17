@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------------------------------
 Completed
 - 3WISE
+- Ascon_Sign
 - Biscuit
 - CROSS
 - EHTv3v4
@@ -19,16 +20,15 @@ Completed
 - SQIsign
 - UOV
 
+
 -----------------------------------------------------------------------------------------------------
 in progress:
-- SQUIRRELS
+
 
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-
 - ALTEQ
-- Ascon_Sign
 - DME_Sign
 - eMLE_Sig_2.0
 - HPPC
@@ -40,7 +40,6 @@ Still to do:
 - PROV
 - QR_UOV
 - SNOVA
-- SQUIRRELS
 - TUOV
 - VOX
 - Xifrat1_Sign_I
@@ -53,6 +52,6 @@ in progress (leave till last):
 - Wave
 - HAETAE
 - SDitH - Threshold Variations
-
+- SQUIRRELS
 
 

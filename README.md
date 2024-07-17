@@ -32,6 +32,7 @@ The following is a set of checklists which detail the algorithm currently implem
 
 ### Implemented
 - 3WISE
+- Ascon_Sign
 - Biscuit
 - CROSS
 - EHTv3v4
@@ -60,7 +61,6 @@ The following is a set of checklists which detail the algorithm currently implem
 ### Still to be Implemented
 - AIMer
 - ALTEQ
-- Ascon_Sign
 - DME_Sign
 - EagleSign
 - eMLE_Sig_2.0
@@ -81,9 +81,10 @@ The following is a set of checklists which detail the algorithm currently implem
 - VOX
 - Wave
 - Xifrat1_Sign_I
+- SQUIRRELS
 
 ### Currently being Implemented 
-- SQUIRRELS
+
 
 
 #### **NOTE to Project Developers**
