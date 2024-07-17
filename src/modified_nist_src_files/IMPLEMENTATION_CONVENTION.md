@@ -7,7 +7,9 @@
 
 2) Copy any modified source files into the relevant algorithm directory and depending on how the source code is implemented, ensure that filenames have the original filename with the variation appended onto the end. If the source code has only one set of source code files and creates its variations through its makefiles, please still append the algorithm name onto the end. Examples for the possible scenarios are as can be seen referenced below.
 
-3) Ensure that added functionality to the automated bash script temporally renames the original file so that is not used within the compilation and after deletes the modified file and restores the name of the original file so that commits to the branch retain the default source code.
+3) **Ensure** that added functionality to the utility bash script (`scripts/copy_modified_src_files.sh`) temporally renames the original file so that is not used within the compilation and after deletes the modified file and restores the name of the original file so that commits to the branch retain the default source code.
+
+4) **Ensure** that any modified contains stored contain a comment on line 1 which has the string "modified-flag", i.e `#modified-flag` or `//modified-flag`. This is vital as it used by the default source exception handling within the utility script.
 
 ### Examples of Modified File Naming Conventions
 For instances where there are multiple copies of the source code for each variation refer to following examples:
