@@ -19,7 +19,7 @@ Completed
 - SPHINCS_alpha
 - SQIsign
 - UOV
-
+- MAYO
 
 -----------------------------------------------------------------------------------------------------
 in progress:
@@ -33,7 +33,6 @@ Still to do:
 - eMLE_Sig_2.0
 - HPPC
 - KAZ_SIGN
-- MAYO
 - MiRitH
 - MQOM
 - Preon

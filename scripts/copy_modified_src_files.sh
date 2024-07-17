@@ -329,7 +329,37 @@ function copy_modified_src_files() {
 
             fi
             ;;
-        
+
+        "MAYO")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/apps/CMakeLists.txt"
+            make_main_backup_file="$main_alg_backup/CMakeLists_$current_variation.txt"
+            make_temp_backup_file="$dst_variation_dir/apps/temp_cmakelists_copy"
+
+            # Copy or restore modified source files for SQIsign algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir/apps" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+                
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/CMakeLists_MAYO.txt" "$make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/apps/pqcsign.c"
+
+
+            elif [ "$util_flag" == "restore" ]; then
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/apps/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+             
         *)
 
             # Set the filepaths for the files being worked with

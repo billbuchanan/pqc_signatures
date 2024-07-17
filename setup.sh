@@ -45,6 +45,7 @@ function array_util_call() {
     IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
     IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
     IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
+    IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -136,7 +137,7 @@ function set_build_cross_flags() {
 
 #---------------------------------------------------------------------------------------------------
 function variations_setup() {
-    # # Function to setup the various signature algorithms and their variations
+    # Function to setup the various signature algorithms and their variations
 
     # Set the modified files directory path
     mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
@@ -670,6 +671,34 @@ function variations_setup() {
     done
 
 
+    #__________________________________________________________________________
+    # Set the source and destination directories for the MAYO algorithm 
+    mayo_src_dir=$nist_src_dir/MAYO/Reference_Implementation
+    mayo_dst_dir=$bin_dir/MAYO
+    mayo_build_dir=$mayo_src_dir/build
+    mayo_apps_dir=$mayo_build_dir/apps
+
+    # Change to source directory and ensure that the build directory is present and empty
+    cd $mayo_src_dir
+
+    if [ ! -d build ]; then
+        mkdir build
+    else
+        rm -rf build && mkdir build
+    fi
+
+    # Copy over modified files to the relevant source code directories
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "MAYO" "$mayo_src_dir" "all" "$root_dir"
+
+    # Compile and move pqcsign binary to relevant bin directory
+    cd $mayo_build_dir
+    cmake -DMAYO_BUILD_TYPE=ref -DENABLE_AESNI=OFF ../ # can change to ENABLE_AESNI=ON if needed (refer to MAYO readme)
+    make 
+    mv $mayo_apps_dir/pqcsign_* "$mayo_dst_dir/"
+    make clean >> /dev/null && cd $mayo_src_dir && rm -rf build
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "MAYO" "$mayo_src_dir" "all" "$root_dir"
 
 }
 

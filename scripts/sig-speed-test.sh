@@ -44,6 +44,7 @@ function array_util_call() {
     IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
     IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
     IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
+    IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -233,6 +234,12 @@ function cycles_test() {
     for variation in "${ascon_sign_variations[@]}"; do
         echo -e "\nRunning Ascon_Sign test for $variation"
         $bin_dir/Ascon_Sign/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # MAYO variation testing
+    for variation in "${mayo_variations[@]}"; do
+        echo -e "\nRunning MAYO test for $variation"
+        $bin_dir/MAYO/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }

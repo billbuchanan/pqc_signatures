@@ -70,6 +70,9 @@ function export_env_vars() {
     ASCON_SIGN_VARIATIONS=$(IFS=,; echo "${ASCON_SIGN_VARIATIONS[*]}")
     export ASCON_SIGN_VARIATIONS
 
+    MAYO_VARIATIONS=$(IFS=,; echo "${MAYO_VARIATIONS[*]}")
+    export MAYO_VARIATIONS
+
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -96,6 +99,7 @@ function clear_env_vars(){
     unset RYDE_VARIATIONS
     unset SDITH_HYPERCUBE_VARIATIONS
     unset ASCON_SIGN_VARIATIONS
+    unset MAYO_VARIATIONS
 
 }
 
@@ -182,6 +186,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         ASCON_SIGN_VARIATIONS+=("$line")
     done < "$alg_variations_dir/Ascon_sign_variations.txt"
+
+    while IFS= read -r line; do
+        MAYO_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/MAYO_variations.txt"
 
 }
 

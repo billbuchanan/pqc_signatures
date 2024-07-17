@@ -70,7 +70,7 @@ int benchmark_cycles() {
     // Define message legnth and signature length variables
     int ret = 0;
     unsigned long long mlen = 32;
-    unsigned long long smlen;
+    //unsigned long long smlen;
     uint8_t sig[CRYPTO_BYTES +  mlen];
     unsigned long long sig_len = sizeof(sig);
 
@@ -113,7 +113,7 @@ int benchmark_cycles() {
     long long verify_time = 0;
 
     //
-    unsigned char sm[32 + CRYPTO_BYTES];
+    //unsigned char sm[32 + CRYPTO_BYTES];
     unsigned char m[32];
     for (unsigned i = 0; i < 32; i++) {
         m[i] = i;
@@ -125,7 +125,7 @@ int benchmark_cycles() {
     unsigned char *pk = (unsigned char *)malloc(CRYPTO_PUBLICKEYBYTES);
     unsigned char *sk = (unsigned char *)malloc(CRYPTO_SECRETKEYBYTES);
 
-    int r0;
+    //int r0;
 
     #if defined(SDITH)
         randombytes(m, mlen);
