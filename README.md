@@ -40,6 +40,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - FuLeeca
 - HAWK
 - HuFu †
+- MAYO
 - MEDS
 - MIRA
 - PERK ††
@@ -68,7 +69,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - HPPC
 - KAZ_SIGN
 - LESS
-- MAYO
 - MiRitH
 - MQOM
 - Preon
