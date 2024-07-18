@@ -24,7 +24,8 @@ Completed
 - DME_Sign
 - Xifrat1_Sign_I
 - VOX
-- TUOV
+- TUOV !!! double check if PQCgen_KAT sign is needed as excluded from makefile to simplify automated compile
+- PROV
 
 
 -----------------------------------------------------------------------------------------------------
@@ -38,7 +39,6 @@ Still to do:
 - HPPC
 - MiRitH
 - MQOM
-- PROV
 - QR_UOV
 - SNOVA
 

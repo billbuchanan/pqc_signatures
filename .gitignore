@@ -13,3 +13,4 @@ setup.py
 setup.c
 temp_src_backup/
 main_default_src_backup/
+last_setup_error.log
