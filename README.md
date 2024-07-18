@@ -53,6 +53,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - SPHINCS_alpha
 - SQIsign
 - UOV
+- VOX
 - Xifrat1_Sign_I
 
 > † IMPORTANT Dev branch Notice: All variations for DME_SIGN function correctly apart from dme-3rnds-8vars-64bits-sign. This is due to the reference code for that variation not including all the correct source code files. This may of been intentional on the authors part, as the optimised implementation contains the correct source code files. This will be reviewed further, as all other schemes implemented use the reference code submitted to NIST, so deviating for this specific algorithm/variation may be problematic for the performance metrics gathered. For the moment, the automated compiling and benchmarking scripts will skip this variation until a decision has been made on how to proceed going forward.
@@ -81,7 +82,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - SNOVA
 - SQUIRRELS
 - TUOV
-- VOX
 - Wave
 - SQUIRRELS
 

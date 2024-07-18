@@ -49,6 +49,7 @@ function array_util_call() {
     IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
     IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
     IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
+    IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -781,6 +782,34 @@ function variations_setup() {
 
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
+
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the VOX algorithm
+    vox_src_dir=$nist_src_dir/VOX/Reference_Implementation/vox_sign
+    vox_dst_dir=$bin_dir/VOX/
+
+    # Change to the VOX source code directory
+    cd $vox_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "VOX" "$vox_src_dir" "all" "$root_dir"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${vox_variations[@]}"; do
+
+        echo "current variation - $variation"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make "PARAM=$variation"
+        mv "$vox_src_dir/pqcsign" "$vox_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "VOX" "$vox_src_dir" "all" "$root_dir"
 
 
 }

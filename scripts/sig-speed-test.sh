@@ -48,6 +48,7 @@ function array_util_call() {
     IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
     IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
     IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
+    IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -268,6 +269,12 @@ function cycles_test() {
     for variation in "${xifrat1_sign_variations[@]}"; do
         echo -e "\nRunning Xifrat1_Sign test for $variation"
         $bin_dir/Xifrat1_Sign_I/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # VOX variation testing
+    for variation in "${vox_variations[@]}"; do
+        echo -e "\nRunning VOX test for $variation"
+        $bin_dir/VOX/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }
