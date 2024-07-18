@@ -36,6 +36,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - Biscuit
 - CROSS
 - EHTv3v4
+- eMLE_Sig_2.0
 - FAEST
 - FuLeeca
 - HAWK
@@ -64,7 +65,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - ALTEQ
 - DME_Sign
 - EagleSign
-- eMLE_Sig_2.0
 - HAETAE
 - HPPC
 - KAZ_SIGN

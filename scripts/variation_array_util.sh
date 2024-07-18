@@ -73,6 +73,8 @@ function export_env_vars() {
     MAYO_VARIATIONS=$(IFS=,; echo "${MAYO_VARIATIONS[*]}")
     export MAYO_VARIATIONS
 
+    EMLE_SIG_2_0_VARIATIONS=$(IFS=,; echo "${EMLE_SIG_2_0_VARIATIONS[*]}")
+    export EMLE_SIG_2_0_VARIATIONS
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -100,6 +102,7 @@ function clear_env_vars(){
     unset SDITH_HYPERCUBE_VARIATIONS
     unset ASCON_SIGN_VARIATIONS
     unset MAYO_VARIATIONS
+    unset EMLE_SIG_2_0_VARIATIONS
 
 }
 
@@ -190,6 +193,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         MAYO_VARIATIONS+=("$line")
     done < "$alg_variations_dir/MAYO_variations.txt"
+
+    while IFS= read -r line; do
+        EMLE_SIG_2_0_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/eMLE_Sig_2.0_variations.txt"
 
 }
 

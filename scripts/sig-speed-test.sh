@@ -45,6 +45,7 @@ function array_util_call() {
     IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
     IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
     IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
+    IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -240,6 +241,12 @@ function cycles_test() {
     for variation in "${mayo_variations[@]}"; do
         echo -e "\nRunning MAYO test for $variation"
         $bin_dir/MAYO/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # eMLE_Sig_2.0 variation testing
+    for variation in "${emle_sig_2_0_variations[@]}"; do
+        echo -e "\nRunning eMLE_Sig_2.0 test for $variation"
+        $bin_dir/eMLE_Sig_2.0/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }

@@ -46,6 +46,7 @@ function array_util_call() {
     IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
     IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
     IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
+    IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -699,6 +700,33 @@ function variations_setup() {
 
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "MAYO" "$mayo_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the eMLE_Sig_2.0 algorithm
+    emle_sig_2_0_src_dir=$nist_src_dir/eMLE_Sig_2.0/Reference_Implementation
+    emle_sig_2_0_dst_dir=$bin_dir/eMLE_Sig_2.0
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${emle_sig_2_0_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$emle_sig_2_0_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make all
+        mv "$variation_dir/pqcsign" "$emle_sig_2_0_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
 
 }
 
