@@ -47,6 +47,7 @@ function array_util_call() {
     IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
     IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
     IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
+    IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -261,6 +262,12 @@ function cycles_test() {
             echo -e "\nSkipping DME_Sign test for $variation, due to lack of reference implementation code, will be reviewed in future"
         fi
 
+    done
+
+    # Xifrat1_Sign variation testing
+    for variation in "${xifrat1_sign_variations[@]}"; do
+        echo -e "\nRunning Xifrat1_Sign test for $variation"
+        $bin_dir/Xifrat1_Sign_I/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }

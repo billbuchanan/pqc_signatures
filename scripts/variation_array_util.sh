@@ -78,6 +78,9 @@ function export_env_vars() {
 
     DME_SIGN_VARIATIONS=$(IFS=,; echo "${DME_SIGN_VARIATIONS[*]}")
     export DME_SIGN_VARIATIONS
+
+    XIFRAT1_SIGN_VARIATIONS=$(IFS=,; echo "${XIFRAT1_SIGN_VARIATIONS[*]}")
+    export XIFRAT1_SIGN_VARIATIONS
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -107,6 +110,7 @@ function clear_env_vars(){
     unset MAYO_VARIATIONS
     unset EMLE_SIG_2_0_VARIATIONS
     unset DME_SIGN_VARIATIONS
+    unset XIFRAT1_SIGN_VARIATIONS
 
 }
 
@@ -205,6 +209,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         DME_SIGN_VARIATIONS+=("$line")
     done < "$alg_variations_dir/DME_Sign_variations.txt"
+
+    while IFS= read -r line; do
+        XIFRAT1_SIGN_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/Xifrat1_Sign_I_variations.txt"
 
 }
 

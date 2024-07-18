@@ -48,6 +48,7 @@ function array_util_call() {
     IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
     IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
     IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
+    IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -760,6 +761,26 @@ function variations_setup() {
         fi
 
     done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the Xifrat1_Sign algorithm
+    xifrat1_sign_src_dir=$nist_src_dir/Xifrat1_Sign_I/Reference_Implementation
+    xifrat1_sign_dst_dir=$bin_dir/Xifrat1_Sign_I
+
+    # Change to the Xifrat1_Sign source code directory
+    cd $xifrat1_sign_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
+
+    # Compile and move pqcsign binary to relevant bin directory
+    make clean >> /dev/null
+    make 
+    mv "$xifrat1_sign_src_dir/pqcsign" "$xifrat1_sign_dst_dir/pqcsign_Xifrat1_Sign_I"
+    make clean >> /dev/null
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
 
 
 }

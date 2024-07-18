@@ -22,6 +22,8 @@ Completed
 - MAYO
 - eMLE_Sig_2.0
 - DME_Sign
+- Xifrat1_Sign_I
+
 
 -----------------------------------------------------------------------------------------------------
 in progress:
@@ -32,16 +34,14 @@ in progress:
 Still to do:
 - ALTEQ
 - HPPC
-- KAZ_SIGN
 - MiRitH
 - MQOM
-- Preon
 - PROV
 - QR_UOV
 - SNOVA
 - TUOV
 - VOX
-- Xifrat1_Sign_I
+
 
 ------------------------------------------------------------------------------------------------------
 in progress (leave till last):
@@ -52,5 +52,5 @@ in progress (leave till last):
 - HAETAE
 - SDitH - Threshold Variations
 - SQUIRRELS
-
-
+- KAZ_SIGN
+- Preon
