@@ -46,6 +46,7 @@ function array_util_call() {
     IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
     IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
     IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
+    IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -247,6 +248,19 @@ function cycles_test() {
     for variation in "${emle_sig_2_0_variations[@]}"; do
         echo -e "\nRunning eMLE_Sig_2.0 test for $variation"
         $bin_dir/eMLE_Sig_2.0/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # DME_Sign variation testing
+    for variation in "${dme_sign_variations[@]}"; do
+
+        # Only test the first two variations as the third does not have complete reference code (will be reviewed in future)
+        if [ $variation != "dme-3rnds-8vars-64bits-sign" ]; then
+            echo -e "\nRunning DME_Sign test for $variation"
+            $bin_dir/DME_Sign/pqcsign_$variation >> $results_dir/$output_file
+        else
+            echo -e "\nSkipping DME_Sign test for $variation, due to lack of reference implementation code, will be reviewed in future"
+        fi
+
     done
 
 }

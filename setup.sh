@@ -47,6 +47,7 @@ function array_util_call() {
     IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
     IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
     IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
+    IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -724,6 +725,39 @@ function variations_setup() {
 
         # Restore the original source code files
         "$scripts_dir/copy_modified_src_files.sh" "restore" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the DME_SIGN algorithm
+    dme_sign_src_dir=$nist_src_dir/DME_Sign
+    dme_sign_dst_dir=$bin_dir/DME_Sign
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${dme_sign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$dme_sign_src_dir/$variation/Reference_Implementation"
+        cd $variation_dir
+
+        # Only compile the first two variations as the third does not have complete reference code (will be reviewed in future)
+        if [ $variation != "dme-3rnds-8vars-64bits-sign" ]; then
+
+            # Copy over modified files to the current variation directory
+            "$scripts_dir/copy_modified_src_files.sh" "copy" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
+
+            # Compile and move pqcsign binary to relevant bin directory
+            make clean >> /dev/null
+            make -j $(nproc)
+            mv "$variation_dir/pqcsign" "$dme_sign_dst_dir/pqcsign_$variation"
+            make clean >> /dev/null
+
+            # Restore the original source code files
+            "$scripts_dir/copy_modified_src_files.sh" "restore" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
+
+        else
+            echo -e "\nSkipping DME_Sign variation: $variation due to lack of reference code implementation, will be reviewed in future"
+        fi
 
     done
 

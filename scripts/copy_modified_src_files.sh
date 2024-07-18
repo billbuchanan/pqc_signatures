@@ -254,6 +254,7 @@ function copy_modified_src_files() {
                 # Make temp copy of original makefile and copy over modified makefile
                 cp "$make_default_filepath" "$make_main_backup_file" 
                 cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+
                 
                 # Copy over modified files to source code directories
                 cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
@@ -363,15 +364,21 @@ function copy_modified_src_files() {
         *)
 
             # Set the filepaths for the files being worked with
-            make_default_filepath="$dst_variation_dir/Makefile"
             make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
             make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            # Check if current algorithm is DME_Sign as it has a different makefile name format
+            if [ "$current_alg" == "DME_Sign" ]; then 
+                make_default_filepath="$dst_variation_dir/makefile"
+            else
+                make_default_filepath="$dst_variation_dir/Makefile"
+            fi
 
             # Copy or restore modified source files for all other algorithms
             if [ "$util_flag" == "copy" ]; then
 
                 # Make temp copy of original makefile and copy over modified makefile if it exists
-                if [ -f "$dst_variation_dir/Makefile" ]; then
+                if [ -f "$make_default_filepath" ]; then
 
                     # Only copy makefile if it is not for Raccoon as default source code does not contain one
                     if [ "$current_alg" != "Raccoon" ]; then
@@ -381,6 +388,7 @@ function copy_modified_src_files() {
                         # Make temp copy of original makefile and copy over modified makefile
                         cp "$make_default_filepath" "$make_main_backup_file" 
                         mv "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+
                     fi
 
                 fi

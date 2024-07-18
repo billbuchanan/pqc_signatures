@@ -75,6 +75,9 @@ function export_env_vars() {
 
     EMLE_SIG_2_0_VARIATIONS=$(IFS=,; echo "${EMLE_SIG_2_0_VARIATIONS[*]}")
     export EMLE_SIG_2_0_VARIATIONS
+
+    DME_SIGN_VARIATIONS=$(IFS=,; echo "${DME_SIGN_VARIATIONS[*]}")
+    export DME_SIGN_VARIATIONS
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -103,6 +106,7 @@ function clear_env_vars(){
     unset ASCON_SIGN_VARIATIONS
     unset MAYO_VARIATIONS
     unset EMLE_SIG_2_0_VARIATIONS
+    unset DME_SIGN_VARIATIONS
 
 }
 
@@ -197,6 +201,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         EMLE_SIG_2_0_VARIATIONS+=("$line")
     done < "$alg_variations_dir/eMLE_Sig_2.0_variations.txt"
+
+    while IFS= read -r line; do
+        DME_SIGN_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/DME_Sign_variations.txt"
 
 }
 

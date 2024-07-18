@@ -35,35 +35,37 @@ The following is a set of checklists which detail the algorithm currently implem
 - Ascon_Sign
 - Biscuit
 - CROSS
+- DME_Sign †
 - EHTv3v4
 - eMLE_Sig_2.0
 - FAEST
 - FuLeeca
 - HAWK
-- HuFu †
+- HuFu ††
 - MAYO
 - MEDS
 - MIRA
-- PERK ††
+- PERK †††
 - Enhanced_pqsigRM
 - Raccoon
 - RYDE
-- SDitH - Hypercube Variations †††
+- SDitH - Hypercube Variations ††††
 - SPHINCS_alpha
 - SQIsign
 - UOV
 
-> † IMPORTANT Dev branch Notice: Benchmarking HuFU can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the HuFU algorithm and its respective variations will be presented when executing the automated benchmarking script.  
+> † IMPORTANT Dev branch Notice: All variations for DME_SIGN function correctly apart from dme-3rnds-8vars-64bits-sign. This is due to the reference code for that variation not including all the correct source code files. This may of been intentional on the authors part, as the optimised implementation contains the correct source code files. This will be reviewed further, as all other schemes implemented use the reference code submitted to NIST, so deviating for this specific algorithm/variation may be problematic for the performance metrics gathered. For the moment, the automated compiling and benchmarking scripts will skip this variation until a decision has been made on how to proceed going forward.
 
-> †† IMPORTANT Dev branch Notice: The PERK algorithm variations is currently partially functional apart from perk-256-short-3 and perk-256-short-5. This is due to a memory issue causing a segmentation fault within the default reference code submitted for those variations. This will be reviewed further but for the time being the rest of the PERK variations function correctly.
+> †† IMPORTANT Dev branch Notice: Benchmarking HuFU can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the HuFU algorithm and its respective variations will be presented when executing the automated benchmarking script.  
 
-> ††† IMPORTANT Dev branch Notice: The SDitH algorithm variations is currently partially functional apart from the threshold variants. This is due to issues with the code that performs the signature verification for these variations. This will be reviewed further but for the time being the rest of the SDiTH-Hypercube variations function correctly. 
+> ††† IMPORTANT Dev branch Notice: The PERK algorithm variations is currently partially functional apart from perk-256-short-3 and perk-256-short-5. This is due to a memory issue causing a segmentation fault within the default reference code submitted for those variations. This will be reviewed further but for the time being the rest of the PERK variations function correctly.
+
+> †††† IMPORTANT Dev branch Notice: The SDitH algorithm variations is currently partially functional apart from the threshold variants. This is due to issues with the code that performs the signature verification for these variations. This will be reviewed further but for the time being the rest of the SDiTH-Hypercube variations function correctly. 
 
 
 ### Still to be Implemented
 - AIMer
 - ALTEQ
-- DME_Sign
 - EagleSign
 - HAETAE
 - HPPC
