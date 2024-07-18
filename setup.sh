@@ -50,6 +50,7 @@ function array_util_call() {
     IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
     IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
     IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
+    IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -380,11 +381,21 @@ function variations_setup() {
         variation_type=$(echo "$variation" | cut -d'_' -f2-)
         variation_dir="$uov_src_dir/$variation_type"
 
+
+        echo "current variation - $variation"
+        echo "current variation type - $variation_type"
+        echo "currennt dir "
+        ls 
+        pwd
+        echo -e "\n\n"
+
+
         # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
         make "PROJ=$variation_type" -j $(nproc)
         mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
+
 
     done
 
@@ -810,6 +821,35 @@ function variations_setup() {
 
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "VOX" "$vox_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the TUOV algorithm
+    tuov_src_dir=$nist_src_dir/TUOV/Reference_Implementation
+    tuov_dst_dir=$bin_dir/TUOV
+
+    # Change to the UOV source code directory
+    cd $tuov_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "TUOV" "$tuov_src_dir" "all" "$root_dir"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${tuov_variations[@]}"; do
+
+        # Extract the variation type from the variation name
+        variation_type=$(echo "$variation" | cut -d'_' -f2-)
+        variation_dir="$tuov_src_dir/$variation_type"
+
+        # Compile and move pqcsign binary to lib directory
+        make clean >> /dev/null
+        make "PROJ=$variation_type" -j $(nproc)
+        mv "$tuov_src_dir/pqcsign" "$tuov_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Restore the original files (makefile will only be resorted if is it the last variation)
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "TUOV" "$tuov_src_dir" "all" "$root_dir"
 
 
 }

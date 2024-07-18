@@ -52,6 +52,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - SDitH - Hypercube Variations ††††
 - SPHINCS_alpha
 - SQIsign
+- TUOV
 - UOV
 - VOX
 - Xifrat1_Sign_I
@@ -81,7 +82,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - SDitH - Threshold Variations
 - SNOVA
 - SQUIRRELS
-- TUOV
 - Wave
 - SQUIRRELS
 

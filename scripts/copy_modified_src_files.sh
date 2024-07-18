@@ -393,6 +393,39 @@ function copy_modified_src_files() {
             fi
             ;;
 
+        "TUOV")
+
+            # NOTE - variation dir is just reference source code directory as modded source files are stored there, not in the variation directories
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
+            make_main_backup_file="$main_alg_backup/Makefile_TUOV"
+            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            # Copy or restore modified source files for UOV algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_TUOV" "$dst_variation_dir/Makefile"
+                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
+
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+
         *)
 
             # Set the filepaths for the files being worked with

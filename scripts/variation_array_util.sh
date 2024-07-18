@@ -84,6 +84,9 @@ function export_env_vars() {
 
     VOX_VARIATIONS=$(IFS=,; echo "${VOX_VARIATIONS[*]}")
     export VOX_VARIATIONS
+
+    TUOV_VARIATIONS=$(IFS=,; echo "${TUOV_VARIATIONS[*]}")
+    export TUOV_VARIATIONS
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -115,6 +118,7 @@ function clear_env_vars(){
     unset DME_SIGN_VARIATIONS
     unset XIFRAT1_SIGN_VARIATIONS
     unset VOX_VARIATIONS
+    unset TUOV_VARIATIONS
 
 }
 
@@ -221,6 +225,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         VOX_VARIATIONS+=("$line")
     done < "$alg_variations_dir/VOX_variations.txt"
+
+    while IFS= read -r line; do
+        TUOV_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/TUOV_variations.txt"
 
 }
 
