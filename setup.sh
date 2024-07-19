@@ -55,6 +55,7 @@ function array_util_call() {
     IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
     IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
     IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
+    IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -105,7 +106,7 @@ function environment_setup() {
         "libgf2x-dev" 
         "libgf2x3" 
         "libm4ri-0.0.20200125" 
-        "libm4ri-dev "
+        "libm4ri-dev"
         "libntl-dev"
         "libntl44"
     )
@@ -1007,6 +1008,26 @@ function variations_setup() {
         "$scripts_dir/copy_modified_src_files.sh" "restore" "HPPC" "$variation_dir" "$variation" "$root_dir"
 
     done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the ALTEQ algorithm
+    alteq_src_dir=$nist_src_dir/ALTEQ/Reference_Implementation
+    alteq_dst_dir=$bin_dir/ALTEQ
+
+    # Change to the ALTEQ source code directory
+    cd $alteq_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
+
+    # Compile and move pqcsign binary to relevant bin directory
+    make distclean >> /dev/null
+    make pqcsign_all -j $(nproc)
+    mv $alteq_src_dir/pqcsign_* $alteq_dst_dir/
+    make distclean >> /dev/null
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
 
 }
 

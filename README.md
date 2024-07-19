@@ -32,6 +32,7 @@ The following is a set of checklists which detail the algorithm currently implem
 
 ### Implemented
 - 3WISE
+- ALTEQ
 - Ascon_Sign
 - Biscuit
 - CROSS
@@ -73,7 +74,6 @@ The following is a set of checklists which detail the algorithm currently implem
 
 ### Still to be Implemented
 - AIMer
-- ALTEQ
 - EagleSign
 - HAETAE
 - KAZ_SIGN
@@ -84,7 +84,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - SDitH - Threshold Variations
 - SQUIRRELS
 - Wave
-- SQUIRRELS
 
 ### Currently being Implemented 
 

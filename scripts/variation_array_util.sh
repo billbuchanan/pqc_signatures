@@ -99,6 +99,9 @@ function export_env_vars() {
 
     HPPC_VARIATIONS=$(IFS=,; echo "${HPPC_VARIATIONS[*]}")
     export HPPC_VARIATIONS
+
+    ALTEQ_VARIATIONS=$(IFS=,; echo "${ALTEQ_VARIATIONS[*]}")
+    export ALTEQ_VARIATIONS
     
 }
 
@@ -136,6 +139,7 @@ function clear_env_vars(){
     unset QR_UOV_VARIATIONS
     unset SNOVA_VARIATIONS
     unset HPPC_VARIATIONS
+    unset ALTEQ_VARIATIONS
 
 }
 
@@ -262,6 +266,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         HPPC_VARIATIONS+=("$line")
     done < "$alg_variations_dir/HPPC_variations.txt"
+
+    while IFS= read -r line; do
+        ALTEQ_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/ALTEQ_variations.txt"
 
 }
 

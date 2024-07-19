@@ -28,6 +28,7 @@ function ensure_default_src_files() {
 
         echo -e "\n#################################################################" >> "$root_dir/last_setup_error.log"
         echo "Default source file checker outputs"
+        echo "Current Algorithm: $current_alg"
         echo -e "\nDefault source files contains modified flag\n" >> "$root_dir/last_setup_error.log"
 
         # Check to see if temp copy is present in current working dir

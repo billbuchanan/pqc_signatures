@@ -63,7 +63,6 @@ char *showhex(uint8_t a[], int size) {
 }
 
 
-
 //------------------------------------------------------------------------------
 int benchmark_cycles() {
 
@@ -78,6 +77,10 @@ int benchmark_cycles() {
     #if defined (SPHINCS_ALGNAME)
         printf("Algorithm: %s\n", SPHINCS_ALGNAME);
         printf("Algorithm: %s\n", CRYPTO_ALGNAME);
+
+    #elif defined (ALTEQ_ALGNAME)
+        printf("Algorithm: %s\n", ALTEQ_ALGNAME);
+    
     #else
 
         if (strcmp(CRYPTO_ALGNAME, "lvl1") == 0) {
