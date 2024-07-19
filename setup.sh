@@ -52,6 +52,7 @@ function array_util_call() {
     IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
     IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
     IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
+    IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -877,6 +878,42 @@ function variations_setup() {
         "$scripts_dir/copy_modified_src_files.sh" "restore" "PROV" "$variation_dir" "$variation" "$root_dir"
 
     done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the QR_UOV algorithm
+    qr_uov_src_dir=$nist_src_dir/QR_UOV/Reference_Implementation/
+    qr_uov_dst_dir=$bin_dir/QR_UOV
+    qr_uov_ref_code_dir=$qr_uov_src_dir/ref
+
+    # Change to the QR_UOV source code directory
+    cd $qr_uov_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
+
+    # Compile the different variations source code
+    make clean >> /dev/null
+    make 
+
+    # Loop throuhg the variations and get the pqcsign binary
+    for variation in "${qr_uov_variations[@]}"; do
+
+        # Set the variation build directory path and change to it
+        variation_dir="$qr_uov_src_dir/$variation/ref"
+        cd $variation_dir
+
+        # Copy over the pqcsign binary to the relevant bin directory
+        mv "$variation_dir/pqcsign" "$qr_uov_dst_dir/pqcsign_$variation"
+
+
+    done
+
+    # Move back to the source directory and clean up
+    cd $qr_uov_src_dir
+    make clean >> /dev/null
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
 
 
 }

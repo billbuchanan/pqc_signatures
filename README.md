@@ -48,6 +48,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - PERK †††
 - Enhanced_pqsigRM
 - PROV
+- QR_UOV
 - Raccoon
 - RYDE
 - SDitH - Hypercube Variations ††††
@@ -78,7 +79,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - MiRitH
 - MQOM
 - Preon
-- QR_UOV
 - SDitH - Threshold Variations
 - SNOVA
 - SQUIRRELS

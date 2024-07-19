@@ -26,10 +26,12 @@ Completed
 - VOX
 - TUOV !!! double check if PQCgen_KAT sign is needed as excluded from makefile to simplify automated compile
 - PROV
+- QR_UOV
 
 
 -----------------------------------------------------------------------------------------------------
 in progress:
+- SNOVA
 
 
 
@@ -37,10 +39,8 @@ in progress:
 Still to do:
 - ALTEQ
 - HPPC
-- MiRitH
-- MQOM
-- QR_UOV
-- SNOVA
+
+
 
 
 ------------------------------------------------------------------------------------------------------
@@ -54,3 +54,5 @@ in progress (leave till last):
 - SQUIRRELS
 - KAZ_SIGN
 - Preon
+- MQOM
+- MiRitH

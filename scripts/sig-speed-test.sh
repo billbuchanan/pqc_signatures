@@ -51,6 +51,7 @@ function array_util_call() {
     IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
     IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
     IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
+    IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -289,6 +290,12 @@ function cycles_test() {
     for variation in "${prov_variations[@]}"; do
         echo -e "\nRunning PROV test for $variation"
         $bin_dir/PROV/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # QR_UOV variation testing
+    for variation in "${qr_uov_variations[@]}"; do
+        echo -e "\nRunning QR_UOV test for $variation"
+        $bin_dir/QR_UOV/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }
