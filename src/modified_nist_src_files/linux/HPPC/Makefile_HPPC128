@@ -1,0 +1,37 @@
+#modifed-flag
+SOURCES=rng.c sign.c serializer.c gen.c
+HEADERS=rng.h serializer.h gen.h ntl_utils.h api.h
+INCLUDES=-I$(CURDIR)/../flint/include/
+LDFLAGS=-L$(CURDIR)/../flint/lib -Wl,-rpath=$(CURDIR)/../flint/lib -lflint -lflint -lm4ri -lgmp -lm -lstdc++ -lntl -ldl -lcrypto -pthread -lpthread -lgf2x
+THREADED=-pthread -lpthread
+OPTIMIZED=-Ofast -march=native
+DFLAGS=-DMULT_STRASSEN
+
+all: test pqcsign PQCgenKAT_sign strassen_fast_test fast_test
+
+PQCgenKAT_sign:
+	g++ -c ntl_utils.cpp $(INCLUDES) $(THREADED) 
+	gcc $@.c $(HEADERS) $(SOURCES) ntl_utils.o -o $@ $(INCLUDES) $(LDFLAGS) $(OPTIMIZED) $(THREADED) -std=c99
+
+pqcsign:
+	g++ -c ntl_utils.cpp $(INCLUDES) $(THREADED)
+	gcc pqcsign.c $(HEADERS) $(SOURCES) ntl_utils.o -o $@ $(INCLUDES) $(LDFLAGS) $(THREADED) -std=c99
+
+test:
+	g++ -c ntl_utils.cpp $(HEADERS) $(INCLUDES) $(THREADED)
+	gcc $@.c $(HEADERS) $(SOURCES) ntl_utils.o -o $@ $(INCLUDES) $(LDFLAGS) $(THREADED) -std=c99
+
+fast_test:
+	g++ -c ntl_utils.cpp $(INCLUDES) $(THREADED)
+	gcc test.c $(HEADERS) $(SOURCES) ntl_utils.o -o $@ $(INCLUDES) $(LDFLAGS) $(THREADED) -std=c99
+
+strassen_fast_test:
+	g++ -c ntl_utils.cpp $(INCLUDES) $(THREADED)
+	gcc test.c $(HEADERS) $(SOURCES)  ntl_utils.o -o $@ $(INCLUDES) $(LDFLAGS) $(OPTIMIZED) $(DFLAGS) $(THREADED) -std=c99
+
+
+.PHONY: clean
+clean:
+	rm -f PQCgenKAT_sign test fast_test strassen_fast_test *.o >/dev/null
+	rm -f pqcsign pqcsign.o ntl_utils.o
+	rm -f *.gch

@@ -9,6 +9,10 @@ src/nist/3WISE/Reference_Implementation/flint/
 src/nist/3WISE/Reference_Implementation/flint-2.9.0/
 src/nist/3WISE/Reference_Implementation/v2.9.0.tar.gz
 src/nist/3WISE/Reference_Implementation/v2.9.0.tar.gz.1
+src/nist/HPPC/Reference_Implementation/flint/
+src/nist/HPPC/Reference_Implementation/flint-2.9.0/
+src/nist/HPPC/Reference_Implementation/v2.9.0.tar.gz
+src/nist/HPPC/Reference_Implementation/v2.9.0.tar.gz.1
 setup.py
 setup.c
 temp_src_backup/

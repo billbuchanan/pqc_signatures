@@ -96,6 +96,10 @@ function export_env_vars() {
 
     SNOVA_VARIATIONS=$(IFS=,; echo "${SNOVA_VARIATIONS[*]}")
     export SNOVA_VARIATIONS
+
+    HPPC_VARIATIONS=$(IFS=,; echo "${HPPC_VARIATIONS[*]}")
+    export HPPC_VARIATIONS
+    
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -131,6 +135,7 @@ function clear_env_vars(){
     unset PROV_VARIATIONS
     unset QR_UOV_VARIATIONS
     unset SNOVA_VARIATIONS
+    unset HPPC_VARIATIONS
 
 }
 
@@ -253,6 +258,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         SNOVA_VARIATIONS+=("$line")
     done < "$alg_variations_dir/SNOVA_variations.txt"
+
+    while IFS= read -r line; do
+        HPPC_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/HPPC_variations.txt"
 
 }
 

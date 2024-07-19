@@ -53,6 +53,7 @@ function array_util_call() {
     IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
     IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
     IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
+    IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -310,6 +311,12 @@ function cycles_test() {
     for variation in "${qr_uov_variations[@]}"; do
         echo -e "\nRunning QR_UOV test for $variation"
         $bin_dir/QR_UOV/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # HPPC variation testing
+    for variation in "${hppc_variations[@]}"; do
+        echo -e "\nRunning HPPC test for $variation"
+        $bin_dir/HPPC/pqcsign_$variation >> $results_dir/$output_file
     done
 
     # HUFU variation testing if included is true

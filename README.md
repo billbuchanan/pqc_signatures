@@ -41,6 +41,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - FAEST
 - FuLeeca
 - HAWK
+- HPPC
 - HuFu ††
 - MAYO
 - MEDS
@@ -75,7 +76,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - ALTEQ
 - EagleSign
 - HAETAE
-- HPPC
 - KAZ_SIGN
 - LESS
 - MiRitH
