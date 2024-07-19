@@ -52,6 +52,7 @@ The following is a set of checklists which detail the algorithm currently implem
 - Raccoon
 - RYDE
 - SDitH - Hypercube Variations ††††
+- SNOVA †††††
 - SPHINCS_alpha
 - SQIsign
 - TUOV
@@ -67,6 +68,7 @@ The following is a set of checklists which detail the algorithm currently implem
 
 > †††† IMPORTANT Dev branch Notice: The SDitH algorithm variations is currently partially functional apart from the threshold variants. This is due to issues with the code that performs the signature verification for these variations. This will be reviewed further but for the time being the rest of the SDiTH-Hypercube variations function correctly. 
 
+> ††††† IMPORTANT Dev branch Notice: Benchmarking SNOVA can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the SNOVA algorithm and its respective variations will be presented when executing the automated benchmarking script.  
 
 ### Still to be Implemented
 - AIMer
@@ -80,7 +82,6 @@ The following is a set of checklists which detail the algorithm currently implem
 - MQOM
 - Preon
 - SDitH - Threshold Variations
-- SNOVA
 - SQUIRRELS
 - Wave
 - SQUIRRELS

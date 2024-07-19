@@ -52,6 +52,7 @@ function array_util_call() {
     IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
     IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
     IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
+    IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -59,7 +60,7 @@ function array_util_call() {
 }
 
 #---------------------------------------------------------------------------------------------------
-function determine_hufu_inclusion() {
+function determine_alg_inclusion() {
     # Function to determine if HUFU is to be included in the benchmarking
 
     # Notify user of HUFU test length Get choice to include HUFU in testing from user
@@ -79,6 +80,31 @@ function determine_hufu_inclusion() {
 
         elif [ $hufu_choice == "n" ]; then
             hufu_included=0
+            break
+        
+        else
+            echo -e "Invalid input. Please enter 'y' or 'n'\n"
+        fi
+
+    done
+
+    # Notify user of SNOVA test length Get choice to include SNOVA in testing from user
+    echo -e "\nWARNGING! - SNOVA benchmarking takes a considerable amount of time to complete, even on a high performance machine\n"
+
+    # Loop until valid input is received
+    while true; do
+
+        # Get user choice to include SNOVA in benchmarking
+        read -p "Would you like to include SNOVA in the benchmarking? (y/n): " snova_choice
+        snova_choice=$(echo $snova_choice | tr '[:upper:]' '[:lower:]')
+        
+        # Check if input is valid and set choice flag
+        if [ $snova_choice == "y" ]; then
+            snova_included=1
+            break
+
+        elif [ $snova_choice == "n" ]; then
+            snova_included=0
             break
         
         else
@@ -195,18 +221,6 @@ function cycles_test() {
         $bin_dir/EHTv3v4/pqcsign_$variation >> $results_dir/$output_file
     done
 
-    # HUFU variation testing if included is true
-    if [ $hufu_included == 1 ]; then
-
-        for variation in "${hufu_variations[@]}"; do
-            echo -e "\nRunning hufu test for $variation"
-            $bin_dir/HuFu/pqcsign_$variation >> $results_dir/$output_file
-        done
-
-    else
-        echo -e "\nSkipping HUFU benchmarking"
-    fi
-
     # 3WISE variation testing
     for variation in "${three_wise_variations[@]}"; do
         echo -e "\nRunning 3WISE test for $variation"
@@ -298,6 +312,30 @@ function cycles_test() {
         $bin_dir/QR_UOV/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # HUFU variation testing if included is true
+    if [ $hufu_included -eq 1 ]; then
+
+        for variation in "${hufu_variations[@]}"; do
+            echo -e "\nRunning hufu test for $variation"
+            $bin_dir/HuFu/pqcsign_$variation >> $results_dir/$output_file
+        done
+
+    else
+        echo -e "\nSkipping HUFU benchmarking"
+    fi
+
+    # SNOVA variation testing if included is true
+    if [ $snova_included -eq 1 ]; then
+
+        for variation in "${snova_variations[@]}"; do
+            echo -e "\nRunning SNOVA test for $variation"
+            $bin_dir/SNOVA/pqcsign_$variation >> $results_dir/$output_file
+        done
+
+    else
+        echo -e "\nSkipping SNOVA benchmarking"
+    fi
+
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -311,7 +349,7 @@ function main() {
     array_util_call
     
     # Determine if HUFU is to be included in testing and number of test runs
-    determine_hufu_inclusion
+    determine_alg_inclusion
     determine_run_nums
 
     # Perform benchmarking for number of specified runs

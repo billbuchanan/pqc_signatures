@@ -432,8 +432,8 @@ function copy_modified_src_files() {
             make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
             make_temp_backup_file="$dst_variation_dir/temp_make_copy"
 
-            # Check if current algorithm is DME_Sign as it has a different makefile name format
-            if [ "$current_alg" == "DME_Sign" ]; then 
+            # Check if current algorithm is DME_Sign and SNOVA as it has a different makefile name format
+            if [ "$current_alg" == "DME_Sign" ] || [ "$current_alg" == "SNOVA" ]; then 
                 make_default_filepath="$dst_variation_dir/makefile"
             else
                 make_default_filepath="$dst_variation_dir/Makefile"

@@ -27,11 +27,11 @@ Completed
 - TUOV !!! double check if PQCgen_KAT sign is needed as excluded from makefile to simplify automated compile
 - PROV
 - QR_UOV
-
+- SNOVA
 
 -----------------------------------------------------------------------------------------------------
 in progress:
-- SNOVA
+
 
 
 

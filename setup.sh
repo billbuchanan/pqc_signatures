@@ -53,6 +53,7 @@ function array_util_call() {
     IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
     IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
     IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
+    IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -915,6 +916,31 @@ function variations_setup() {
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
 
+    #__________________________________________________________________________
+    # Set the source and destination directories for the SNOVA algorithm
+    snova_src_dir=$nist_src_dir/SNOVA/Reference_Implementation
+    snova_dst_dir=$bin_dir/SNOVA
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${snova_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$snova_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SNOVA" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make pqcsign -j $(nproc)
+        mv "$variation_dir/pqcsign" "$snova_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SNOVA" "$variation_dir" "$variation" "$root_dir"
+
+    done
 
 }
 

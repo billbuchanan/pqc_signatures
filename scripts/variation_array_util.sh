@@ -93,6 +93,9 @@ function export_env_vars() {
 
     QR_UOV_VARIATIONS=$(IFS=,; echo "${QR_UOV_VARIATIONS[*]}")
     export QR_UOV_VARIATIONS
+
+    SNOVA_VARIATIONS=$(IFS=,; echo "${SNOVA_VARIATIONS[*]}")
+    export SNOVA_VARIATIONS
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -127,6 +130,7 @@ function clear_env_vars(){
     unset TUOV_VARIATIONS
     unset PROV_VARIATIONS
     unset QR_UOV_VARIATIONS
+    unset SNOVA_VARIATIONS
 
 }
 
@@ -245,6 +249,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         QR_UOV_VARIATIONS+=("$line")
     done < "$alg_variations_dir/QR_UOV_variations.txt"
+
+    while IFS= read -r line; do
+        SNOVA_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/SNOVA_variations.txt"
 
 }
 
