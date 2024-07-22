@@ -66,7 +66,7 @@ function copy_modified_src_files() {
 
     # Set relevant path variables from passed arguments
     src_dir="$root_dir/src"
-    pqcsign_src_file="$src_dir/performance-eval-scripts/pqcsign.c"
+    pqcsign_src_file="$src_dir/performance_eval_scripts/pqcsign.c"
     main_alg_backup="$main_backup_dir/$current_alg"
     modified_files_path="$root_dir/src/modified_nist_src_files/linux/$current_alg"
 

@@ -69,6 +69,82 @@ function array_util_call() {
 }
 
 #---------------------------------------------------------------------------------------------------
+function determine_setup_options() {
+    # Function to determine the number of runs to be performed set by the user
+
+    # Determine if user wants to do benchmark testing before performing setup
+    while true; do
+
+        # Get user input for number of runs
+        read -p "Would you like to perform benchmarking after completing compilation (y/n): " benchmark_choice
+        benchmark_choice=$(echo $benchmark_choice | tr '[:upper:]' '[:lower:]')
+
+        echo "benchmark choice: $benchmark_choice"
+
+        # Check if input is valid and set choice flag
+        if [ $benchmark_choice == "y" ]; then
+            benchmark_included="1"
+            break
+
+        elif [ $benchmark_choice == "n" ]; then
+            benchmark_included="0"
+            break
+        
+        else
+            echo -e "\nIncorrect input, please use (y/n) to indicate benchmark inclusion choice"
+        fi
+
+    done
+
+    # Get the number of runs to be performed if benchmarking is included
+    if [ $benchmark_included == "1" ]; then
+
+        # Loop until valid input is received for the number of runs
+        while true; do
+
+            # Get user input for number of runs
+            read -p "Enter the number of runs to be performed: " num_runs
+
+            # Check if input is valid and set number of runs
+            if [[ $num_runs =~ ^[0-9]+$ ]]; then
+                break
+            else
+                echo -e "Invalid input. Please enter a positive integer\n"
+            fi
+
+        done
+
+    fi
+
+    # Loop until valid input is received for the output method
+    while true; do
+            
+            # Get user input for output method
+            echo -e "\nWhere would you like the compilation output of the script to be directed?:"
+            echo -e "Option 1: terminal"
+            echo -e "Option 2: file\n"
+            read -p "Select Option: " output_method
+
+            # Determine the output method based on user choice (0: terminal, 1: file)
+            case $output_method in
+                1)
+                    output_method="0"
+                    break
+                    ;;
+                2)
+                    output_method="1"
+                    break
+                    ;;
+                *) 
+                    echo -e "Invalid input. Please enter either 1 or 2\n"
+                    ;;
+            esac
+    
+    done
+
+}
+
+#---------------------------------------------------------------------------------------------------
 function environment_setup() {
     # Function to setup the required environment for the automated compilation of the algorithms
 
@@ -137,46 +213,9 @@ function environment_setup() {
 }
 
 #---------------------------------------------------------------------------------------------------
-function determine_run_nums() {
-    # Function to determine the number of runs to be performed set by the user
-
-    # Loop until valid input is received
-    while true; do
-
-        # Get user input for number of runs
-        read -p "Enter the number of runs to be performed: " num_runs
-
-        # Check if input is valid and set number of runs
-        if [[ $num_runs =~ ^[0-9]+$ ]]; then
-            break
-        else
-            echo -e "Invalid input. Please enter a positive integer\n"
-        fi
-
-    done
-
-}
-
-
-
-#---------------------------------------------------------------------------------------------------
-function variations_setup() {
-    # Function to setup the various signature algorithms and their variations
-
-    # Set the modified files directory path
-    mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the Raccoon algorithm
-
-
-
-
-}
-
-#---------------------------------------------------------------------------------------------------
 function cycles_test() {
     # Function to run the signature speed tests for each algorithm variation for current run
+    # The functionality that would go in the sig_speed_test.sh would go here
 
     # Set the output filename based on current run
     local output_file="sig_speed_results_run_$1.txt"
@@ -184,45 +223,60 @@ function cycles_test() {
 
 }
 
+
+#---------------------------------------------------------------------------------------------------
+function variations_setup() {
+    # Function to setup the various signature algorithms and their variations
+    # The setup functionality that is in the setup.sh script would go here
+
+    # Set the modified files directory path
+    mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the * algorithm
+
+}   
+
+
 #---------------------------------------------------------------------------------------------------
 function main() {
     # Main function for setting up the required environment and compiling the various signature algorithms
+
+    # Outputting to the user what version of setup this is
+    echo -e "\n#############################################"
+    echo -e "Development Automated Setup Script\n"
 
     # Remove error log from any previous runs
     if [ -f "last_setup_error.log" ]; then
         rm last_setup_error.log
     fi
 
-    # Determine if user wants to do benchmark testing before performing setup
-    while true; do
+    # Determine the setup options
+    determine_setup_options
 
-        # Get user input for number of runs
-        echo -e "\n"
-        read -p "Enter the number of runs to be performed: " num_runs
-        benchmark_choice=$(echo $benchmark_choice | tr '[:upper:]' '[:lower:]')
+    # # Echo separator to specified output location
+    if [ "$output_method" == "0" ]; then
+        echo -e "\n#############################################"
+        echo -e "Performing Environment Setup"
+    else
+        echo -e "\n#############################################" > "dev_setup_output.txt"
+        echo -e "Performing Environment Setup" >> dev_setup_output.txt
+    fi
 
-        # Check if input is valid and set choice flag
-        if [ $benchmark_choice == "y" ]; then
-            benchmark_included=1
-            break
+    # Perform setup based on output method
+    if [ "$output_method" == "1" ]; then
 
-        elif [ $benchmark_choice == "n" ]; then
-            benchmark_included=0
-            break
+        # Configure setup environment and setup the variations
+        environment_setup >> "dev_setup_output.txt" 2>&1
+        variations_setup >> "dev_setup_output.txt" 2>&1
         
-        else
-            echo -e "\nIncorrect input, please use (y/n) to indicate benchmark inclusion choice"
-        fi
+    else
 
-    done
+        # Configure setup environment and setup the variations without redirection
+        environment_setup
+        variations_setup
 
-
-    # Configure setup environment
-    echo "Performing Environment Setup"
-    environment_setup
-
-    # Setup the various algorithms and their variations
-    variations_setup
+    fi
 
     # Output to the user that setup is complete
     echo -e "\nSetup complete, testing scripts can be found in the test_scripts directory"
@@ -233,20 +287,20 @@ function main() {
     fi
 
     # Perform benchmarking if user indicated it should be performed
-    if [ "$benchmark_choice" == "1" ]; then 
+    if [ "$benchmark_included" == "1" ]; then
 
-        # Determine the number of test runs
-        determine_run_nums
+        # Echo separator to specified output location
+        echo -e "\n#############################################"
+        echo -e "Performing Benchmarking"
 
         # Perform benchmarking for number of specified runs
-        for run_num in $(seq 1 $number_of_runs); do
+        for run_num in $(seq 1 $num_runs); do
             echo "Performing Run $run_num"
             cycles_test "$run_num"
         done
 
         # Output results location
         echo -e "\nBenchmarking runs completed, results can be found in the test_data/results directory"
-
 
     else
         echo -e "\nSkipping benchmarking"
