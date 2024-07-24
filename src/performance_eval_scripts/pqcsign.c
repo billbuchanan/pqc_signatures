@@ -201,10 +201,10 @@ int benchmark_cycles() {
     printf("Verify:\t%llu cycles\n",  verify_time);
 
     // Temporaily output the message and key values for debugging purposes
-    printf("\nMessage: %s\n",showhex(m, mlen));
-    printf("\nAlice Public key (16th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/16));
-    printf("Alice Secret key (128th of signature): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/128 ));
-    printf("Signature (128th of signature): %s\n\n",showhex(sig,CRYPTO_BYTES/128));
+    // printf("\nMessage: %s\n",showhex(m, mlen));
+    // printf("\nAlice Public key (16th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/16));
+    // printf("Alice Secret key (128th of signature): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/128 ));
+    // printf("Signature (128th of signature): %s\n\n",showhex(sig,CRYPTO_BYTES/128));
 
     // Free the allocated memory for the public and secret keys
     free(pk);
