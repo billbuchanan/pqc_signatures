@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"sync"
-	"time"
 )
 
 type PathVariables struct {
@@ -53,7 +52,7 @@ func NewPathVariables() (*PathVariables, error) {
 		SrcDir:           root + sep + "src",
 		BinDir:           root + sep + "bin",
 		TestDataDir:      root + sep + "test_data",
-		ResultsDir:       root + sep + "test_data" + sep + "results" + time.Now().Local().Format("20060102"),
+		ResultsDir:       root + sep + "test_data" + sep + "results",
 		AlgsListDir:      root + sep + "test_data" + sep + "sig_algs_list",
 		AlgVariationsDir: root + sep + "test_data" + sep + "alg_variation_lists",
 	}
