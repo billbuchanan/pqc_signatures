@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"sync"
+	"time"
 )
 
 type PathVariables struct {
@@ -136,9 +137,9 @@ func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *P
 			continue
 		}
 		for _, element := range v {
-			cmd := exec.Command(pathvars.BinDir+sep+k+sep+"pqcsign_"+element, ">>", pathvars.ResultsDir+sep+ResultsFileName+strconv.Itoa(step+1)+".txt")
+			cmd := exec.Command(pathvars.BinDir+sep+k+sep+"pqcsign_"+element, ">>", pathvars.ResultsDir+sep+ResultsFileName+strconv.Itoa(step+1)+".txt &")
 			if err := cmd.Run(); err != nil {
-				fmt.Println(err)
+				fmt.Printf("Command execution error: %s \n", err)
 			}
 		}
 	}
@@ -162,6 +163,7 @@ func deleteExistingFolder(wd string, name string) {
 
 }
 func main() {
+	start := time.Now()
 	var wg sync.WaitGroup
 	pathvars, err := NewPathVariables()
 	if err != nil {
@@ -169,11 +171,11 @@ func main() {
 	}
 	res := NewAlgVariationArrays(pathvars.AlgVariationsDir)
 	cfg := Config()
-
+	fmt.Println("Started")
 	for run := 0; run < int(cfg.NumRuns); run++ {
 		wg.Add(1)
 		go PerformBenchmarking(res, cfg, pathvars, run, &wg)
 	}
 	wg.Wait()
-	fmt.Println("Started")
+	fmt.Printf("Finished in %s\n", time.Since(start))
 }

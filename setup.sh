@@ -185,6 +185,7 @@ function variations_setup() {
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
         make -j $(nproc)
+        # :TODO Not a good idea, lowercase only used here
         variation_lower="${variation,,}"
         cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation_lower
         make clean >> /dev/null
@@ -653,6 +654,7 @@ function variations_setup() {
 
     #__________________________________________________________________________
     # Set the source and destination directories for the SDitH algorithm
+    # TODO: Here should be SDitH_hypercube instead of just SDitH
     sdith_src_dir=$nist_src_dir/SDitH/Reference_Implementation
     sdith_hybercube_src_dir="$sdith_src_dir/Hypercube_Variant"
     sdith_threshold_src_dir="$sdith_src_dir/Threshold_Variant"
