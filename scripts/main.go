@@ -6,6 +6,8 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strconv"
+	"sync"
 	"time"
 )
 
@@ -19,74 +21,23 @@ type PathVariables struct {
 	AlgVariationsDir string
 }
 
-type AlgVariationArrays struct {
-	BISCUIT         chan map[string][]string
-	CROSS           chan map[string][]string
-	FAEST           chan map[string][]string
-	FULEECA         chan map[string][]string
-	PQSIGRM         chan map[string][]string
-	SPHINCS_ALPHA   chan map[string][]string
-	SQI             chan map[string][]string
-	UOV             chan map[string][]string
-	MED             chan map[string][]string
-	HAWK            chan map[string][]string
-	EHTV3V4         chan map[string][]string
-	HUFU            chan map[string][]string
-	THREE_WISE      chan map[string][]string
-	MIRA            chan map[string][]string
-	PERK            chan map[string][]string
-	RYDE            chan map[string][]string
-	SDITH_HYPERCUBE chan map[string][]string
-	ASCON_SIGN      chan map[string][]string
-	MAYO            chan map[string][]string
-	EMLE_SIG_2_0    chan map[string][]string
-	DME_SIGN        chan map[string][]string
-	XIFRAT1_SIGN    chan map[string][]string
-	VOX             chan map[string][]string
-	TUOV            chan map[string][]string
-	PROV            chan map[string][]string
-	QR_UOV          chan map[string][]string
-	SNOVA           chan map[string][]string
-	HPPC            chan map[string][]string
-	ALTEQ           chan map[string][]string
+type ConfigParams struct {
+	HUFU    bool
+	SNOVA   bool
+	NumRuns uint8
 }
 
-var algs map[int][]string
+const ResultsFileName = "sig_speed_results_run"
 
-func NewAlgVariationArrays(wd string) map[string][]string {
-	res := make(map[string][]string)
-	err := filepath.Walk(wd, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			fmt.Printf("Working dir error %s", err)
-			return err
-		}
+const HUFUWarningMessage = "WARNGING! - HUFU benchmarking takes a considerable amount of time to complete, even on a high performance machine"
+const HUFUSuggestMessage = "Would you like to include HUFU in the benchmarking? (y/n): "
 
-		file, err := os.Open(path)
-		if err != nil {
-			fmt.Printf("Reading file in dir error %s", err)
-			return err
-		}
-		defer file.Close()
+const SNOVAWarningMessage = "WARNGING! - SNOVA benchmarking takes a considerable amount of time to complete, even on a high performance machine"
+const SNOVASuggestMessage = "Would you like to include SNOVA in the benchmarking? (y/n): "
 
-		var lines []string
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			lines = append(lines, scanner.Text())
-		}
+const NumRunsMessage = "Enter the number of runs to be performed: "
 
-		// Print lines to verify
-		fmt.Printf("Lines in file %s:\n", info.Name())
-		for _, line := range lines {
-			fmt.Println(line)
-		}
-		res[info.Name()[:len(info.Name())-4]] = lines
-		return nil
-	})
-	if err != nil {
-		fmt.Printf("Working dir error %s", err)
-	}
-	return res
-}
+const sep = string(os.PathSeparator)
 
 func NewPathVariables() (*PathVariables, error) {
 	// Set absolute path to root folder of the project (run only inside of scripts/)
@@ -95,7 +46,6 @@ func NewPathVariables() (*PathVariables, error) {
 		fmt.Printf("Working dir error %s \n", err)
 		return &PathVariables{}, err
 	}
-	sep := string(os.PathSeparator)
 	root := filepath.Dir(wd)
 	pvb := &PathVariables{
 		RootDir:          root,
@@ -109,31 +59,119 @@ func NewPathVariables() (*PathVariables, error) {
 	return pvb, nil
 }
 
+func NewAlgVariationArrays(wd string) map[string][]string {
+	res := make(map[string][]string)
+	err := filepath.Walk(wd, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			fmt.Printf("Working dir error %s \n", err)
+			return err
+		}
+
+		file, err := os.Open(path)
+		if err != nil {
+			fmt.Printf("Reading file in dir error %s \n", err)
+			return err
+		}
+		defer file.Close()
+
+		var lines []string
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			lines = append(lines, scanner.Text())
+		}
+		res[info.Name()[:len(info.Name())-15]] = lines
+		return nil
+	})
+	if err != nil {
+		fmt.Printf("Working dir error %s \n", err)
+	}
+	return res
+}
+
+func Config() *ConfigParams {
+	var message string
+	var nums uint8
+	cfg := ConfigParams{}
+	fmt.Println(HUFUWarningMessage)
+	fmt.Println(HUFUSuggestMessage)
+	_, err := fmt.Scan(&message)
+	if err != nil || (message != "y" && message != "n") {
+		fmt.Printf("Invalid inpuit  %s \n", err)
+		panic(err)
+	}
+	if message == "y" {
+		cfg.HUFU = true
+	} else if message == "n" {
+		cfg.HUFU = false
+	}
+
+	fmt.Println(SNOVAWarningMessage)
+	fmt.Println(SNOVASuggestMessage)
+	_, err1 := fmt.Scan(&message)
+	if err1 != nil || (message != "y" && message != "n") {
+		fmt.Printf("Invalid inpuit  %s \n", err1)
+		panic(err1)
+	}
+	if message == "y" {
+		cfg.SNOVA = true
+	} else if message == "n" {
+		cfg.SNOVA = false
+	}
+
+	fmt.Println(NumRunsMessage)
+	_, err2 := fmt.Scan(&nums)
+	if err2 != nil {
+		fmt.Printf("Invalid inpuit  %s \n", err2)
+		panic(err2)
+	}
+	cfg.NumRuns = nums
+
+	return &cfg
+}
+
+func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *PathVariables, step int, wg sync.WaitGroup) {
+	defer wg.Done()
+	for k, v := range res {
+		if (k == "HuFu" && cfg.HUFU == false) || (k == "SNOVA" && cfg.SNOVA == false) {
+			continue
+		}
+		for _, element := range v {
+			fmt.Println(pathvars.BinDir+sep+k+sep+"pqcsign_"+element, ">>", pathvars.ResultsDir+sep+ResultsFileName+strconv.Itoa(step+1)+".txt")
+			// exec.Comand should be here
+		}
+	}
+}
 func deleteExistingFolder(wd string, name string) {
 	// Delete folder if its exists
 	err := filepath.Walk(wd, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
-			fmt.Printf("Working dir error %s", err)
+			fmt.Printf("Working dir error %s \n", err)
 			return err
 		}
 		if info.Name() == name {
 			os.RemoveAll(info.Name())
-			fmt.Printf("Previous %s folder was deleted", name)
+			fmt.Printf("Previous %s folder was deleted \n", name)
 		}
 		return nil
 	})
 	if err != nil {
-		fmt.Printf("Working dir error %s", err)
+		fmt.Printf("Working dir error %s \n", err)
 	}
 
 }
 func main() {
+	var wg sync.WaitGroup
 	pathvars, err := NewPathVariables()
 	if err != nil {
 		panic(err)
 	}
 	res := NewAlgVariationArrays(pathvars.AlgVariationsDir)
-	for k, v := range res {
-		fmt.Println(k, "value is", v)
+	cfg := Config()
+
+	for run := 0; run < int(cfg.NumRuns); run++ {
+		wg.Add(1)
+		go PerformBenchmarking(res, cfg, pathvars, run, wg)
 	}
+	wg.Wait()
+	fmt.Println("Started")
 }
