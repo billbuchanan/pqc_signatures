@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"sync"
@@ -129,15 +130,17 @@ func Config() *ConfigParams {
 	return &cfg
 }
 
-func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *PathVariables, step int, wg sync.WaitGroup) {
-	defer wg.Done()
+func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *PathVariables, step int, wg *sync.WaitGroup) {
+	defer wg.Done() // Correctly defer wg.Done()
 	for k, v := range res {
 		if (k == "HuFu" && cfg.HUFU == false) || (k == "SNOVA" && cfg.SNOVA == false) {
 			continue
 		}
 		for _, element := range v {
-			fmt.Println(pathvars.BinDir+sep+k+sep+"pqcsign_"+element, ">>", pathvars.ResultsDir+sep+ResultsFileName+strconv.Itoa(step+1)+".txt")
-			// exec.Comand should be here
+			cmd := exec.Command(pathvars.BinDir+sep+k+sep+"pqcsign_"+element, ">>", pathvars.ResultsDir+sep+ResultsFileName+strconv.Itoa(step+1)+".txt")
+			if err := cmd.Run(); err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 }
@@ -170,7 +173,7 @@ func main() {
 
 	for run := 0; run < int(cfg.NumRuns); run++ {
 		wg.Add(1)
-		go PerformBenchmarking(res, cfg, pathvars, run, wg)
+		go PerformBenchmarking(res, cfg, pathvars, run, &wg)
 	}
 	wg.Wait()
 	fmt.Println("Started")
