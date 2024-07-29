@@ -103,7 +103,24 @@ void set_env_macros() {
 
     #elif defined(PERK_ALGNAME)
         printf("Algorithm: %s\n", PERK_ALGNAME);
-    
+
+    #elif defined (KAZ_ALGNAME)
+        
+        // Determine which security level is being used for the algorithm
+        if (KAZ_ALGNAME == 1) {
+            printf("Algorithm: %s\n", "kaz458");
+        }
+        else if (KAZ_ALGNAME == 3) {
+            printf("Algorithm: %s\n", "kaz738");
+        }
+        else if (KAZ_ALGNAME == 5) {
+            printf("Algorithm: %s\n", "kaz970");
+        }
+        else {
+            printf("error in getting the KAZ_SIGN algorithm security level\n");
+            exit(1);
+        }
+
     #else
 
         // Check if the algorithm is SQI and get the variation, otherwise output the default algorithm name

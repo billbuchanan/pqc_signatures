@@ -59,6 +59,7 @@ function array_util_call() {
     IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
     IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
     IFS=',' read -r -a HAETAE_variations <<< "$HAETAE_VARIATIONS"
+    IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"

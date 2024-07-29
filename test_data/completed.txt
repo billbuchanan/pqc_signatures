@@ -42,14 +42,6 @@ in progress:
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-
-
-
-
-
-------------------------------------------------------------------------------------------------------
-in progress (leave till last):
-- KAZ_SIGN
 - LESS
 - MiRitH
 - MQOM
@@ -57,3 +49,8 @@ in progress (leave till last):
 - SDitH - Threshold Variations
 - SQUIRRELS
 - Wave
+
+
+------------------------------------------------------------------------------------------------------
+in progress (marked for team-debugging):
+- KAZ_SIGN

@@ -32,36 +32,8 @@ function array_util_call() {
     source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_variations_dir"
 
     # Import the variation arrays from environment variables
-    IFS=',' read -r -a raccoon_variations <<< "$RACCOON_VARIATIONS"
-    IFS=',' read -r -a biscuit_variations <<< "$BISCUIT_VARIATIONS"
-    IFS=',' read -r -a cross_variations <<< "$CROSS_VARIATIONS"
-    IFS=',' read -r -a faest_variations <<< "$FAEST_VARIATIONS"
-    IFS=',' read -r -a fuleeca_variations <<< "$FULEECA_VARIATIONS"
-    IFS=',' read -r -a pqsigrm_variations <<< "$PQSIGRM_VARIATIONS"
-    IFS=',' read -r -a sphincs_alpha_variations <<< "$SPHINCS_ALPHA_VARIATIONS"
-    IFS=',' read -r -a sqi_variations <<< "$SQI_VARIATIONS"
-    IFS=',' read -r -a uov_variations <<< "$UOV_VARIATIONS"
-    IFS=',' read -r -a med_variations <<< "$MED_VARIATIONS"
-    IFS=',' read -r -a hawk_variations <<< "$HAWK_VARIATIONS"
-    IFS=',' read -r -a ehtv3v4_variations <<< "$EHTV3V4_VARIATIONS"
-    IFS=',' read -r -a hufu_variations <<< "$HUFU_VARIATIONS"
-    IFS=',' read -r -a three_wise_variations <<< "$THREE_WISE_VARIATIONS"
-    IFS=',' read -r -a mira_variations <<< "$MIRA_VARIATIONS"
-    IFS=',' read -r -a perk_variations <<< "$PERK_VARIATIONS"
-    IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
-    IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
-    IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
-    IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
-    IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
-    IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
-    IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
-    IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
-    IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
-    IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
-    IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
-    IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
-    IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
-    IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
+    IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
+
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -191,6 +163,7 @@ function environment_setup() {
         "libm4ri-dev"
         "libntl-dev"
         "libntl44"
+        "patchelf"
     )
     not_installed=()
 
@@ -217,9 +190,16 @@ function cycles_test() {
     # Function to run the signature speed tests for each algorithm variation for current run
     # The functionality that would go in the sig_speed_test.sh would go here
 
+    # DEV NOTE - In the dev_setup script, output the results to the TERMINAL for testing purposes
+
     # Set the output filename based on current run
     local output_file="sig_speed_results_run_$1.txt"
 
+    # Run testing for KAZ_SIGN algorithm
+    for variation in "${kaz_sign_variations[@]}"; do
+        echo -e "\nRunning KAZ_SIGN test for $variation"
+        $bin_dir/KAZ_SIGN/pqcsign_$variation
+    done
 
 }
 
@@ -233,7 +213,31 @@ function variations_setup() {
     mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the * algorithm
+    # Set the source and destination directories for the KAZ_SIGN algorithm
+    kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
+    kaz_dst_dir="$bin_dir/KAZ_SIGN"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${kaz_sign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$kaz_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make 
+        mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
 
 }   
 
