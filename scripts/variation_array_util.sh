@@ -108,6 +108,9 @@ function export_env_vars() {
 
     EAGLESIGN_VARIATIONS=$(IFS=,; echo "${EAGLESIGN_VARIATIONS[*]}")
     export EAGLESIGN_VARIATIONS
+
+    HAETAE_VARIATIONS=$(IFS=,; echo "${HAETAE_VARIATIONS[*]}")
+    export HAETAE_VARIATIONS
     
 }
 
@@ -148,6 +151,7 @@ function clear_env_vars(){
     unset ALTEQ_VARIATIONS
     unset AIMER_VARIATIONS
     unset EAGLESIGN_VARIATIONS
+    unset HAETAE_VARIATIONS
 
 }
 
@@ -286,6 +290,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         EAGLESIGN_VARIATIONS+=("$line")
     done < "$alg_variations_dir/EagleSign_variations.txt"
+
+    while IFS= read -r line; do
+        HAETAE_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/HAETAE_variations.txt"
 
 }
 

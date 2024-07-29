@@ -2,36 +2,37 @@
 Completed
 - 3WISE
 - AIMer
+- ALTEQ
 - Ascon_Sign
 - Biscuit
 - CROSS
+- DME_Sign †
+- EagleSign
 - EHTv3v4
+- eMLE_Sig_2.0
 - FAEST
 - FuLeeca
-- HAWK !!!! - fix hawk makefile clean statements
-- HuFu †
+- HAETAE
+- HAWK
+- HPPC
+- HuFu ††
+- MAYO
 - MEDS
 - MIRA
-- PERK ††
+- PERK †††
 - Enhanced_pqsigRM
-- Raccoon
-- RYDE
-- SDitH - Hypercube Variations †††
-- SPHINCS_alpha
-- SQIsign
-- UOV
-- MAYO
-- eMLE_Sig_2.0
-- DME_Sign
-- Xifrat1_Sign_I
-- VOX
-- TUOV !!! double check if PQCgen_KAT sign is needed as excluded from makefile to simplify automated compile
 - PROV
 - QR_UOV
-- SNOVA
-- HPPC
-- ALTEQ
-- EagleSign
+- Raccoon
+- RYDE
+- SDitH - Hypercube Variations ††††
+- SNOVA †††††
+- SPHINCS_alpha
+- SQIsign
+- TUOV
+- UOV
+- VOX
+- Xifrat1_Sign_I
 
 -----------------------------------------------------------------------------------------------------
 in progress:
@@ -48,12 +49,11 @@ Still to do:
 
 ------------------------------------------------------------------------------------------------------
 in progress (leave till last):
+- KAZ_SIGN
 - LESS
-- Wave
-- HAETAE
+- MiRitH
+- MQOM
+- Preon
 - SDitH - Threshold Variations
 - SQUIRRELS
-- KAZ_SIGN
-- Preon
-- MQOM
-- MiRitH
+- Wave

@@ -465,7 +465,52 @@ function copy_modified_src_files() {
                 mv "$api_temp_backup_file" "$api_default_filepath"
 
             fi
+            ;;
 
+        "HAETAE")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/CMakeLists.txt"
+            make_main_backup_file="$main_alg_backup/CMakeLists_$current_alg.txt"
+            make_temp_backup_file="$dst_variation_dir/temp_cmakelists_copy"
+
+            api_default_filepath="$dst_variation_dir/kat/api.h"
+            api_main_backup_file="$main_alg_backup/api_$current_alg.h"
+            api_temp_backup_file="$dst_variation_dir/kat/temp_api_copy.h"
+
+            api_src_default_filepath="$dst_variation_dir/kat/api.c"
+
+            # Copy or restore modified source files for HAETAE algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir/kat" "$api_default_filepath" "$api_main_backup_file" "$api_temp_backup_file"
+                
+                if [ -f "$api_src_default_filepath" ]; then
+                    rm -f "$api_src_default_filepath"
+                fi
+
+                # Make temp copy of original makefile and api.h file and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+                cp "$api_default_filepath" "$api_main_backup_file"
+                cp "$api_default_filepath" "$api_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/CMakeLists_$current_alg.txt" "$make_default_filepath"
+                cp "$modified_files_path/api_HAETAE.h" "$api_default_filepath"
+                cp "$modified_files_path/api_HAETAE.c" "$api_src_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/src/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/src/pqcsign.c" && rm -f "$api_src_default_filepath"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+                mv "$api_temp_backup_file" "$api_default_filepath"
+
+            fi
             ;;
 
         *)

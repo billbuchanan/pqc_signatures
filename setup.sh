@@ -58,6 +58,7 @@ function array_util_call() {
     IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
     IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
     IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
+    IFS=',' read -r -a HAETAE_variations <<< "$HAETAE_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -111,6 +112,7 @@ function environment_setup() {
         "libm4ri-dev"
         "libntl-dev"
         "libntl44"
+        "patchelf"
     )
     not_installed=()
 
@@ -1091,6 +1093,52 @@ function variations_setup() {
         rm -f $variation_dir/aes256ctr.*
 
     done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the HAETAE algorithm
+    haetae_src_dir=$nist_src_dir/HAETAE/Reference_Implementation
+    haetae_dst_dir=$bin_dir/HAETAE
+    haetae_dst_libs_dir=$bin_dir/HAETAE/libs
+
+    # Change to the HAETAE source code directory
+    cd $haetae_src_dir
+
+    # Ensure build directory is not present from previous setup
+    if [ -d "$haetae_src_dir/build" ]; then
+        rm -rf "$haetae_src_dir/build"
+    fi
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
+
+    # Compile and move pqcsign binaries and shared libraries to relevant bin directory
+    cmake -S ./ -B build && cmake --build build --clean-first
+    cd "$haetae_src_dir/build"
+    make -j $(nproc)
+    mv $haetae_src_dir/build/bin/pqcsign_* "$haetae_dst_dir/"
+
+    # Create libs directory in the destination directory and move shared libraries
+    if [ -d "$haetae_dst_libs_dir" ]; then
+        rm -rf "$haetae_dst_libs_dir"
+        mkdir -p "$haetae_dst_libs_dir"
+    else
+        mkdir -p "$haetae_dst_libs_dir"
+    fi
+
+    mv $haetae_src_dir/build/libs/* "$haetae_dst_libs_dir/"
+
+    # Utilse patchelf to modify the paths used for shared libraries in the pqcsign binaries so that they can be moved to the bin directory
+    for binary in "$haetae_dst_dir"/pqcsign_*; do
+        patchelf --set-rpath '$ORIGIN/libs' "$binary"
+    done
+
+    for lib in "$haetae_dst_libs_dir"/*.so; do
+        patchelf --set-rpath '$ORIGIN' "$lib"
+    done
+
+    # Restore the original source code files and remove build directory
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
+    rm -rf "$haetae_src_dir/build"
 
 
 }
