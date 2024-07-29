@@ -88,6 +88,24 @@ The following is a set of checklists which detail the algorithm currently implem
 - SQUIRRELS
 - Wave
 
+### Algorithm Implementation Stage Table
+
+| **Algorithm**                | **Default Source Code in Modified Dir** | **Modifications Being Made to Default Files** | **Algorithm Able to Compile** | **PQCSign Binary Functioning** |
+|------------------------------|-----------------------------------------|-----------------------------------------------|-------------------------------|--------------------------------|
+| AIMer                        |                                         |                                               |                               |                                |
+| EagleSign                    |                                         |                                               |                               |                                |
+| HAETAE                       |                                         |                                               |                               |                                |
+| KAZ_SIGN                     |                                         |                                               |                               |                                |
+| LESS                         |                                         |                                               |                               |                                |
+| MiRitH                       |                                         |                                               |                               |                                |
+| MQOM                         |                                         |                                               |                               |                                |
+| Preon                        |                                         |                                               |                               |                                |
+| SDitH - Threshold Variations |                                         |                                               |                               |                                |
+| SQUIRRELS                    |                                         |                                               |                               |                                |
+| Wave                         |                                         |                                               |                               |                                |
+
+
+
 ### Currently being Implemented 
 
 ## Basic Setup Instructions
