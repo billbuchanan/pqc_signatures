@@ -15,6 +15,11 @@ This binary is then used by the `sig-test.sh` script to automatically gather CPU
 #include <x86intrin.h>
 #include "api.h"
 
+#if defined (EAGLESIGN_MODE)
+    #include "sign.h"
+#endif
+
+//------------------------------------------------------------------------------
 // Defining the randombytes function based on the api being used
 int randombytes1 (unsigned char* random_array, unsigned long long num_bytes);
 char *showhex(uint8_t a[], int size);
@@ -69,20 +74,24 @@ char *showhex(uint8_t a[], int size) {
 
 }
 
-
 //------------------------------------------------------------------------------
-int benchmark_cycles() {
-    // Function to benchmark the key generation, signing, and verification functions of the signature scheme
+void set_env_macros() {
+    // Function to set the environment macros for the signature scheme being tested as API usage varies between schemes
 
-    // Define message legnth and signature length variables
-    int ret = 0;
-    unsigned long long mlen = 32;
-    //unsigned long long smlen;
-    uint8_t sig[CRYPTO_BYTES +  mlen];
-    unsigned long long sig_len = sizeof(sig);
+    // Copy and define macros if the signature schemes is EagleSign due to its drastic difference in API usage
+    #if (EAGLESIGN_MODE == 3)
+        printf("Algorithm: %s\n", "EagleSign3");
+        #define CRYPTO_BYTES pq_eaglesign3_BYTES
+        #define CRYPTO_SECRETKEYBYTES pq_eaglesign3_SECRETKEYBYTES
+        #define CRYPTO_PUBLICKEYBYTES pq_eaglesign3_PUBLICKEYBYTES
 
-    // Setting the algorithm name, based on the algorithm being used as not all schemes include this or the variation name in their API
-    #if defined (SPHINCS_ALGNAME)
+    #elif (EAGLESIGN_MODE == 5)
+        printf("Algorithm: %s\n", "EagleSign5");
+        #define CRYPTO_BYTES pq_eaglesign5_BYTES
+        #define CRYPTO_SECRETKEYBYTES pq_eaglesign5_SECRETKEYBYTES
+        #define CRYPTO_PUBLICKEYBYTES pq_eaglesign5_PUBLICKEYBYTES
+
+    #elif defined (SPHINCS_ALGNAME)
         printf("Algorithm: %s\n", SPHINCS_ALGNAME);
         printf("Algorithm: %s\n", CRYPTO_ALGNAME);
 
@@ -91,8 +100,13 @@ int benchmark_cycles() {
     
     #elif defined (AIMER_NAME)
         printf("Algorithm: %s\n", AIMER_NAME);
+
+    #elif defined(PERK_ALGNAME)
+        printf("Algorithm: %s\n", PERK_ALGNAME);
     
     #else
+
+        // Check if the algorithm is SQI and get the variation, otherwise output the default algorithm name
         if (strcmp(CRYPTO_ALGNAME, "lvl1") == 0) {
             printf("Algorithm: %s\n", "sqi-lvl1");
         }
@@ -105,25 +119,25 @@ int benchmark_cycles() {
         else {
             printf("Algorithm: %s\n", CRYPTO_ALGNAME);
         }
+    
     #endif
+    
+}
 
-    #if defined(PERK_ALGNAME)
-        printf("Algorithm: %s\n", PERK_ALGNAME);
+//------------------------------------------------------------------------------
+int benchmark_cycles() {
+    // Function to benchmark the key generation, signing, and verification functions of the signature scheme
 
-    #else
-        printf("NAME: %s\n", CRYPTO_ALGNAME);
-    #endif
-
+    // Define message legnth and signature length variables
+    unsigned long long mlen = 32;
+    //unsigned long long smlen;
+    uint8_t sig[CRYPTO_BYTES +  mlen];
+    unsigned long long sig_len = sizeof(sig);
 
     // Outputting the algorithm name, secret key size, public key size, and signature size
     printf("Private key size: %d\n", CRYPTO_SECRETKEYBYTES );
     printf("Public key size: %d\n", CRYPTO_PUBLICKEYBYTES );
     printf("Signature size: %d\n\n", CRYPTO_BYTES );
-
-    // Declare timing variables used for benchmarking
-    long long keygen_time = 0;
-    long long sign_time = 0;
-    long long verify_time = 0;
 
     /*
     Temporary comment out as not all schemes use this variable, but some may need it, will be reviewed further
@@ -149,8 +163,19 @@ int benchmark_cycles() {
         randombytes1(m, mlen);
     #endif
 
+    // Perform the cryptographic operations for the signature scheme
+    //crypto_operations(pk, sk, sig, &sig_len, m);
+
+    // Define return flag for the cryptographic operations
+    int ret = 0;
+
+    // Declare timing variables used for benchmarking
+    long long keygen_time = 0;
+    long long sign_time = 0;
+    long long verify_time = 0;
+    
     // Outputting that the cryptographic operations are being benchmarked
-    printf("Performing Crytographic Operations\n");
+    printf("Performing Crytographic Operations:\n");
 
     // Generated keypair for the signature scheme
     keygen_time = -cpucycles();
@@ -196,7 +221,7 @@ int benchmark_cycles() {
 
     }
     else {
-      fprintf(stderr, "\n\nERROR! Signature did not open!\n\n\n");
+      fprintf(stderr, "ERROR! Signature did not open!\n\n\n");
       exit(-1);
 
     }
@@ -206,12 +231,6 @@ int benchmark_cycles() {
     printf("Keygen:\t%llu cycles\n",  keygen_time);
     printf("Sign:\t%llu cycles\n",  sign_time);
     printf("Verify:\t%llu cycles\n\n",  verify_time);
-
-    // Temporaily output the message and key values for debugging purposes
-    // printf("\nMessage: %s\n",showhex(m, mlen));
-    // printf("\nAlice Public key (16th of key): %s\n\n",showhex(pk,CRYPTO_PUBLICKEYBYTES/16));
-    // printf("Alice Secret key (128th of signature): %s\n\n",showhex(sk,CRYPTO_SECRETKEYBYTES/128 ));
-    // printf("Signature (128th of signature): %s\n\n",showhex(sig,CRYPTO_BYTES/128));
 
     // Free the allocated memory for the public and secret keys
     free(pk);
@@ -224,7 +243,10 @@ int benchmark_cycles() {
 //------------------------------------------------------------------------------
 int main(void) {
 
-    // Calling cpu cycles benchmarking function
+    // Setting the environment macros for the signature scheme
+    set_env_macros();
+
+    // Calling cpu cycles benchmarking function for all other algorithms
     if (benchmark_cycles() != 0) {
         printf("Benchmarking failed\n");
         return -1;

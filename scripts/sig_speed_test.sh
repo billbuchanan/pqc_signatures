@@ -56,6 +56,7 @@ function array_util_call() {
     IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
     IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
     IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
+    IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -355,6 +356,12 @@ function cycles_test() {
     for variation in "${aimer_variations[@]}"; do
         echo -e "\nRunning AIMER test for $variation"
         $bin_dir/AIMer/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # EagleSign variation testing
+    for variation in "${eaglesign_variations[@]}"; do
+        echo -e "\nRunning EagleSign test for $variation"
+        $bin_dir/EagleSign/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }

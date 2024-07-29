@@ -57,6 +57,7 @@ function array_util_call() {
     IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
     IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
     IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
+    IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -1031,7 +1032,7 @@ function variations_setup() {
     "$scripts_dir/copy_modified_src_files.sh" "restore" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the AIMeer algorithm
+    # Set the source and destination directories for the AIMer algorithm
     aimer_src_dir=$nist_src_dir/AIMer/Reference_Implementation
     aimer_dst_dir=$bin_dir/AIMer
 
@@ -1058,6 +1059,39 @@ function variations_setup() {
         "$scripts_dir/copy_modified_src_files.sh" "restore" "AIMer" "$variation_dir" "$variation" "$root_dir"
     
     done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the EagleSign algorithm
+    eaglesign_src_dir=$nist_src_dir/EagleSign/Reference_Implementation
+    eaglesign_dst_dir=$bin_dir/EagleSign
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${eaglesign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$eaglesign_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over aes256ctr source and headers files to the current variation directory
+        cp $mod_file_dir/EagleSign/aes256ctr.* $variation_dir/
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "EagleSign" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/pqcsign" "$eaglesign_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "EagleSign" "$variation_dir" "$variation" "$root_dir"
+
+        # Remove the copied aes256ctr source and headers files
+        rm -f $variation_dir/aes256ctr.*
+
+    done
+
 
 }
 
