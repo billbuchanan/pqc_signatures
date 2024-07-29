@@ -56,6 +56,7 @@ function array_util_call() {
     IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
     IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
     IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
+    IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -1028,6 +1029,35 @@ function variations_setup() {
 
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the AIMeer algorithm
+    aimer_src_dir=$nist_src_dir/AIMer/Reference_Implementation
+    aimer_dst_dir=$bin_dir/AIMer
+
+    # Change to the AIMer source code directory
+    cd $aimer_src_dir
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${aimer_variations[@]}"; do
+    
+        # Set the variation directory path and change to it
+        variation_dir="$aimer_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "AIMer" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$aimer_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "AIMer" "$variation_dir" "$variation" "$root_dir"
+    
+    done
 
 }
 

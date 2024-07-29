@@ -102,6 +102,9 @@ function export_env_vars() {
 
     ALTEQ_VARIATIONS=$(IFS=,; echo "${ALTEQ_VARIATIONS[*]}")
     export ALTEQ_VARIATIONS
+
+    AIMER_VARIATIONS=$(IFS=,; echo "${AIMER_VARIATIONS[*]}")
+    export AIMER_VARIATIONS
     
 }
 
@@ -140,6 +143,7 @@ function clear_env_vars(){
     unset SNOVA_VARIATIONS
     unset HPPC_VARIATIONS
     unset ALTEQ_VARIATIONS
+    unset AIMER_VARIATIONS
 
 }
 
@@ -270,6 +274,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         ALTEQ_VARIATIONS+=("$line")
     done < "$alg_variations_dir/ALTEQ_variations.txt"
+
+    while IFS= read -r line; do
+        AIMER_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/AIMer_variations.txt"
 
 }
 

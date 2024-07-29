@@ -35,6 +35,7 @@ The following is a set of checklists which detail the algorithm currently implem
 
 ### Implemented
 - 3WISE
+- AIMer
 - ALTEQ
 - Ascon_Sign
 - Biscuit
@@ -76,7 +77,6 @@ The following is a set of checklists which detail the algorithm currently implem
 > ††††† IMPORTANT Dev branch Notice: Benchmarking SNOVA can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the SNOVA algorithm and its respective variations will be presented when executing the automated benchmarking script.  
 
 ### Still to be Implemented
-- AIMer
 - EagleSign
 - HAETAE
 - KAZ_SIGN
@@ -90,21 +90,19 @@ The following is a set of checklists which detail the algorithm currently implem
 
 ### Algorithm Implementation Stage Table
 
-| **Algorithm**                | **Default Source Code in Modified Dir** | **Modifications Being Made to Default Files** | **Algorithm Able to Compile** | **PQCSign Binary Functioning** |
-|------------------------------|-----------------------------------------|-----------------------------------------------|-------------------------------|--------------------------------|
-| AIMer                        |                                         |                                               |                               |                                |
-| EagleSign                    |                                         |                                               |                               |                                |
-| HAETAE                       |                                         |                                               |                               |                                |
-| KAZ_SIGN                     |                                         |                                               |                               |                                |
-| LESS                         |                                         |                                               |                               |                                |
-| MiRitH                       |                                         |                                               |                               |                                |
-| MQOM                         |                                         |                                               |                               |                                |
-| Preon                        |                                         |                                               |                               |                                |
-| SDitH - Threshold Variations |                                         |                                               |                               |                                |
-| SQUIRRELS                    |                                         |                                               |                               |                                |
-| Wave                         |                                         |                                               |                               |                                |
-
-
+| **Algorithm**                | **Default Source Code in Modified Dir** | **Modifications Being Made to Default Files** | **Algorithm Able to Compile** | **PQCSign Binary Functioning** | **Completed (Y/N)** | **Notes**                                                                                                                                                |
+|------------------------------|-----------------------------------------|-----------------------------------------------|-------------------------------|--------------------------------|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| AIMer                        | X                                       | X                                             | X                             | X                              | Y                   | NIST API files in default reference code did not have the correct signature size for parameter sets for each security level apart from parameter set 1.  |
+| EagleSign                    |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| HAETAE                       |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| KAZ_SIGN                     |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| LESS                         |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| MiRitH                       |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| MQOM                         |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| Preon                        |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| SDitH - Threshold Variations |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| SQUIRRELS                    |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |
+| Wave                         |                                         |                                               |                               |                                | N                   |                                                                                                                                                          |                                                |
 
 ### Currently being Implemented 
 

@@ -55,6 +55,7 @@ function array_util_call() {
     IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
     IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
     IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
+    IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
 
     # Call the array utility script to clear environment variables
     source "$root_dir/scripts/variation_array_util.sh" "clear"
@@ -348,6 +349,12 @@ function cycles_test() {
     for variation in "${alteq_variations[@]}"; do
         echo -e "\nRunning ALTEQ test for $variation"
         $bin_dir/ALTEQ/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # AIMER variation testing
+    for variation in "${aimer_variations[@]}"; do
+        echo -e "\nRunning AIMER test for $variation"
+        $bin_dir/AIMer/pqcsign_$variation >> $results_dir/$output_file
     done
 
 }

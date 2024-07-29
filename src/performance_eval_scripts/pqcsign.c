@@ -89,6 +89,9 @@ int benchmark_cycles() {
     #elif defined (ALTEQ_ALGNAME)
         printf("Algorithm: %s\n", ALTEQ_ALGNAME);
     
+    #elif defined (AIMER_NAME)
+        printf("Algorithm: %s\n", AIMER_NAME);
+    
     #else
         if (strcmp(CRYPTO_ALGNAME, "lvl1") == 0) {
             printf("Algorithm: %s\n", "sqi-lvl1");
@@ -146,6 +149,9 @@ int benchmark_cycles() {
         randombytes1(m, mlen);
     #endif
 
+    // Outputting that the cryptographic operations are being benchmarked
+    printf("Performing Crytographic Operations\n");
+
     // Generated keypair for the signature scheme
     keygen_time = -cpucycles();
     ret = crypto_sign_keypair(pk, sk);
@@ -186,19 +192,20 @@ int benchmark_cycles() {
 
     // Verify if the signature was successfully verified
     if (ret == 0) {
-        printf("Signature verified\n");
+        printf("Signature verified\n\n");
 
     }
     else {
-      fprintf(stderr, "\n\n   ERROR! Signature did not open!\n\n\n");
+      fprintf(stderr, "\n\nERROR! Signature did not open!\n\n\n");
       exit(-1);
 
     }
 
     // Outputting the performance metrics gathered for the scheme
+    printf("CPU Cycles Performance Metrics:\n");
     printf("Keygen:\t%llu cycles\n",  keygen_time);
     printf("Sign:\t%llu cycles\n",  sign_time);
-    printf("Verify:\t%llu cycles\n",  verify_time);
+    printf("Verify:\t%llu cycles\n\n",  verify_time);
 
     // Temporaily output the message and key values for debugging purposes
     // printf("\nMessage: %s\n",showhex(m, mlen));

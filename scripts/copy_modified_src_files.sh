@@ -389,6 +389,7 @@ function copy_modified_src_files() {
 
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$api_temp_backup_file" "$api_default_filepath"
                 mv "$make_temp_backup_file" "$make_default_filepath"
 
             fi
@@ -425,6 +426,46 @@ function copy_modified_src_files() {
                 mv "$make_temp_backup_file" "$make_default_filepath"
 
             fi
+            ;;
+
+        "AIMer")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
+            make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
+            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            api_default_filepath="$dst_variation_dir/api.h"
+            api_main_backup_file="$main_alg_backup/api_$current_variation.h"
+            api_temp_backup_file="$dst_variation_dir/temp_api_copy.h"
+
+            # Copy or restore modified source files for AIMer algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir" "$api_default_filepath" "$api_main_backup_file" "$api_temp_backup_file"
+
+                # Make temp copy of original makefile and api.h file and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+                cp "$api_default_filepath" "$api_main_backup_file"
+                cp "$api_default_filepath" "$api_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
+                cp "$modified_files_path/api_$current_variation.h" "$api_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+                mv "$api_temp_backup_file" "$api_default_filepath"
+
+            fi
+
             ;;
 
         *)
