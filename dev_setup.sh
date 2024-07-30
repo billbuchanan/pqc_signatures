@@ -219,31 +219,31 @@ function variations_setup() {
     # Set the modified files directory path
     mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
 
-    # #__________________________________________________________________________
-    # # Set the source and destination directories for the KAZ_SIGN algorithm
-    # kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
-    # kaz_dst_dir="$bin_dir/KAZ_SIGN"
+    #__________________________________________________________________________
+    # Set the source and destination directories for the KAZ_SIGN algorithm
+    kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
+    kaz_dst_dir="$bin_dir/KAZ_SIGN"
 
-    # # Loop through the different variations and compile the pqcsign binary
-    # for variation in "${kaz_sign_variations[@]}"; do
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${kaz_sign_variations[@]}"; do
 
-    #     # Set the variation directory path and change to it
-    #     variation_dir="$kaz_src_dir/$variation"
-    #     cd $variation_dir
+        # Set the variation directory path and change to it
+        variation_dir="$kaz_src_dir/$variation"
+        cd $variation_dir
 
-    #     # Copy over modified files to the current variation directory
-    #     "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
 
-    #     # Compile the pqcsign binary for the current variation
-    #     make clean >> /dev/null
-    #     make 
-    #     mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
-    #     make clean >> /dev/null
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make 
+        mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
 
-    #     # Restore the original source code files
-    #     "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
 
-    # done
+    done
 
     #__________________________________________________________________________
     # Set the source and destination directories for the MiRitH algorithm
