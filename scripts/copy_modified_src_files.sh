@@ -513,6 +513,39 @@ function copy_modified_src_files() {
             fi
             ;;
 
+        "LESS")
+
+            # NOTE - LESS does not have a default CMakelists.txt file, so a variation of the one included in the additional implementation is used
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/CMakeLists.txt"
+
+            # Copy or restore modified source files for LESS algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Remove any CMakelists.txt file if it exists as there is no default one
+                if [ -f "$make_default_filepath" ]; then
+                    rm -f "$make_default_filepath"
+                fi
+
+                # Remove pqcsign source file if it exists
+                if [ -f "$dst_variation_dir/lib/pqcsign.c" ]; then
+                    rm -f "$dst_variation_dir/lib/pqcsign.c"
+                fi
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/CMakeLists_LESS.txt" "$make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/lib/pqcsign.c"
+
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/lib/pqcsign.c"
+
+            fi
+            ;;
+
         *)
 
             # Set the filepaths for the files being worked with

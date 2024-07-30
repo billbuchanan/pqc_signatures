@@ -101,7 +101,7 @@ void set_env_macros() {
     #elif defined (AIMER_NAME)
         printf("Algorithm: %s\n", AIMER_NAME);
 
-    #elif defined(PERK_ALGNAME)
+    #elif defined (PERK_ALGNAME)
         printf("Algorithm: %s\n", PERK_ALGNAME);
 
     #elif defined (KAZ_ALGNAME)
@@ -120,6 +120,9 @@ void set_env_macros() {
             printf("error in getting the KAZ_SIGN algorithm security level\n");
             exit(1);
         }
+
+    #elif defined (LESS_ALGNAME)
+        printf("Algorithm: %s\n", LESS_ALGNAME);
 
     #else
 

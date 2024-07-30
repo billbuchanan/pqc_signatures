@@ -16,6 +16,7 @@ Completed
 - HAWK
 - HPPC
 - HuFu ††
+- LESS
 - MAYO
 - MEDS
 - MIRA
@@ -42,7 +43,6 @@ in progress:
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-- LESS
 - MiRitH
 - MQOM
 - Preon

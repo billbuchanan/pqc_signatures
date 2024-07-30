@@ -114,6 +114,9 @@ function export_env_vars() {
 
     KAZ_SIGN_VARIATIONS=$(IFS=,; echo "${KAZ_SIGN_VARIATIONS[*]}")
     export KAZ_SIGN_VARIATIONS
+
+    LESS_VARIATIONS=$(IFS=,; echo "${LESS_VARIATIONS[*]}")
+    export LESS_VARIATIONS
     
 }
 
@@ -156,6 +159,7 @@ function clear_env_vars(){
     unset EAGLESIGN_VARIATIONS
     unset HAETAE_VARIATIONS
     unset KAZ_SIGN_VARIATIONS
+    unset LESS_VARIATIONS
 
 }
 
@@ -302,6 +306,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         KAZ_SIGN_VARIATIONS+=("$line")
     done < "$alg_variations_dir/KAZ_SIGN_variations.txt"
+
+    while IFS= read -r line; do
+        LESS_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/LESS_variations.txt"
 
 }
 

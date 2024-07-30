@@ -60,6 +60,7 @@ function array_util_call() {
     IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
     IFS=',' read -r -a HAETAE_variations <<< "$HAETAE_VARIATIONS"
     IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
+    IFS=',' read -r -a less_variations <<< "$LESS_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -1140,6 +1141,30 @@ function variations_setup() {
     # Restore the original source code files and remove build directory
     "$scripts_dir/copy_modified_src_files.sh" "restore" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
     rm -rf "$haetae_src_dir/build"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the LESS algorithm
+    # NOTE - LESS does not have a default CMakelists.txt file, so a variation of the one included in the additional implementation is used
+    less_src_dir=$nist_src_dir/LESS/Reference_Implementation
+    less_dst_dir=$bin_dir/LESS
+    less_build_dir=$less_src_dir/build
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "LESS" "$less_src_dir" "all" "$root_dir"
+
+    # Ensure build directory is not present from previous setup
+    if [ -d "$less_build_dir" ]; then
+        rm -rf "$less_build_dir"
+    fi
+
+    # Compile and move pqcsign binary to relevant bin directory
+    mkdir "$less_build_dir" && cd "$less_build_dir"
+    cmake ../ && make -j $(nproc)
+    mv $less_build_dir/bin/pqcsign_* "$less_dst_dir/"
+    cd $less_src_dir && rm -rf build
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "LESS" "$less_src_dir" "all" "$root_dir"
 
 
 }
