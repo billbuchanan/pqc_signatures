@@ -13,7 +13,16 @@ This binary is then used by the `sig-test.sh` script to automatically gather CPU
 #include <time.h>
 #include <stdint.h>
 #include <x86intrin.h>
-#include "api.h"
+
+// Include the relevant header files based on the signature scheme being tested
+# if defined (MIRITH)
+    #include "../api.h"
+    #include "../random.h"
+    #include "../sign.h"
+# else
+    #include "api.h"
+#endif
+
 
 #if defined (EAGLESIGN_MODE)
     #include "sign.h"
@@ -101,7 +110,7 @@ void set_env_macros() {
     #elif defined (AIMER_NAME)
         printf("Algorithm: %s\n", AIMER_NAME);
 
-    #elif defined (PERK_ALGNAME)
+    #elif defined(PERK_ALGNAME)
         printf("Algorithm: %s\n", PERK_ALGNAME);
 
     #elif defined (KAZ_ALGNAME)
@@ -120,9 +129,6 @@ void set_env_macros() {
             printf("error in getting the KAZ_SIGN algorithm security level\n");
             exit(1);
         }
-
-    #elif defined (LESS_ALGNAME)
-        printf("Algorithm: %s\n", LESS_ALGNAME);
 
     #else
 

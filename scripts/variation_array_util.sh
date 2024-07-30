@@ -117,6 +117,9 @@ function export_env_vars() {
 
     LESS_VARIATIONS=$(IFS=,; echo "${LESS_VARIATIONS[*]}")
     export LESS_VARIATIONS
+
+    MIRITH_VARIATIONS=$(IFS=,; echo "${MIRITH_VARIATIONS[*]}")
+    export MIRITH_VARIATIONS
     
 }
 
@@ -160,6 +163,7 @@ function clear_env_vars(){
     unset HAETAE_VARIATIONS
     unset KAZ_SIGN_VARIATIONS
     unset LESS_VARIATIONS
+    unset MIRITH_VARIATIONS
 
 }
 
@@ -310,6 +314,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         LESS_VARIATIONS+=("$line")
     done < "$alg_variations_dir/LESS_variations.txt"
+
+    while IFS= read -r line; do
+        MIRITH_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/MiRitH_variations.txt"
 
 }
 

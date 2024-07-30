@@ -33,6 +33,7 @@ function array_util_call() {
 
     # Import the variation arrays from environment variables
     IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
+    IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
 
     
     # Call the array utility script to clear environment variables
@@ -201,6 +202,12 @@ function cycles_test() {
         $bin_dir/KAZ_SIGN/pqcsign_$variation
     done
 
+    # Run testing for MiRitH algorithm
+    for variation in "${mirith_variations[@]}"; do
+        echo -e "\nRunning MiRitH test for $variation"
+        $bin_dir/MiRitH/pqcsign_$variation
+    done
+
 }
 
 
@@ -212,31 +219,63 @@ function variations_setup() {
     # Set the modified files directory path
     mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
 
+    # #__________________________________________________________________________
+    # # Set the source and destination directories for the KAZ_SIGN algorithm
+    # kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
+    # kaz_dst_dir="$bin_dir/KAZ_SIGN"
+
+    # # Loop through the different variations and compile the pqcsign binary
+    # for variation in "${kaz_sign_variations[@]}"; do
+
+    #     # Set the variation directory path and change to it
+    #     variation_dir="$kaz_src_dir/$variation"
+    #     cd $variation_dir
+
+    #     # Copy over modified files to the current variation directory
+    #     "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+
+    #     # Compile the pqcsign binary for the current variation
+    #     make clean >> /dev/null
+    #     make 
+    #     mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    #     # Restore the original source code files
+    #     "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+
+    # done
+
     #__________________________________________________________________________
-    # Set the source and destination directories for the KAZ_SIGN algorithm
-    kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
-    kaz_dst_dir="$bin_dir/KAZ_SIGN"
+    # Set the source and destination directories for the MiRitH algorithm
+    mirith_src_dir="$nist_src_dir/MiRitH/Reference_Implementation"
+    mirith_dst_dir="$bin_dir/MiRitH"
+
+    # NOTE - MiRitH uses the same structures for its makefiles across all variations, so only one copy has been made in 
+    # the modified_nist_src_files directory and it copied across to all variations. This will make fixing errors easier as
+    # as there would be a total of 72 copies of the makefile to fix if they were all separate. There is the main makefile and 
+    # the nist makefile that need to copied over to the variations.
 
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${kaz_sign_variations[@]}"; do
+    for variation in "${mirith_variations[@]}"; do
 
         # Set the variation directory path and change to it
-        variation_dir="$kaz_src_dir/$variation"
+        variation_dir="$mirith_src_dir/$variation"
         cd $variation_dir
 
         # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "MiRitH" "$variation_dir" "$variation" "$root_dir"
 
         # Compile the pqcsign binary for the current variation
         make clean >> /dev/null
-        make 
-        mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
+        make -j $(nproc)
+        mv "$variation_dir/nist/pqcsign" "$mirith_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
         # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "MiRitH" "$variation_dir" "$variation" "$root_dir"
 
     done
+
 
 
 }   

@@ -537,13 +537,54 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/CMakeLists_LESS.txt" "$make_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/lib/pqcsign.c"
 
-
             elif [ "$util_flag" == "restore" ]; then
 
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/lib/pqcsign.c"
 
             fi
+            ;;
+
+        "MiRitH")
+
+            # Set the filepaths for the files being worked with
+            main_make_default_filepath="$dst_variation_dir/Makefile"
+            nist_make_default_filepath="$dst_variation_dir/nist/Makefile"
+
+            main_make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
+            nist_make_main_backup_file="$main_alg_backup/nist/Makefile_$current_variation"
+
+            main_make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+            nist_make_temp_backup_file="$dst_variation_dir/nist/temp_make_copy"
+
+            # Copy or restore modified source files for MiRitH algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$main_make_default_filepath" "$main_make_main_backup_file" "$main_make_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir/nist" "$nist_make_default_filepath" "$nist_make_main_backup_file" "$nist_make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$main_make_default_filepath" "$main_make_main_backup_file" 
+                cp "$main_make_default_filepath" "$main_make_temp_backup_file" # temp stored in working_dir
+
+                cp "$nist_make_default_filepath" "$nist_make_main_backup_file" 
+                cp "$nist_make_default_filepath" "$nist_make_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_main_MiRitH" "$main_make_default_filepath"
+                cp "$modified_files_path/Makefile_nist_MiRitH" "$nist_make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/nist/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$main_make_default_filepath" && rm -f "$nist_make_default_filepath" && rm -f "$dst_variation_dir/nist/pqcsign.c"
+                mv "$main_make_temp_backup_file" "$main_make_default_filepath"
+                mv "$nist_make_temp_backup_file" "$nist_make_default_filepath"
+
+            fi
+
             ;;
 
         *)
