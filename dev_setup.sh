@@ -34,6 +34,7 @@ function array_util_call() {
     # Import the variation arrays from environment variables
     IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
     IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
+    IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
 
     
     # Call the array utility script to clear environment variables
@@ -208,6 +209,12 @@ function cycles_test() {
         $bin_dir/MiRitH/pqcsign_$variation
     done
 
+    # Run testing for MQOM algorithm
+    for variation in "${mqom_variations[@]}"; do
+        echo -e "\nRunning MQOM test for $variation"
+        $bin_dir/MQOM/pqcsign_$variation
+    done
+
 }
 
 
@@ -273,6 +280,32 @@ function variations_setup() {
 
         # Restore the original source code files
         "$scripts_dir/copy_modified_src_files.sh" "restore" "MiRitH" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the MQOM algorithm
+    mqom_src_dir="$nist_src_dir/MQOM/Reference_Implementation"
+    mqom_dst_dir="$bin_dir/MQOM"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${mqom_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$mqom_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "MQOM" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$mqom_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "MQOM" "$variation_dir" "$variation" "$root_dir"
 
     done
 

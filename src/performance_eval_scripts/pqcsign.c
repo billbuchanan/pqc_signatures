@@ -34,7 +34,7 @@ int randombytes1 (unsigned char* random_array, unsigned long long num_bytes);
 char *showhex(uint8_t a[], int size);
 
 
-#if defined(SDITH)
+#if defined(SDITH) || defined (MQOM_API_H)
 int randombytes (unsigned char* random_array, unsigned long long num_bytes)
 {
     // unsigned char *random_array = malloc (num_bytes);
@@ -183,7 +183,7 @@ int benchmark_cycles() {
     //int r0;
 
     // Determine which function name to use for random number generation based on the API being used
-    #if defined(SDITH)
+    #if defined(SDITH) || defined (MQOM_API_H)
         randombytes(m, mlen);
     #else
         randombytes1(m, mlen);

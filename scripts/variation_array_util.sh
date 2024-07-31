@@ -120,6 +120,9 @@ function export_env_vars() {
 
     MIRITH_VARIATIONS=$(IFS=,; echo "${MIRITH_VARIATIONS[*]}")
     export MIRITH_VARIATIONS
+
+    MQOM_VARIATIONS=$(IFS=,; echo "${MQOM_VARIATIONS[*]}")
+    export MQOM_VARIATIONS
     
 }
 
@@ -164,6 +167,7 @@ function clear_env_vars(){
     unset KAZ_SIGN_VARIATIONS
     unset LESS_VARIATIONS
     unset MIRITH_VARIATIONS
+    unset MQOM_VARATIONS
 
 }
 
@@ -318,6 +322,11 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         MIRITH_VARIATIONS+=("$line")
     done < "$alg_variations_dir/MiRitH_variations.txt"
+
+    while IFS= read -r line; do
+        MQOM_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/MQOM_variations.txt"
+
 
 }
 

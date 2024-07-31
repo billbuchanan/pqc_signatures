@@ -43,7 +43,6 @@ in progress:
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-- MQOM
 - Preon
 - SDitH - Threshold Variations
 - SQUIRRELS
@@ -54,3 +53,4 @@ Still to do:
 in progress (marked for team-debugging):
 - KAZ_SIGN
 - MiRitH
+- MQOM
