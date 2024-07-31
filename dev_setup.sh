@@ -36,6 +36,7 @@ function array_util_call() {
     IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
     IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
+    IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
 
     
     # Call the array utility script to clear environment variables
@@ -223,8 +224,13 @@ function cycles_test() {
         $bin_dir/Preon/pqcsign_$variation
     done
 
-}
+    # Run testing for SDitH Threshold algorithm
+    for variation in "${sdith_threshold_variations[@]}"; do
+        echo -e "\nRunning SDitH Threshold test for $variation"
+        $bin_dir/SDitH/pqcsign_$variation
+    done
 
+}
 
 #---------------------------------------------------------------------------------------------------
 function kaz_sign_setup() {
@@ -360,6 +366,66 @@ function preon_setup() {
 }
 
 #---------------------------------------------------------------------------------------------------
+function sdith_threshold_setup() {
+    # Function  for performing the setup of the SDITH algorithm
+
+    # NOTE - When adding back to main setup script, only copy over the second loop for the threshold variants
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the SDitH algorithm
+    sdith_src_dir=$nist_src_dir/SDitH/Reference_Implementation
+    sdith_hybercube_src_dir="$sdith_src_dir/Hypercube_Variant"
+    sdith_threshold_src_dir="$sdith_src_dir/Threshold_Variant"
+    sdith_dst_dir=$bin_dir/SDitH
+
+    # Setting up the Hypercube variants
+
+    # # Loop through the different variations and compile the pqcsign binary
+    # for variation in "${sdith_hypercube_variations[@]}"; do
+
+    #     # Set the variation directory path and change to it
+    #     variation_dir="$sdith_hybercube_src_dir/$variation"
+    #     cd $variation_dir
+
+    #     # Copy over modified files to the current variation directory
+    #     "$scripts_dir/copy_modified_src_files.sh" "copy" "SDitH" "$variation_dir" "$variation" "$root_dir"
+
+    #     # Compile and move pqcsign binary to relevant bin directory
+    #     make clean >> /dev/null
+    #     make
+    #     mv "$variation_dir/pqcsign" "$sdith_dst_dir/pqcsign_$variation"
+    #     make clean >> /dev/null
+
+    #     # Restore the original source code files
+    #     "$scripts_dir/copy_modified_src_files.sh" "restore" "SDitH" "$variation_dir" "$variation" "$root_dir"
+
+    # done
+
+    # Setting up the Threshold variants
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${sdith_threshold_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$sdith_threshold_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SDitH" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$sdith_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SDitH" "$variation_dir" "$variation" "$root_dir"
+
+    done
+}
+
+#---------------------------------------------------------------------------------------------------
 function variations_setup() {
     # Function to setup the various signature algorithms and their variations
     # The setup functionality that is in the setup.sh script would go here
@@ -377,6 +443,7 @@ function variations_setup() {
     mirith_setup
     mqom_setup
     preon_setup
+    sdith_threshold_setup
 
 }   
 

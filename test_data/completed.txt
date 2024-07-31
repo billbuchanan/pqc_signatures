@@ -43,8 +43,6 @@ in progress:
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-- Preon
-- SDitH - Threshold Variations
 - SQUIRRELS
 - Wave
 
@@ -54,3 +52,5 @@ in progress (marked for team-debugging):
 - KAZ_SIGN
 - MiRitH
 - MQOM
+- Preon
+- SDitH - Threshold Variations

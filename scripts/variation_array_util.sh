@@ -126,6 +126,9 @@ function export_env_vars() {
 
     PREON_VARIATIONS=$(IFS=,; echo "${PREON_VARIATIONS[*]}")
     export PREON_VARIATIONS
+
+    SDITH_THRESHOLD_VARIATIONS=$(IFS=,; echo "${SDITH_THRESHOLD_VARIATIONS[*]}")
+    export SDITH_THRESHOLD_VARIATIONS
     
 }
 
@@ -334,6 +337,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         PREON_VARIATIONS+=("$line")
     done < "$alg_variations_dir/Preon_variations.txt"
+
+    while IFS= read -r line; do
+        SDITH_THRESHOLD_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/SDitH_threshold_variations.txt"
 
 
 }
