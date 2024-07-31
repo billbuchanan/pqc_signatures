@@ -35,6 +35,7 @@ function array_util_call() {
     IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
     IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
     IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
+    IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
 
     
     # Call the array utility script to clear environment variables
@@ -193,6 +194,7 @@ function cycles_test() {
     # The functionality that would go in the sig_speed_test.sh would go here
 
     # DEV NOTE - In the dev_setup script, output the results to the TERMINAL for testing purposes
+    # You can safely comment out any algorithm you are not working on to reduce the output to the terminal
 
     # Set the output filename based on current run
     local output_file="sig_speed_results_run_$1.txt"
@@ -215,16 +217,18 @@ function cycles_test() {
         $bin_dir/MQOM/pqcsign_$variation
     done
 
+    # Run testing for Preon algorithm
+    for variation in "${preon_variations[@]}"; do
+        echo -e "\nRunning Preon test for $variation"
+        $bin_dir/Preon/pqcsign_$variation
+    done
+
 }
 
 
 #---------------------------------------------------------------------------------------------------
-function variations_setup() {
-    # Function to setup the various signature algorithms and their variations
-    # The setup functionality that is in the setup.sh script would go here
-
-    # Set the modified files directory path
-    mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
+function kaz_sign_setup() {
+    # Function for performing the setup of the KAZ_SIGN algorithm
 
     #__________________________________________________________________________
     # Set the source and destination directories for the KAZ_SIGN algorithm
@@ -251,6 +255,12 @@ function variations_setup() {
         "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
 
     done
+
+}
+
+#---------------------------------------------------------------------------------------------------
+function mirith_setup() {
+    # Function for performing the setup of the MiRitH algorithm
 
     #__________________________________________________________________________
     # Set the source and destination directories for the MiRitH algorithm
@@ -283,6 +293,12 @@ function variations_setup() {
 
     done
 
+}
+
+#---------------------------------------------------------------------------------------------------
+function mqom_setup() {
+    # Function for performing the setup of the MQOM algorithm
+
     #__________________________________________________________________________
     # Set the source and destination directories for the MQOM algorithm
     mqom_src_dir="$nist_src_dir/MQOM/Reference_Implementation"
@@ -309,7 +325,58 @@ function variations_setup() {
 
     done
 
+}
 
+#---------------------------------------------------------------------------------------------------
+function preon_setup() {
+    # Function for performing the setup of the PREON algorithm
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the PREON algorithm
+    preon_src_dir="$nist_src_dir/Preon/Reference_Implementation"
+    preon_dst_dir="$bin_dir/Preon"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${preon_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$preon_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Preon" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make  -j $(nproc)
+        mv "$variation_dir/pqcsign" "$preon_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Preon" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+}
+
+#---------------------------------------------------------------------------------------------------
+function variations_setup() {
+    # Function to setup the various signature algorithms and their variations
+    # The setup functionality that is in the setup.sh script would go here
+
+    # Set the modified files directory path
+    mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
+
+
+    # NOTE - To improve development, in this script the setups have been placed in separate functions
+    # so that they can be tested individually. You can comment out the algorithms which you are not currently working on.
+    # When integrating into the main setup script, please follow the current structure of the setup.sh script.
+
+    # Call setup functions
+    kaz_sign_setup
+    mirith_setup
+    mqom_setup
+    preon_setup
 
 }   
 

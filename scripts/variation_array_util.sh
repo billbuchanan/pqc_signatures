@@ -123,6 +123,9 @@ function export_env_vars() {
 
     MQOM_VARIATIONS=$(IFS=,; echo "${MQOM_VARIATIONS[*]}")
     export MQOM_VARIATIONS
+
+    PREON_VARIATIONS=$(IFS=,; echo "${PREON_VARIATIONS[*]}")
+    export PREON_VARIATIONS
     
 }
 
@@ -168,6 +171,7 @@ function clear_env_vars(){
     unset LESS_VARIATIONS
     unset MIRITH_VARIATIONS
     unset MQOM_VARATIONS
+    unset PREON_VARIATIONS
 
 }
 
@@ -326,6 +330,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         MQOM_VARIATIONS+=("$line")
     done < "$alg_variations_dir/MQOM_variations.txt"
+
+    while IFS= read -r line; do
+        PREON_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/Preon_variations.txt"
 
 
 }
