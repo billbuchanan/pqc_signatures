@@ -13,12 +13,17 @@ This binary is then used by the `sig-test.sh` script to automatically gather CPU
 #include <time.h>
 #include <stdint.h>
 #include <x86intrin.h>
+#include "NIST-kat/rng.h"
 
 // Include the relevant header files based on the signature scheme being tested
 # if defined (MIRITH)
     #include "../api.h"
     #include "../random.h"
     #include "../sign.h"
+
+#elif defined (WAVE)
+    #include "api.h"
+    #include "NIST-kat/rng.h"
 # else
     #include "api.h"
 #endif
@@ -182,7 +187,7 @@ int benchmark_cycles() {
     //int r0;
 
     // Determine which function name to use for random number generation based on the API being used
-    #if defined(SDITH) || defined (MQOM_API_H) || defined(SQUIRRELS_LEVEL)
+    #if defined(SDITH) || defined (MQOM_API_H) || defined(SQUIRRELS_LEVEL) || defined (WAVE)
         randombytes(m, mlen);
     #else
         randombytes1(m, mlen);

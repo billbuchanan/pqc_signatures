@@ -67,6 +67,7 @@ function array_util_call() {
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
     IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
     IFS=',' read -r -a squirrels_variations <<< "$SQUIRRELS_VARIATIONS"
+    IFS=',' read -r -a wave_variations <<< "$WAVE_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"

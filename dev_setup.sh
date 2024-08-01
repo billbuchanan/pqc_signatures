@@ -38,6 +38,7 @@ function array_util_call() {
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
     IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
     IFS=',' read -r -a squirrels_variations <<< "$SQUIRRELS_VARIATIONS"
+    IFS=',' read -r -a wave_variations <<< "$WAVE_VARIATIONS"
 
     
     # Call the array utility script to clear environment variables
@@ -235,6 +236,12 @@ function cycles_test() {
     for variation in "${squirrels_variations[@]}"; do
         echo -e "\nRunning SQUIRRELS test for $variation"
         $bin_dir/SQUIRRELS/pqcsign_$variation
+    done
+
+    # Run testing for Wave algorithm
+    for variation in "${wave_variations[@]}"; do
+        echo -e "\nRunning Wave test for $variation"
+        $bin_dir/Wave/pqcsign_$variation
     done
 
 }
@@ -524,6 +531,37 @@ function squirrels_variations() {
 
 }
 
+#---------------------------------------------------------------------------------------------------
+function wave_setup() {
+    # Function for performing the setup of the Wave algorithm
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the Wave algorithm
+    wave_src_dir="$nist_src_dir/Wave/Reference_Implementation"
+    wave_dst_dir="$bin_dir/Wave"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${wave_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$wave_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Wave" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$wave_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Wave" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+}
 
 
 #---------------------------------------------------------------------------------------------------
@@ -546,6 +584,7 @@ function variations_setup() {
     preon_setup
     sdith_threshold_setup
     squirrels_variations
+    wave_setup
 
 }   
 

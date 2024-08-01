@@ -132,6 +132,11 @@ function export_env_vars() {
 
     SQUIRRELS_VARIATIONS=$(IFS=,; echo "${SQUIRRELS_VARIATIONS[*]}")
     export SQUIRRELS_VARIATIONS
+
+    WAVE_VARIATIONS=$(IFS=,; echo "${WAVE_VARIATIONS[*]}")
+    export WAVE_VARIATIONS
+
+
     
 }
 
@@ -180,6 +185,7 @@ function clear_env_vars(){
     unset PREON_VARIATIONS
     unset SDITH_THRESHOLD_VARIATIONS
     unset SQUIRRELS_VARIATIONS
+    unset WAVE_VARIATIONS
 
 }
 
@@ -351,6 +357,9 @@ function create_alg_arrays() {
         SQUIRRELS_VARIATIONS+=("$line")
     done < "$alg_variations_dir/SQUIRRELS_variations.txt"
 
+    while IFS= read -r line; do
+        WAVE_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/Wave_variations.txt"
 
 }
 
