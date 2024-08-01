@@ -56,3 +56,5 @@ in progress (marked for team-debugging):
 - SDitH - Threshold Variations
 - SQUIRRELS
 - Wave
+- DME_Sign
+- PERK

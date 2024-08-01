@@ -26,49 +26,47 @@ function array_util_call() {
     source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_variations_dir"
 
     # Import the variation arrays from environment variables
-    IFS=',' read -r -a raccoon_variations <<< "$RACCOON_VARIATIONS"
+    IFS=',' read -r -a three_wise_variations <<< "$THREE_WISE_VARIATIONS"
+    IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
+    IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
+    IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
     IFS=',' read -r -a biscuit_variations <<< "$BISCUIT_VARIATIONS"
     IFS=',' read -r -a cross_variations <<< "$CROSS_VARIATIONS"
+    IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
+    IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
+    IFS=',' read -r -a ehtv3v4_variations <<< "$EHTV3V4_VARIATIONS"
+    IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
+    IFS=',' read -r -a pqsigrm_variations <<< "$PQSIGRM_VARIATIONS"
     IFS=',' read -r -a faest_variations <<< "$FAEST_VARIATIONS"
     IFS=',' read -r -a fuleeca_variations <<< "$FULEECA_VARIATIONS"
-    IFS=',' read -r -a pqsigrm_variations <<< "$PQSIGRM_VARIATIONS"
-    IFS=',' read -r -a sphincs_alpha_variations <<< "$SPHINCS_ALPHA_VARIATIONS"
-    IFS=',' read -r -a sqi_variations <<< "$SQI_VARIATIONS"
-    IFS=',' read -r -a uov_variations <<< "$UOV_VARIATIONS"
-    IFS=',' read -r -a med_variations <<< "$MED_VARIATIONS"
-    IFS=',' read -r -a hawk_variations <<< "$HAWK_VARIATIONS"
-    IFS=',' read -r -a ehtv3v4_variations <<< "$EHTV3V4_VARIATIONS"
-    IFS=',' read -r -a hufu_variations <<< "$HUFU_VARIATIONS"
-    IFS=',' read -r -a three_wise_variations <<< "$THREE_WISE_VARIATIONS"
-    IFS=',' read -r -a mira_variations <<< "$MIRA_VARIATIONS"
-    IFS=',' read -r -a perk_variations <<< "$PERK_VARIATIONS"
-    IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
-    IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
-    IFS=',' read -r -a ascon_sign_variations <<< "$ASCON_SIGN_VARIATIONS"
-    IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
-    IFS=',' read -r -a emle_sig_2_0_variations <<< "$EMLE_SIG_2_0_VARIATIONS"
-    IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
-    IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
-    IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
-    IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
-    IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
-    IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
-    IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
-    IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
-    IFS=',' read -r -a alteq_variations <<< "$ALTEQ_VARIATIONS"
-    IFS=',' read -r -a aimer_variations <<< "$AIMER_VARIATIONS"
-    IFS=',' read -r -a eaglesign_variations <<< "$EAGLESIGN_VARIATIONS"
     IFS=',' read -r -a HAETAE_variations <<< "$HAETAE_VARIATIONS"
+    IFS=',' read -r -a hawk_variations <<< "$HAWK_VARIATIONS"
+    IFS=',' read -r -a hppc_variations <<< "$HPPC_VARIATIONS"
+    IFS=',' read -r -a hufu_variations <<< "$HUFU_VARIATIONS"
     IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
     IFS=',' read -r -a less_variations <<< "$LESS_VARIATIONS"
-    IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
+    IFS=',' read -r -a mayo_variations <<< "$MAYO_VARIATIONS"
+    IFS=',' read -r -a med_variations <<< "$MED_VARIATIONS"
+    IFS=',' read -r -a mira_variations <<< "$MIRA_VARIATIONS"
     IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
     IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
+    IFS=',' read -r -a perk_variations <<< "$PERK_VARIATIONS"
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
-    IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
+    IFS=',' read -r -a prov_variations <<< "$PROV_VARIATIONS"
+    IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
+    IFS=',' read -r -a raccoon_variations <<< "$RACCOON_VARIATIONS"
+    IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
+    IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
+    IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
+    IFS=',' read -r -a sphincs_alpha_variations <<< "$SPHINCS_ALPHA_VARIATIONS"
+    IFS=',' read -r -a sqi_variations <<< "$SQI_VARIATIONS"
     IFS=',' read -r -a squirrels_variations <<< "$SQUIRRELS_VARIATIONS"
+    IFS=',' read -r -a tuov_variations <<< "$TUOV_VARIATIONS"
+    IFS=',' read -r -a uov_variations <<< "$UOV_VARIATIONS"
+    IFS=',' read -r -a vox_variations <<< "$VOX_VARIATIONS"
     IFS=',' read -r -a wave_variations <<< "$WAVE_VARIATIONS"
-    
+    IFS=',' read -r -a xifrat1_sign_variations <<< "$XIFRAT1_SIGN_VARIATIONS"
+
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
 
@@ -87,11 +85,13 @@ function environment_setup() {
     required_dirs=($bin_dir $results_dir)
 
     for dir in "${required_dirs[@]}"; do
+
         if [ ! -d $dir ]; then
             mkdir -p $dir
         else
             rm -rf $dir && mkdir -p $dir
         fi
+
     done
 
     # Check if the required bin directories exist for the various signature algorithms
@@ -127,9 +127,11 @@ function environment_setup() {
 
     # Check if the required packages are installed
     for package in "${packages[@]}"; do
+
         if ! dpkg -s "$package" >/dev/null 2>&1; then
             not_installed+=("$package")
         fi
+
     done
 
     # Install any missing dependency packages
@@ -181,30 +183,125 @@ function variations_setup() {
     mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the Raccoon algorithm
-    raccoon_src_dir=$nist_src_dir/Raccoon/Reference_Implementation
-    raccoon_dst_dir=$bin_dir/Raccoon
-    
+    # Set the source and destination directories for the 3WISE algorithm
+    three_wise_src_dir=$nist_src_dir/3WISE/Reference_Implementation
+    three_wise_dst_dir=$bin_dir/3WISE
+    three_wise_flint_path=$three_wise_src_dir/flint
+
+    # Change to the 3WISE source code directory
+    cd $three_wise_src_dir
+
+    # Ensure there is no previous build of flint library dependency
+    if [ -d "$three_wise_flint_path" ]; then
+        rm -rf "$three_wise_flint_path"
+        rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
+    fi
+    mkdir $three_wise_flint_path
+
+    # Setting up flint library dependency
+    wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
+    tar -xf v2.9.0.tar.gz && cd flint-2.9.0
+    ./configure --prefix=$three_wise_flint_path
+    make -j $(nproc) && make install
+
+    # Change back to the 3WISE source code directory and clean up
+    cd $three_wise_src_dir
+    rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
+
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${raccoon_variations[@]}"; do
+    for variation in "${three_wise_variations[@]}"; do
 
         # Set the variation directory path and change to it
-        variation_dir="$raccoon_src_dir/$variation"
+        variation_dir="$three_wise_src_dir/$variation"
         cd $variation_dir
 
         # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "Raccoon" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "3WISE" "$variation_dir" "$variation" "$root_dir"
 
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
         make -j $(nproc)
-        variation_lower="${variation,,}"
-        cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation_lower
+        mv "$variation_dir/pqcsign" "$three_wise_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
         # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "Raccoon" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "3WISE" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the AIMer algorithm
+    aimer_src_dir=$nist_src_dir/AIMer/Reference_Implementation
+    aimer_dst_dir=$bin_dir/AIMer
+
+    # Change to the AIMer source code directory
+    cd $aimer_src_dir
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${aimer_variations[@]}"; do
     
+        # Set the variation directory path and change to it
+        variation_dir="$aimer_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "AIMer" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$aimer_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "AIMer" "$variation_dir" "$variation" "$root_dir"
+    
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the ALTEQ algorithm
+    alteq_src_dir=$nist_src_dir/ALTEQ/Reference_Implementation
+    alteq_dst_dir=$bin_dir/ALTEQ
+
+    # Change to the ALTEQ source code directory
+    cd $alteq_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
+
+    # Compile and move pqcsign binary to relevant bin directory
+    make distclean >> /dev/null
+    make pqcsign_all -j $(nproc)
+    mv $alteq_src_dir/pqcsign_* $alteq_dst_dir/
+    make distclean >> /dev/null
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the Ascon_sign algorithm
+    ascon_sign_src_dir=$nist_src_dir/Ascon_Sign/Reference_Implementation
+    ascon_sign_dst_dir=$bin_dir/Ascon_Sign
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${ascon_sign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$ascon_sign_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Ascon_Sign" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make all -j $(nproc)
+        mv "$variation_dir/pqcsign" "$ascon_sign_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Ascon_sign" "$variation_dir" "$variation" "$root_dir"
+
     done
 
     #__________________________________________________________________________
@@ -264,6 +361,150 @@ function variations_setup() {
     "$scripts_dir/copy_modified_src_files.sh" "restore" "CROSS" "$cross_src_dir" "all" "$root_dir"
 
     #__________________________________________________________________________
+    # Set the source and destination directories for the DME_SIGN algorithm
+    dme_sign_src_dir=$nist_src_dir/DME_Sign
+    dme_sign_dst_dir=$bin_dir/DME_Sign
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${dme_sign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$dme_sign_src_dir/$variation/Reference_Implementation"
+        cd $variation_dir
+
+        # Only compile the first two variations as the third does not have complete reference code (will be reviewed in future)
+        if [ $variation != "dme-3rnds-8vars-64bits-sign" ]; then
+
+            # Copy over modified files to the current variation directory
+            "$scripts_dir/copy_modified_src_files.sh" "copy" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
+
+            # Compile and move pqcsign binary to relevant bin directory
+            make clean >> /dev/null
+            make -j $(nproc)
+            mv "$variation_dir/pqcsign" "$dme_sign_dst_dir/pqcsign_$variation"
+            make clean >> /dev/null
+
+            # Restore the original source code files
+            "$scripts_dir/copy_modified_src_files.sh" "restore" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
+
+        else
+            echo -e "\nSkipping DME_Sign variation: $variation due to lack of reference code implementation, will be reviewed in future"
+
+        fi
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the EagleSign algorithm
+    eaglesign_src_dir=$nist_src_dir/EagleSign/Reference_Implementation
+    eaglesign_dst_dir=$bin_dir/EagleSign
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${eaglesign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$eaglesign_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over aes256ctr source and headers files to the current variation directory
+        cp $mod_file_dir/EagleSign/aes256ctr.* $variation_dir/
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "EagleSign" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/pqcsign" "$eaglesign_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "EagleSign" "$variation_dir" "$variation" "$root_dir"
+
+        # Remove the copied aes256ctr source and headers files
+        rm -f $variation_dir/aes256ctr.*
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the EHTv3v4 algorithm
+    ehtv3v4_src_dir=$nist_src_dir/EHTv3v4/Reference_Implementation
+    eht3v4_dst_dir=$bin_dir/EHTv3v4
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${ehtv3v4_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$ehtv3v4_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "EHTv3v4" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/pqcsign" "$eht3v4_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "EHTv3v4" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the eMLE_Sig_2.0 algorithm
+    emle_sig_2_0_src_dir=$nist_src_dir/eMLE_Sig_2.0/Reference_Implementation
+    emle_sig_2_0_dst_dir=$bin_dir/eMLE_Sig_2.0
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${emle_sig_2_0_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$emle_sig_2_0_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make all
+        mv "$variation_dir/pqcsign" "$emle_sig_2_0_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Setting up variations of the Enhanced_pqsigRM algorithm
+    pqsigrm_src_dir=$nist_src_dir/Enhanced_pqsigRM/Reference_Implementation
+    pqsigrm_dst_dir=$bin_dir/Enhanced_pqsigRM
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${pqsigrm_variations[@]}"; do
+    
+        # Set the variation directory path and change to it
+        variation_dir="$pqsigrm_src_dir/$variation"    
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Enhanced_pqsigRM" "$variation_dir" "$variation" "$root_dir"
+        
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/pqcsign" "$pqsigrm_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Enhanced_pqsigRM" "$variation_dir" "$variation" "$root_dir"
+    
+    done
+
+    #__________________________________________________________________________
     # Set the source and destination directories for the FAEST algorithm
     faest_src_dir=$nist_src_dir/FAEST/Reference_Implementation
     faest_dst_dir=$bin_dir/FAEST
@@ -316,150 +557,50 @@ function variations_setup() {
     done
 
     #__________________________________________________________________________
-    # Setting up variations of the Enhanced_pqsigRM algorithm
-    pqsigrm_src_dir=$nist_src_dir/Enhanced_pqsigRM/Reference_Implementation
-    pqsigrm_dst_dir=$bin_dir/Enhanced_pqsigRM
+    # Set the source and destination directories for the HAETAE algorithm
+    haetae_src_dir=$nist_src_dir/HAETAE/Reference_Implementation
+    haetae_dst_dir=$bin_dir/HAETAE
+    haetae_dst_libs_dir=$bin_dir/HAETAE/libs
 
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${pqsigrm_variations[@]}"; do
-    
-        # Set the variation directory path and change to it
-        variation_dir="$pqsigrm_src_dir/$variation"    
-        cd $variation_dir
+    # Change to the HAETAE source code directory
+    cd $haetae_src_dir
 
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "Enhanced_pqsigRM" "$variation_dir" "$variation" "$root_dir"
-        
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$pqsigrm_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "Enhanced_pqsigRM" "$variation_dir" "$variation" "$root_dir"
-    
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the SPHINCS_alpha algorithm
-    sphincs_alpha_src_dir=$nist_src_dir/SPHINCS_alpha/Reference_Implementation
-    sphincs_alpha_dst_dir=$bin_dir/SPHINCS_alpha
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${sphincs_alpha_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$sphincs_alpha_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "SPHINCS_alpha" "$variation_dir" "$variation" "$root_dir"
-        
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$sphincs_alpha_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "SPHINCS_alpha" "$variation_dir" "$variation" "$root_dir"
-    
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the SQIsignsign algorithm
-    sqi_src_dir=$nist_src_dir/SQIsign/Reference_Implementation
-    sqi_dst_dir=$bin_dir/SQIsign
-    sqi_build_dir=$nist_src_dir/SQIsign/Reference_Implementation/build
-    sqi_apps_dir=$sqi_build_dir/apps
-
-    # Change to source directory and ensure that the build directory is present and empty
-    cd $sqi_src_dir
-
-    if [ ! -d build ]; then
-        mkdir build
-    else
-        rm -rf build && mkdir build
+    # Ensure build directory is not present from previous setup
+    if [ -d "$haetae_src_dir/build" ]; then
+        rm -rf "$haetae_src_dir/build"
     fi
 
-    # Copy over modified files to the relevant source code directories
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "SQIsign" "$sqi_src_dir" "all" "$root_dir"
-
-    # Compile and move pqcsign binary to relevant bin directory
-    cd $sqi_build_dir
-    cmake -DSQISIGN_BUILD_TYPE=ref -DCMAKE_BUILD_TYPE=Release ../ 
-    make -j $(nproc)
-    mv $sqi_apps_dir/pqcsign_* "$sqi_dst_dir/"
-    make clean >> /dev/null && cd $sqi_src_dir && rm -rf build
-
-    # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "SQIsign" "$sqi_src_dir" "all" "$root_dir"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the UOV algorithm
-    uov_src_dir=$nist_src_dir/UOV/Reference_Implementation
-    uov_dst_dir=$bin_dir/UOV
-
-    # Change to the UOV source code directory
-    cd $uov_src_dir
-
     # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "UOV" "$uov_src_dir" "all" "$root_dir"
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
 
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${uov_variations[@]}"; do
+    # Compile and move pqcsign binaries and shared libraries to relevant bin directory
+    cmake -S ./ -B build && cmake --build build --clean-first
+    cd "$haetae_src_dir/build"
+    make -j $(nproc)
+    mv $haetae_src_dir/build/bin/pqcsign_* "$haetae_dst_dir/"
 
-        # Extract the variation type from the variation name
-        variation_type=$(echo "$variation" | cut -d'_' -f2-)
-        variation_dir="$uov_src_dir/$variation_type"
+    # Create libs directory in the destination directory and move shared libraries
+    if [ -d "$haetae_dst_libs_dir" ]; then
+        rm -rf "$haetae_dst_libs_dir"
+        mkdir -p "$haetae_dst_libs_dir"
+    else
+        mkdir -p "$haetae_dst_libs_dir"
+    fi
 
+    mv $haetae_src_dir/build/libs/* "$haetae_dst_libs_dir/"
 
-        echo "current variation - $variation"
-        echo "current variation type - $variation_type"
-        echo "currennt dir "
-        ls 
-        pwd
-        echo -e "\n\n"
-
-
-        # Compile and move pqcsign binary to lib directory
-        make clean >> /dev/null
-        make "PROJ=$variation_type" -j $(nproc)
-        mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-
+    # Utilse patchelf to modify the paths used for shared libraries in the pqcsign binaries so that they can be moved to the bin directory
+    for binary in "$haetae_dst_dir"/pqcsign_*; do
+        patchelf --set-rpath '$ORIGIN/libs' "$binary"
     done
 
-    # Restore the original files (makefile will only be resorted if is it the last variation)
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "UOV" "$uov_src_dir" "all" "$root_dir"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the MEDS algorithm
-    med_src_dir=$nist_src_dir/MEDS/Reference_Implementation
-    med_dst_dir=$bin_dir/MEDS
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${med_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$med_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "MEDS" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make
-        mv "$variation_dir/pqcsign" "$med_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "MEDS" "$variation_dir" "$variation" "$root_dir"
-
+    for lib in "$haetae_dst_libs_dir"/*.so; do
+        patchelf --set-rpath '$ORIGIN' "$lib"
     done
+
+    # Restore the original source code files and remove build directory
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
+    rm -rf "$haetae_src_dir/build"
 
     #__________________________________________________________________________
     # Set the source and destination directories for the HAWK algorithm
@@ -488,28 +629,49 @@ function variations_setup() {
     done
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the EHTv3v4 algorithm
-    ehtv3v4_src_dir=$nist_src_dir/EHTv3v4/Reference_Implementation
-    eht3v4_dst_dir=$bin_dir/EHTv3v4
+    # Set the source and destination directories for the HPPC algorithm
+    hppc_src_dir=$nist_src_dir/HPPC/Reference_Implementation
+    hppc_dst_dir=$bin_dir/HPPC
+    hppc_flint_path=$hppc_src_dir/flint
+
+    # Change to the HPPC source code directory
+    cd $hppc_src_dir
+
+    # Ensure there is no previous build of flint library dependency
+    if [ -d "$hppc_flint_path/flint" ]; then
+        rm -rf "$hppc_flint_path/flint"
+        rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
+    fi
+    mkdir $hppc_flint_path
+
+    # Setting up flint library dependency
+    wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
+    tar -xf v2.9.0.tar.gz && cd flint-2.9.0
+    ./configure --prefix=$hppc_flint_path
+    make -j $(nproc) && make install
+
+    # Change back to the HPPC source code directory and clean up
+    cd $hppc_src_dir
+    rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
 
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${ehtv3v4_variations[@]}"; do
+    for variation in "${hppc_variations[@]}"; do
 
         # Set the variation directory path and change to it
-        variation_dir="$ehtv3v4_src_dir/$variation"
+        variation_dir="$hppc_src_dir/$variation"
         cd $variation_dir
 
         # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "EHTv3v4" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "HPPC" "$variation_dir" "$variation" "$root_dir"
 
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
         make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$eht3v4_dst_dir/pqcsign_$variation"
+        mv "$variation_dir/pqcsign" "$hppc_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
         # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "EHTv3v4" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "HPPC" "$variation_dir" "$variation" "$root_dir"
 
     done
 
@@ -540,49 +702,81 @@ function variations_setup() {
     done
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the 3WISE algorithm
-    three_wise_src_dir=$nist_src_dir/3WISE/Reference_Implementation
-    three_wise_dst_dir=$bin_dir/3WISE
-    three_wise_flint_path=$three_wise_src_dir/flint
+    # Set the source and destination directories for the LESS algorithm
+    # NOTE - LESS does not have a default CMakelists.txt file, so a variation of the one included in the additional implementation is used
+    less_src_dir=$nist_src_dir/LESS/Reference_Implementation
+    less_dst_dir=$bin_dir/LESS
+    less_build_dir=$less_src_dir/build
 
-    # Change to the 3WISE source code directory
-    cd $three_wise_src_dir
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "LESS" "$less_src_dir" "all" "$root_dir"
 
-    # Ensure there is no previous build of flint library dependency
-    if [ -d "$three_wise_flint_path" ]; then
-        rm -rf "$three_wise_flint_path"
-        rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
+    # Ensure build directory is not present from previous setup
+    if [ -d "$less_build_dir" ]; then
+        rm -rf "$less_build_dir"
     fi
-    mkdir $three_wise_flint_path
 
-    # Setting up flint library dependency
-    wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
-    tar -xf v2.9.0.tar.gz && cd flint-2.9.0
-    ./configure --prefix=$three_wise_flint_path
-    make -j $(nproc) && make install
+    # Compile and move pqcsign binary to relevant bin directory
+    mkdir "$less_build_dir" && cd "$less_build_dir"
+    cmake ../ && make -j $(nproc)
+    mv $less_build_dir/bin/pqcsign_* "$less_dst_dir/"
+    cd $less_src_dir && rm -rf build
 
-    # Change back to the 3WISE source code directory and clean up
-    cd $three_wise_src_dir
-    rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "LESS" "$less_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the MAYO algorithm 
+    mayo_src_dir=$nist_src_dir/MAYO/Reference_Implementation
+    mayo_dst_dir=$bin_dir/MAYO
+    mayo_build_dir=$mayo_src_dir/build
+    mayo_apps_dir=$mayo_build_dir/apps
+
+    # Change to source directory and ensure that the build directory is present and empty
+    cd $mayo_src_dir
+
+    if [ ! -d build ]; then
+        mkdir build
+    else
+        rm -rf build && mkdir build
+    fi
+
+    # Copy over modified files to the relevant source code directories
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "MAYO" "$mayo_src_dir" "all" "$root_dir"
+
+    # Compile and move pqcsign binary to relevant bin directory
+    cd $mayo_build_dir
+    cmake -DMAYO_BUILD_TYPE=ref -DENABLE_AESNI=OFF ../ # can change to ENABLE_AESNI=ON if needed (refer to MAYO readme)
+    make 
+    mv $mayo_apps_dir/pqcsign_* "$mayo_dst_dir/"
+    make clean >> /dev/null && cd $mayo_src_dir && rm -rf build
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "MAYO" "$mayo_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the MEDS algorithm
+    med_src_dir=$nist_src_dir/MEDS/Reference_Implementation
+    med_dst_dir=$bin_dir/MEDS
 
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${three_wise_variations[@]}"; do
+    for variation in "${med_variations[@]}"; do
 
         # Set the variation directory path and change to it
-        variation_dir="$three_wise_src_dir/$variation"
+        variation_dir="$med_src_dir/$variation"
         cd $variation_dir
 
         # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "3WISE" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "MEDS" "$variation_dir" "$variation" "$root_dir"
 
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$three_wise_dst_dir/pqcsign_$variation"
+        make
+        mv "$variation_dir/pqcsign" "$med_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
         # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "3WISE" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "MEDS" "$variation_dir" "$variation" "$root_dir"
 
     done
 
@@ -636,6 +830,94 @@ function variations_setup() {
         # Restore the original source code files
         "$scripts_dir/copy_modified_src_files.sh" "restore" "PERK" "$variation_dir" "$variation" "$root_dir"
 
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the PROV algorithm
+    prov_src_dir=$nist_src_dir/PROV/Reference_Implementation
+    prov_dst_dir=$bin_dir/PROV
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${prov_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$prov_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "PROV" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/pqcsign" "$prov_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "PROV" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the QR_UOV algorithm
+    qr_uov_src_dir=$nist_src_dir/QR_UOV/Reference_Implementation/
+    qr_uov_dst_dir=$bin_dir/QR_UOV
+    qr_uov_ref_code_dir=$qr_uov_src_dir/ref
+
+    # Change to the QR_UOV source code directory
+    cd $qr_uov_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
+
+    # Compile the different variations source code
+    make clean >> /dev/null
+    make 
+
+    # Loop throuhg the variations and get the pqcsign binary
+    for variation in "${qr_uov_variations[@]}"; do
+
+        # Set the variation build directory path and change to it
+        variation_dir="$qr_uov_src_dir/$variation/ref"
+        cd $variation_dir
+
+        # Copy over the pqcsign binary to the relevant bin directory
+        mv "$variation_dir/pqcsign" "$qr_uov_dst_dir/pqcsign_$variation"
+
+    done
+
+    # Move back to the source directory and clean up
+    cd $qr_uov_src_dir
+    make clean >> /dev/null
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the Raccoon algorithm
+    raccoon_src_dir=$nist_src_dir/Raccoon/Reference_Implementation
+    raccoon_dst_dir=$bin_dir/Raccoon
+    
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${raccoon_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$raccoon_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Raccoon" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        variation_lower="${variation,,}"
+        cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation_lower
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Raccoon" "$variation_dir" "$variation" "$root_dir"
+    
     done
 
     #__________________________________________________________________________
@@ -695,42 +977,66 @@ function variations_setup() {
     done
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the Ascon_sign algorithm
-    ascon_sign_src_dir=$nist_src_dir/Ascon_Sign/Reference_Implementation
-    ascon_sign_dst_dir=$bin_dir/Ascon_Sign
-
+    # Set the source and destination directories for the SNOVA algorithm
+    snova_src_dir=$nist_src_dir/SNOVA/Reference_Implementation
+    snova_dst_dir=$bin_dir/SNOVA
 
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${ascon_sign_variations[@]}"; do
+    for variation in "${snova_variations[@]}"; do
 
         # Set the variation directory path and change to it
-        variation_dir="$ascon_sign_src_dir/$variation"
+        variation_dir="$snova_src_dir/$variation"
         cd $variation_dir
 
         # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "Ascon_Sign" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SNOVA" "$variation_dir" "$variation" "$root_dir"
 
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
-        make all -j $(nproc)
-        mv "$variation_dir/pqcsign" "$ascon_sign_dst_dir/pqcsign_$variation"
+        make pqcsign -j $(nproc)
+        mv "$variation_dir/pqcsign" "$snova_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
 
         # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "Ascon_sign" "$variation_dir" "$variation" "$root_dir"
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SNOVA" "$variation_dir" "$variation" "$root_dir"
 
     done
 
+    #__________________________________________________________________________
+    # Set the source and destination directories for the SPHINCS_alpha algorithm
+    sphincs_alpha_src_dir=$nist_src_dir/SPHINCS_alpha/Reference_Implementation
+    sphincs_alpha_dst_dir=$bin_dir/SPHINCS_alpha
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${sphincs_alpha_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$sphincs_alpha_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SPHINCS_alpha" "$variation_dir" "$variation" "$root_dir"
+        
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/pqcsign" "$sphincs_alpha_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SPHINCS_alpha" "$variation_dir" "$variation" "$root_dir"
+    
+    done
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the MAYO algorithm 
-    mayo_src_dir=$nist_src_dir/MAYO/Reference_Implementation
-    mayo_dst_dir=$bin_dir/MAYO
-    mayo_build_dir=$mayo_src_dir/build
-    mayo_apps_dir=$mayo_build_dir/apps
+    # Set the source and destination directories for the SQIsignsign algorithm
+    sqi_src_dir=$nist_src_dir/SQIsign/Reference_Implementation
+    sqi_dst_dir=$bin_dir/SQIsign
+    sqi_build_dir=$nist_src_dir/SQIsign/Reference_Implementation/build
+    sqi_apps_dir=$sqi_build_dir/apps
 
     # Change to source directory and ensure that the build directory is present and empty
-    cd $mayo_src_dir
+    cd $sqi_src_dir
 
     if [ ! -d build ]; then
         mkdir build
@@ -739,124 +1045,17 @@ function variations_setup() {
     fi
 
     # Copy over modified files to the relevant source code directories
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "MAYO" "$mayo_src_dir" "all" "$root_dir"
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "SQIsign" "$sqi_src_dir" "all" "$root_dir"
 
     # Compile and move pqcsign binary to relevant bin directory
-    cd $mayo_build_dir
-    cmake -DMAYO_BUILD_TYPE=ref -DENABLE_AESNI=OFF ../ # can change to ENABLE_AESNI=ON if needed (refer to MAYO readme)
-    make 
-    mv $mayo_apps_dir/pqcsign_* "$mayo_dst_dir/"
-    make clean >> /dev/null && cd $mayo_src_dir && rm -rf build
+    cd $sqi_build_dir
+    cmake -DSQISIGN_BUILD_TYPE=ref -DCMAKE_BUILD_TYPE=Release ../ 
+    make -j $(nproc)
+    mv $sqi_apps_dir/pqcsign_* "$sqi_dst_dir/"
+    make clean >> /dev/null && cd $sqi_src_dir && rm -rf build
 
     # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "MAYO" "$mayo_src_dir" "all" "$root_dir"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the eMLE_Sig_2.0 algorithm
-    emle_sig_2_0_src_dir=$nist_src_dir/eMLE_Sig_2.0/Reference_Implementation
-    emle_sig_2_0_dst_dir=$bin_dir/eMLE_Sig_2.0
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${emle_sig_2_0_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$emle_sig_2_0_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make all
-        mv "$variation_dir/pqcsign" "$emle_sig_2_0_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "eMLE_Sig_2.0" "$variation_dir" "$variation" "$root_dir"
-
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the DME_SIGN algorithm
-    dme_sign_src_dir=$nist_src_dir/DME_Sign
-    dme_sign_dst_dir=$bin_dir/DME_Sign
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${dme_sign_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$dme_sign_src_dir/$variation/Reference_Implementation"
-        cd $variation_dir
-
-        # Only compile the first two variations as the third does not have complete reference code (will be reviewed in future)
-        if [ $variation != "dme-3rnds-8vars-64bits-sign" ]; then
-
-            # Copy over modified files to the current variation directory
-            "$scripts_dir/copy_modified_src_files.sh" "copy" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
-
-            # Compile and move pqcsign binary to relevant bin directory
-            make clean >> /dev/null
-            make -j $(nproc)
-            mv "$variation_dir/pqcsign" "$dme_sign_dst_dir/pqcsign_$variation"
-            make clean >> /dev/null
-
-            # Restore the original source code files
-            "$scripts_dir/copy_modified_src_files.sh" "restore" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
-
-        else
-            echo -e "\nSkipping DME_Sign variation: $variation due to lack of reference code implementation, will be reviewed in future"
-        fi
-
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the Xifrat1_Sign algorithm
-    xifrat1_sign_src_dir=$nist_src_dir/Xifrat1_Sign_I/Reference_Implementation
-    xifrat1_sign_dst_dir=$bin_dir/Xifrat1_Sign_I
-
-    # Change to the Xifrat1_Sign source code directory
-    cd $xifrat1_sign_src_dir
-
-    # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
-
-    # Compile and move pqcsign binary to relevant bin directory
-    make clean >> /dev/null
-    make 
-    mv "$xifrat1_sign_src_dir/pqcsign" "$xifrat1_sign_dst_dir/pqcsign_Xifrat1_Sign_I"
-    make clean >> /dev/null
-
-    # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
-
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the VOX algorithm
-    vox_src_dir=$nist_src_dir/VOX/Reference_Implementation/vox_sign
-    vox_dst_dir=$bin_dir/VOX/
-
-    # Change to the VOX source code directory
-    cd $vox_src_dir
-
-    # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "VOX" "$vox_src_dir" "all" "$root_dir"
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${vox_variations[@]}"; do
-
-        echo "current variation - $variation"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make "PARAM=$variation"
-        mv "$vox_src_dir/pqcsign" "$vox_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-    done
-
-    # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "VOX" "$vox_src_dir" "all" "$root_dir"
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "SQIsign" "$sqi_src_dir" "all" "$root_dir"
 
     #__________________________________________________________________________
     # Set the source and destination directories for the TUOV algorithm
@@ -888,291 +1087,80 @@ function variations_setup() {
     "$scripts_dir/copy_modified_src_files.sh" "restore" "TUOV" "$tuov_src_dir" "all" "$root_dir"
 
     #__________________________________________________________________________
-    # Set the source and destination directories for the PROV algorithm
-    prov_src_dir=$nist_src_dir/PROV/Reference_Implementation
-    prov_dst_dir=$bin_dir/PROV
+    # Set the source and destination directories for the UOV algorithm
+    uov_src_dir=$nist_src_dir/UOV/Reference_Implementation
+    uov_dst_dir=$bin_dir/UOV
+
+    # Change to the UOV source code directory
+    cd $uov_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "UOV" "$uov_src_dir" "all" "$root_dir"
 
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${prov_variations[@]}"; do
+    for variation in "${uov_variations[@]}"; do
 
-        # Set the variation directory path and change to it
-        variation_dir="$prov_src_dir/$variation"
-        cd $variation_dir
+        # Extract the variation type from the variation name
+        variation_type=$(echo "$variation" | cut -d'_' -f2-)
+        variation_dir="$uov_src_dir/$variation_type"
 
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "PROV" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
+        # Compile and move pqcsign binary to lib directory
         make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$prov_dst_dir/pqcsign_$variation"
+        make "PROJ=$variation_type" -j $(nproc)
+        mv "$uov_src_dir/pqcsign" "$uov_dst_dir/pqcsign_$variation"
         make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "PROV" "$variation_dir" "$variation" "$root_dir"
 
     done
 
-    #__________________________________________________________________________
-    # Set the source and destination directories for the QR_UOV algorithm
-    qr_uov_src_dir=$nist_src_dir/QR_UOV/Reference_Implementation/
-    qr_uov_dst_dir=$bin_dir/QR_UOV
-    qr_uov_ref_code_dir=$qr_uov_src_dir/ref
+    # Restore the original files (makefile will only be resorted if is it the last variation)
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "UOV" "$uov_src_dir" "all" "$root_dir"
 
-    # Change to the QR_UOV source code directory
-    cd $qr_uov_src_dir
+    #__________________________________________________________________________
+    # Set the source and destination directories for the VOX algorithm
+    vox_src_dir=$nist_src_dir/VOX/Reference_Implementation/vox_sign
+    vox_dst_dir=$bin_dir/VOX/
+
+    # Change to the VOX source code directory
+    cd $vox_src_dir
 
     # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "VOX" "$vox_src_dir" "all" "$root_dir"
 
-    # Compile the different variations source code
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${vox_variations[@]}"; do
+
+        echo "current variation - $variation"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make "PARAM=$variation"
+        mv "$vox_src_dir/pqcsign" "$vox_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+    done
+
+    # Restore the original source code files
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "VOX" "$vox_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the Xifrat1_Sign algorithm
+    xifrat1_sign_src_dir=$nist_src_dir/Xifrat1_Sign_I/Reference_Implementation
+    xifrat1_sign_dst_dir=$bin_dir/Xifrat1_Sign_I
+
+    # Change to the Xifrat1_Sign source code directory
+    cd $xifrat1_sign_src_dir
+
+    # Copy over modified files to the current variation directory
+    "$scripts_dir/copy_modified_src_files.sh" "copy" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
+
+    # Compile and move pqcsign binary to relevant bin directory
     make clean >> /dev/null
     make 
-
-    # Loop throuhg the variations and get the pqcsign binary
-    for variation in "${qr_uov_variations[@]}"; do
-
-        # Set the variation build directory path and change to it
-        variation_dir="$qr_uov_src_dir/$variation/ref"
-        cd $variation_dir
-
-        # Copy over the pqcsign binary to the relevant bin directory
-        mv "$variation_dir/pqcsign" "$qr_uov_dst_dir/pqcsign_$variation"
-
-
-    done
-
-    # Move back to the source directory and clean up
-    cd $qr_uov_src_dir
+    mv "$xifrat1_sign_src_dir/pqcsign" "$xifrat1_sign_dst_dir/pqcsign_Xifrat1_Sign_I"
     make clean >> /dev/null
 
     # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "QR_UOV" "$qr_uov_ref_code_dir" "QR_UOV" "$root_dir"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the SNOVA algorithm
-    snova_src_dir=$nist_src_dir/SNOVA/Reference_Implementation
-    snova_dst_dir=$bin_dir/SNOVA
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${snova_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$snova_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "SNOVA" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make pqcsign -j $(nproc)
-        mv "$variation_dir/pqcsign" "$snova_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "SNOVA" "$variation_dir" "$variation" "$root_dir"
-
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the HPPC algorithm
-    hppc_src_dir=$nist_src_dir/HPPC/Reference_Implementation
-    hppc_dst_dir=$bin_dir/HPPC
-    hppc_flint_path=$hppc_src_dir/flint
-
-    # Change to the HPPC source code directory
-    cd $hppc_src_dir
-
-    # Ensure there is no previous build of flint library dependency
-    if [ -d "$hppc_flint_path/flint" ]; then
-        rm -rf "$hppc_flint_path/flint"
-        rm -rf v2.9.0.tar.* && rm -rf flint-2.9.0
-    fi
-    mkdir $hppc_flint_path
-
-    # Setting up flint library dependency
-    wget https://github.com/flintlib/flint2/archive/refs/tags/v2.9.0.tar.gz
-    tar -xf v2.9.0.tar.gz && cd flint-2.9.0
-    ./configure --prefix=$hppc_flint_path
-    make -j $(nproc) && make install
-
-    # Change back to the HPPC source code directory and clean up
-    cd $hppc_src_dir
-    rm -rf v2.9.0.tar.gz && rm -rf flint-2.9.0
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${hppc_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$hppc_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "HPPC" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$hppc_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "HPPC" "$variation_dir" "$variation" "$root_dir"
-
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the ALTEQ algorithm
-    alteq_src_dir=$nist_src_dir/ALTEQ/Reference_Implementation
-    alteq_dst_dir=$bin_dir/ALTEQ
-
-    # Change to the ALTEQ source code directory
-    cd $alteq_src_dir
-
-    # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
-
-    # Compile and move pqcsign binary to relevant bin directory
-    make distclean >> /dev/null
-    make pqcsign_all -j $(nproc)
-    mv $alteq_src_dir/pqcsign_* $alteq_dst_dir/
-    make distclean >> /dev/null
-
-    # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "ALTEQ" "$alteq_src_dir" "ALTEQ" "$root_dir"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the AIMer algorithm
-    aimer_src_dir=$nist_src_dir/AIMer/Reference_Implementation
-    aimer_dst_dir=$bin_dir/AIMer
-
-    # Change to the AIMer source code directory
-    cd $aimer_src_dir
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${aimer_variations[@]}"; do
-    
-        # Set the variation directory path and change to it
-        variation_dir="$aimer_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "AIMer" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make
-        mv "$variation_dir/pqcsign" "$aimer_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "AIMer" "$variation_dir" "$variation" "$root_dir"
-    
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the EagleSign algorithm
-    eaglesign_src_dir=$nist_src_dir/EagleSign/Reference_Implementation
-    eaglesign_dst_dir=$bin_dir/EagleSign
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${eaglesign_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$eaglesign_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over aes256ctr source and headers files to the current variation directory
-        cp $mod_file_dir/EagleSign/aes256ctr.* $variation_dir/
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "EagleSign" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/pqcsign" "$eaglesign_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "EagleSign" "$variation_dir" "$variation" "$root_dir"
-
-        # Remove the copied aes256ctr source and headers files
-        rm -f $variation_dir/aes256ctr.*
-
-    done
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the HAETAE algorithm
-    haetae_src_dir=$nist_src_dir/HAETAE/Reference_Implementation
-    haetae_dst_dir=$bin_dir/HAETAE
-    haetae_dst_libs_dir=$bin_dir/HAETAE/libs
-
-    # Change to the HAETAE source code directory
-    cd $haetae_src_dir
-
-    # Ensure build directory is not present from previous setup
-    if [ -d "$haetae_src_dir/build" ]; then
-        rm -rf "$haetae_src_dir/build"
-    fi
-
-    # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
-
-    # Compile and move pqcsign binaries and shared libraries to relevant bin directory
-    cmake -S ./ -B build && cmake --build build --clean-first
-    cd "$haetae_src_dir/build"
-    make -j $(nproc)
-    mv $haetae_src_dir/build/bin/pqcsign_* "$haetae_dst_dir/"
-
-    # Create libs directory in the destination directory and move shared libraries
-    if [ -d "$haetae_dst_libs_dir" ]; then
-        rm -rf "$haetae_dst_libs_dir"
-        mkdir -p "$haetae_dst_libs_dir"
-    else
-        mkdir -p "$haetae_dst_libs_dir"
-    fi
-
-    mv $haetae_src_dir/build/libs/* "$haetae_dst_libs_dir/"
-
-    # Utilse patchelf to modify the paths used for shared libraries in the pqcsign binaries so that they can be moved to the bin directory
-    for binary in "$haetae_dst_dir"/pqcsign_*; do
-        patchelf --set-rpath '$ORIGIN/libs' "$binary"
-    done
-
-    for lib in "$haetae_dst_libs_dir"/*.so; do
-        patchelf --set-rpath '$ORIGIN' "$lib"
-    done
-
-    # Restore the original source code files and remove build directory
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "HAETAE" "$haetae_src_dir" "all" "$root_dir"
-    rm -rf "$haetae_src_dir/build"
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the LESS algorithm
-    # NOTE - LESS does not have a default CMakelists.txt file, so a variation of the one included in the additional implementation is used
-    less_src_dir=$nist_src_dir/LESS/Reference_Implementation
-    less_dst_dir=$bin_dir/LESS
-    less_build_dir=$less_src_dir/build
-
-    # Copy over modified files to the current variation directory
-    "$scripts_dir/copy_modified_src_files.sh" "copy" "LESS" "$less_src_dir" "all" "$root_dir"
-
-    # Ensure build directory is not present from previous setup
-    if [ -d "$less_build_dir" ]; then
-        rm -rf "$less_build_dir"
-    fi
-
-    # Compile and move pqcsign binary to relevant bin directory
-    mkdir "$less_build_dir" && cd "$less_build_dir"
-    cmake ../ && make -j $(nproc)
-    mv $less_build_dir/bin/pqcsign_* "$less_dst_dir/"
-    cd $less_src_dir && rm -rf build
-
-    # Restore the original source code files
-    "$scripts_dir/copy_modified_src_files.sh" "restore" "LESS" "$less_src_dir" "all" "$root_dir"
-
+    "$scripts_dir/copy_modified_src_files.sh" "restore" "Xifrat1_Sign_I" "$xifrat1_sign_src_dir" "Xifrat1_Sign_I" "$root_dir"
 
 }
 

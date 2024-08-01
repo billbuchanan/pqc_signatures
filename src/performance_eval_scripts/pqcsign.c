@@ -13,7 +13,6 @@ This binary is then used by the `sig-test.sh` script to automatically gather CPU
 #include <time.h>
 #include <stdint.h>
 #include <x86intrin.h>
-#include "NIST-kat/rng.h"
 
 // Include the relevant header files based on the signature scheme being tested
 # if defined (MIRITH)
@@ -219,7 +218,6 @@ int benchmark_cycles() {
     else {
         fprintf(stderr, "ERROR! Key generation failed!\n");
         exit(-1);
-
     }
 
     // Sign the message using the generated secret key
@@ -234,7 +232,6 @@ int benchmark_cycles() {
     else {
         fprintf(stderr, "ERROR! Signing failed!\n");
         exit(-1);
-
     }
 
     // Verify the signature using the public key
@@ -248,12 +245,10 @@ int benchmark_cycles() {
     // Verify if the signature was successfully verified
     if (ret == 0) {
         printf("Signature verified\n\n");
-
     }
     else {
       fprintf(stderr, "ERROR! Signature did not open!\n\n\n");
       exit(-1);
-
     }
 
     // Outputting the performance metrics gathered for the scheme
@@ -285,4 +280,3 @@ int main(void) {
     return 0;
 
 }
-

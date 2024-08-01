@@ -32,14 +32,15 @@ function array_util_call() {
     source "$root_dir/scripts/variation_array_util.sh" "set" "$alg_variations_dir"
 
     # Import the variation arrays from environment variables
+    IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
     IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
     IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
     IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
+    IFS=',' read -r -a perk_variations <<< "$PERK_VARIATIONS"
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
     IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
     IFS=',' read -r -a squirrels_variations <<< "$SQUIRRELS_VARIATIONS"
     IFS=',' read -r -a wave_variations <<< "$WAVE_VARIATIONS"
-
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -70,6 +71,7 @@ function determine_setup_options() {
         
         else
             echo -e "\nIncorrect input, please use (y/n) to indicate benchmark inclusion choice"
+
         fi
 
     done
@@ -116,6 +118,7 @@ function determine_setup_options() {
                 *) 
                     echo -e "Invalid input. Please enter either 1 or 2\n"
                     ;;
+
             esac
     
     done
@@ -135,11 +138,13 @@ function environment_setup() {
     required_dirs=($bin_dir $results_dir)
 
     for dir in "${required_dirs[@]}"; do
+
         if [ ! -d $dir ]; then
             mkdir -p $dir
         else
             rm -rf $dir && mkdir -p $dir
         fi
+
     done
 
     # Check if the required bin directories exist for the various signature algorithms
@@ -175,9 +180,11 @@ function environment_setup() {
 
     # Check if the required packages are installed
     for package in "${packages[@]}"; do
+
         if ! dpkg -s "$package" >/dev/null 2>&1; then
             not_installed+=("$package")
         fi
+
     done
 
     # Install any missing dependency packages
@@ -202,6 +209,12 @@ function cycles_test() {
     # Set the output filename based on current run
     local output_file="sig_speed_results_run_$1.txt"
 
+    # Run testing for DME_Sign algorithm
+    for variation in "${dme_sign_variations[@]}"; do
+        echo -e "\nRunning DME_Sign test for $variation"
+        $bin_dir/DME_Sign/pqcsign_$variation
+    done
+
     # Run testing for KAZ_SIGN algorithm
     for variation in "${kaz_sign_variations[@]}"; do
         echo -e "\nRunning KAZ_SIGN test for $variation"
@@ -218,6 +231,12 @@ function cycles_test() {
     for variation in "${mqom_variations[@]}"; do
         echo -e "\nRunning MQOM test for $variation"
         $bin_dir/MQOM/pqcsign_$variation
+    done
+
+    # Run testing for PERK algorithm
+    for variation in "${perk_variations[@]}"; do
+        echo -e "\nRunning PERK test for $variation"
+        $bin_dir/PERK/pqcsign_$variation
     done
 
     # Run testing for Preon algorithm
@@ -242,6 +261,45 @@ function cycles_test() {
     for variation in "${wave_variations[@]}"; do
         echo -e "\nRunning Wave test for $variation"
         $bin_dir/Wave/pqcsign_$variation
+    done
+
+}
+
+#---------------------------------------------------------------------------------------------------
+function dme_sign_setup() {
+    # Function for performing the setup of the DME_SIGN algorithm
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the DME_SIGN algorithm
+    dme_sign_src_dir=$nist_src_dir/DME_Sign
+    dme_sign_dst_dir=$bin_dir/DME_Sign
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${dme_sign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$dme_sign_src_dir/$variation/Reference_Implementation"
+        cd $variation_dir
+
+        # Only compile the first two variations as the third does not have complete reference code (will be reviewed in future)
+        if [ $variation != "dme-3rnds-8vars-64bits-sign" ]; then
+
+            # Copy over modified files to the current variation directory
+            "$scripts_dir/copy_modified_src_files.sh" "copy" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
+
+            # Compile and move pqcsign binary to relevant bin directory
+            make clean >> /dev/null
+            make -j $(nproc)
+            mv "$variation_dir/pqcsign" "$dme_sign_dst_dir/pqcsign_$variation"
+            make clean >> /dev/null
+
+            # Restore the original source code files
+            "$scripts_dir/copy_modified_src_files.sh" "restore" "DME_Sign" "$variation_dir" "$variation" "$root_dir"
+
+        else
+            echo -e "\nSkipping DME_Sign variation: $variation due to lack of reference code implementation, will be reviewed in future"
+        fi
+
     done
 
 }
@@ -348,6 +406,38 @@ function mqom_setup() {
 }
 
 #---------------------------------------------------------------------------------------------------
+function perk_setup() {
+    # Function for performing the setup of the PERK algorithm
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the PERK algorithm
+    perk_src_dir=$nist_src_dir/PERK/Reference_Implementation
+    perk_dst_dir=$bin_dir/PERK
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${perk_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$perk_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "PERK" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make all -j $(nproc)
+        mv "$variation_dir/pqcsign" "$perk_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "PERK" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+}
+
+#---------------------------------------------------------------------------------------------------
 function preon_setup() {
     # Function for performing the setup of the PREON algorithm
 
@@ -437,6 +527,7 @@ function sdith_threshold_setup() {
         "$scripts_dir/copy_modified_src_files.sh" "restore" "SDitH" "$variation_dir" "$variation" "$root_dir"
 
     done
+
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -472,6 +563,7 @@ function squirrels_variations() {
             rm -rf "$squirrels_lib_dir"
             cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
             touch "$squirrels_lib_dir/modded-lib.flag"
+
         else
            echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
            echo -e "please manually restore the src/nist/SQUIRRELS/lib directory to avoid committing the built lib files\n" >> "$root_dir/last_setup_error.log"
@@ -521,12 +613,14 @@ function squirrels_variations() {
     done
 
     # Restore the original lib directory
-    if [ -d "$orgin_lib_dir_backup" ]; then
+    if [ -d "$orgin_lib_dir_backup/lib" ]; then
         rm -rf "$squirrels_lib_dir"
         cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+
     else
         echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
         echo -e "please manually restore the src/nist/SQUIRRELS/lib directory to avoid committing the built lib files\n" >> "$root_dir/last_setup_error.log"
+
     fi
 
 }
@@ -563,7 +657,6 @@ function wave_setup() {
 
 }
 
-
 #---------------------------------------------------------------------------------------------------
 function variations_setup() {
     # Function to setup the various signature algorithms and their variations
@@ -572,22 +665,22 @@ function variations_setup() {
     # Set the modified files directory path
     mod_file_dir="$root_dir/src/modified_nist_src_files/linux"
 
-
     # NOTE - To improve development, in this script the setups have been placed in separate functions
     # so that they can be tested individually. You can comment out the algorithms which you are not currently working on.
     # When integrating into the main setup script, please follow the current structure of the setup.sh script.
 
     # Call setup functions
+    dme_sign_setup
     kaz_sign_setup
     mirith_setup
     mqom_setup
+    perk_setup
     preon_setup
     sdith_threshold_setup
     squirrels_variations
     wave_setup
 
 }   
-
 
 #---------------------------------------------------------------------------------------------------
 function main() {
@@ -655,8 +748,8 @@ function main() {
 
     else
         echo -e "\nSkipping benchmarking"
-    fi
 
+    fi
 
 }
 main
