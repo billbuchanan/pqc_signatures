@@ -37,6 +37,7 @@ function array_util_call() {
     IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
     IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
+    IFS=',' read -r -a squirrels_variations <<< "$SQUIRRELS_VARIATIONS"
 
     
     # Call the array utility script to clear environment variables
@@ -228,6 +229,12 @@ function cycles_test() {
     for variation in "${sdith_threshold_variations[@]}"; do
         echo -e "\nRunning SDitH Threshold test for $variation"
         $bin_dir/SDitH/pqcsign_$variation
+    done
+
+    # Run testing for SQUIRRELS algorithm
+    for variation in "${squirrels_variations[@]}"; do
+        echo -e "\nRunning SQUIRRELS test for $variation"
+        $bin_dir/SQUIRRELS/pqcsign_$variation
     done
 
 }
@@ -426,6 +433,100 @@ function sdith_threshold_setup() {
 }
 
 #---------------------------------------------------------------------------------------------------
+function squirrels_variations() {
+    # Function for performing the setup of the SQUIRRELS algorithm
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the SQUIRRELS algorithm
+    squirrels_src_dir="$nist_src_dir/SQUIRRELS/Reference_Implementation"
+    squirrels_lib_dir="$nist_src_dir/SQUIRRELS/lib"
+    orgin_lib_dir_backup="$root_dir/main_default_src_backup/SQUIRRELS"
+    squirrels_dst_dir="$bin_dir/SQUIRRELS"
+
+    # Check if original lib directory is present and make a copy of it
+    if [ ! -f "$squirrels_lib_dir/modded-lib.flag" ]; then
+
+        # Remove the current lib backup directory if it exists as the one in squirrels src is the default
+        if [ -d "$orgin_lib_dir_backup/lib" ]; then
+            rm -rf "$orgin_lib_dir_backup/lib"
+            cp -r "$squirrels_lib_dir" "$orgin_lib_dir_backup/lib"
+            touch "$squirrels_lib_dir/modded-lib.flag"
+
+        else
+            cp -r "$squirrels_lib_dir" "$orgin_lib_dir_backup/lib"
+            touch "$squirrels_lib_dir/modded-lib.flag"
+
+        fi
+    
+    else
+
+        # Check if original lib directory backup is present and restore from that
+        if [ -d "$orgin_lib_dir_backup/lib" ]; then
+            rm -rf "$squirrels_lib_dir"
+            cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+            touch "$squirrels_lib_dir/modded-lib.flag"
+        else
+           echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
+           echo -e "please manually restore the src/nist/SQUIRRELS/lib directory to avoid committing the built lib files\n" >> "$root_dir/last_setup_error.log"
+        fi
+    
+    fi
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${squirrels_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$squirrels_src_dir/$variation"
+        cd $variation_dir
+
+        # Ensure that there is no build directory present from previous runs
+        if [ -d "build" ]; then
+            rm -rf build
+        fi
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SQUIRRELS" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/build/pqcsign" "$squirrels_dst_dir/pqcsign_$variation"
+
+        # Copy over the required shared libraries to the bin directory only once
+        if [ ! -d "$squirrels_dst_dir/lib" ]; then
+            mkdir -p "$squirrels_dst_dir/lib"
+            cp -R "$squirrels_lib_dir/build/mpfr/lib" "$squirrels_dst_dir/lib/mpfr"
+            cp -R "$squirrels_lib_dir/build/gmp/lib" "$squirrels_dst_dir/lib/gmp"
+            cp -R "$squirrels_lib_dir/build/flint/lib" "$squirrels_dst_dir/lib/flint"
+            cp -R "$squirrels_lib_dir/build/fplll/lib" "$squirrels_dst_dir/lib/fplll"
+        fi
+
+        # Set rpath to include all relevant subdirectories in ./lib
+        patchelf --set-rpath '$ORIGIN/lib/mpfr:$ORIGIN/lib/gmp:$ORIGIN/lib/flint:$ORIGIN/lib/fplll' "$squirrels_dst_dir/pqcsign_$variation"
+
+        # Clean up and remove build directory
+        make clean >> /dev/null
+        rm -rf "$variation_dir/build"
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SQUIRRELS" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    # Restore the original lib directory
+    if [ -d "$orgin_lib_dir_backup" ]; then
+        rm -rf "$squirrels_lib_dir"
+        cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+    else
+        echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
+        echo -e "please manually restore the src/nist/SQUIRRELS/lib directory to avoid committing the built lib files\n" >> "$root_dir/last_setup_error.log"
+    fi
+
+}
+
+
+
+#---------------------------------------------------------------------------------------------------
 function variations_setup() {
     # Function to setup the various signature algorithms and their variations
     # The setup functionality that is in the setup.sh script would go here
@@ -444,6 +545,7 @@ function variations_setup() {
     mqom_setup
     preon_setup
     sdith_threshold_setup
+    squirrels_variations
 
 }   
 

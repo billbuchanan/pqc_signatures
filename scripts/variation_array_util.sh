@@ -129,6 +129,9 @@ function export_env_vars() {
 
     SDITH_THRESHOLD_VARIATIONS=$(IFS=,; echo "${SDITH_THRESHOLD_VARIATIONS[*]}")
     export SDITH_THRESHOLD_VARIATIONS
+
+    SQUIRRELS_VARIATIONS=$(IFS=,; echo "${SQUIRRELS_VARIATIONS[*]}")
+    export SQUIRRELS_VARIATIONS
     
 }
 
@@ -175,6 +178,8 @@ function clear_env_vars(){
     unset MIRITH_VARIATIONS
     unset MQOM_VARATIONS
     unset PREON_VARIATIONS
+    unset SDITH_THRESHOLD_VARIATIONS
+    unset SQUIRRELS_VARIATIONS
 
 }
 
@@ -341,6 +346,10 @@ function create_alg_arrays() {
     while IFS= read -r line; do
         SDITH_THRESHOLD_VARIATIONS+=("$line")
     done < "$alg_variations_dir/SDitH_threshold_variations.txt"
+
+    while IFS= read -r line; do
+        SQUIRRELS_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/SQUIRRELS_variations.txt"
 
 
 }

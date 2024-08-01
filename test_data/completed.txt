@@ -43,7 +43,7 @@ in progress:
 
 ------------------------------------------------------------------------------------------------------
 Still to do:
-- SQUIRRELS
+
 - Wave
 
 
@@ -54,3 +54,4 @@ in progress (marked for team-debugging):
 - MQOM
 - Preon
 - SDitH - Threshold Variations
+- SQUIRRELS
