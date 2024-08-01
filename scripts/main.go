@@ -143,7 +143,7 @@ func handleOutputChan(f *os.File, output chan ([]byte)) {
 		if !ok {
 			return
 		}
-		_, err := f.WriteString(string(line)[:15] + "\n")
+		_, err := f.WriteString(string(line))
 		if err != nil {
 			fmt.Printf("File error %s \n", err)
 			continue
@@ -157,7 +157,7 @@ func IterateAndRunAlgVers(BinDir string, k string, v []string, output chan ([]by
 		out, err := exec.Command(filepath.Join(BinDir, k, "pqcsign_"+element)).Output()
 		if err != nil {
 			fmt.Printf("Command execution error: %s \nOutput:  %s \n", err, out)
-			return
+			continue
 		}
 		output <- out
 	}
