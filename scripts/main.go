@@ -40,8 +40,6 @@ const NumRunsMessage = "Enter the number of runs to be performed: "
 
 const sep = string(os.PathSeparator)
 
-var wg sync.WaitGroup
-
 func NewPathVariables() (*PathVariables, error) {
 	// Set absolute path to root folder of the project (run only inside of scripts/)
 	wd, err := os.Getwd()
@@ -135,45 +133,6 @@ func Config() *ConfigParams {
 	return &cfg
 }
 
-// handleOutputChan handles the output channel and closes when producer stops
-func handleOutputChan(f *os.File, output chan ([]byte)) {
-	defer f.Close()
-	for {
-		line, ok := <-output
-		if !ok {
-			return
-		}
-		_, err := f.WriteString(string(line))
-		if err != nil {
-			fmt.Printf("File error %s \n", err)
-			continue
-		}
-	}
-}
-
-func IterateAndRunAlgVers(BinDir string, k string, v []string, output chan ([]byte)) {
-	defer wg.Done()
-	for _, element := range v {
-		out, err := exec.Command(filepath.Join(BinDir, k, "pqcsign_"+element)).Output()
-		if err != nil {
-			fmt.Printf("Command execution error: %s \nOutput:  %s \n", err, out)
-			continue
-		}
-		output <- out
-	}
-}
-
-// PerformBenchmarking performs the benchmarking
-func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *PathVariables, step int, output chan ([]byte)) {
-	fmt.Printf("Performing step %s \n", strconv.Itoa(step+1))
-	for k, v := range res {
-		wg.Add(1)
-		fmt.Printf("Algorithm %s execution started \n", k)
-		go IterateAndRunAlgVers(pathvars.BinDir, k, v, output)
-
-	}
-}
-
 func deleteExistingFolder(wd string, name string) {
 	// Delete folder if its exists
 	err := filepath.Walk(wd, func(path string, info fs.FileInfo, err error) error {
@@ -192,7 +151,54 @@ func deleteExistingFolder(wd string, name string) {
 	}
 
 }
+
+// handleOutputChan handles the output channel and closes when producer stops
+func handleOutputChan(f *os.File, output chan []byte, stopchan chan bool) {
+	defer f.Close()
+	for {
+		select {
+		case line, ok := <-output:
+			if !ok {
+				return
+			}
+			_, err := f.WriteString(string(line))
+			if err != nil {
+				fmt.Printf("File error %s \n", err)
+				continue
+			}
+		case <-stopchan:
+			return
+		}
+	}
+}
+
+func IterateAndRunAlgVers(BinDir string, k string, v []string, output chan<- ([]byte)) {
+	for _, element := range v {
+		out, err := exec.Command(filepath.Join(BinDir, k, "pqcsign_"+element)).Output()
+		if err != nil {
+			fmt.Printf("Command execution error: %s \nOutput:  %s \n", err, out)
+			continue
+		}
+		output <- out
+	}
+}
+
+// PerformBenchmarking performs the benchmarking
+func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *PathVariables, step int, output chan ([]byte), wg *sync.WaitGroup) {
+	fmt.Printf("Performing step %s \n", strconv.Itoa(step+1))
+	for k, v := range res {
+		wg.Add(1)
+		fmt.Printf("Algorithm %s execution started \n", k)
+		go func(k string, v []string) {
+			defer wg.Done()
+			IterateAndRunAlgVers(pathvars.BinDir, k, v, output)
+		}(k, v)
+
+	}
+}
+
 func main() {
+	wg := sync.WaitGroup{}
 	start := time.Now()
 	pathvars, err := NewPathVariables()
 	if err != nil {
@@ -200,7 +206,8 @@ func main() {
 	}
 	res, amount := NewAlgVariationArrays(pathvars.AlgVariationsDir)
 	cfg := Config()
-	var output = make(chan ([]byte), amount)
+	output := make(chan ([]byte), amount)
+	stopchan := make(chan bool)
 	fmt.Println("Started")
 	for run := 0; run < int(cfg.NumRuns); run++ {
 		file, err := os.Create(pathvars.ResultsDir + sep + "results" + strconv.Itoa(run+1) + "_" + time.Now().Local().Format("20060102") + ".txt")
@@ -208,11 +215,10 @@ func main() {
 			fmt.Printf("File error %s \n", err)
 			return
 		}
-		wg.Add(1)
-		go handleOutputChan(file, output)
-		PerformBenchmarking(res, cfg, pathvars, run, output)
+		go handleOutputChan(file, output, stopchan)
+		PerformBenchmarking(res, cfg, pathvars, run, output, &wg)
 	}
 	wg.Wait()
-	close(output)
+	stopchan <- true
 	fmt.Printf("Finished in %s\n", time.Since(start))
 }
