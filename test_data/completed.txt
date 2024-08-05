@@ -16,10 +16,12 @@ Completed
 - HAWK
 - HPPC
 - HuFu ††
+- KAZ_SIGN
 - LESS
 - MAYO
 - MEDS
 - MIRA
+- MiRitH
 - PERK †††
 - Enhanced_pqsigRM
 - PROV
@@ -33,6 +35,7 @@ Completed
 - TUOV
 - UOV
 - VOX
+- Wave
 - Xifrat1_Sign_I
 
 -----------------------------------------------------------------------------------------------------
@@ -49,12 +52,9 @@ Still to do:
 
 ------------------------------------------------------------------------------------------------------
 in progress (marked for team-debugging):
-- KAZ_SIGN
-- MiRitH
 - MQOM
 - Preon
 - SDitH - Threshold Variations
 - SQUIRRELS
-- Wave
 - DME_Sign
 - PERK

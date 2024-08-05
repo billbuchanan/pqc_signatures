@@ -702,6 +702,32 @@ function variations_setup() {
     done
 
     #__________________________________________________________________________
+    # Set the source and destination directories for the KAZ_SIGN algorithm
+    kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
+    kaz_dst_dir="$bin_dir/KAZ_SIGN"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${kaz_sign_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$kaz_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make 
+        mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
     # Set the source and destination directories for the LESS algorithm
     # NOTE - LESS does not have a default CMakelists.txt file, so a variation of the one included in the additional implementation is used
     less_src_dir=$nist_src_dir/LESS/Reference_Implementation
@@ -803,6 +829,37 @@ function variations_setup() {
 
         # Restore the original source code files
         "$scripts_dir/copy_modified_src_files.sh" "restore" "MIRA" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the MiRitH algorithm
+    mirith_src_dir="$nist_src_dir/MiRitH/Reference_Implementation"
+    mirith_dst_dir="$bin_dir/MiRitH"
+
+    # NOTE - MiRitH uses the same structures for its makefiles across all variations, so only one copy has been made in 
+    # the modified_nist_src_files directory and it copied across to all variations. This will make fixing errors easier as
+    # as there would be a total of 72 copies of the makefile to fix if they were all separate. There is the main makefile and 
+    # the nist makefile that need to copied over to the variations.
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${mirith_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$mirith_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "MiRitH" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make -j $(nproc)
+        mv "$variation_dir/nist/pqcsign" "$mirith_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "MiRitH" "$variation_dir" "$variation" "$root_dir"
 
     done
 
@@ -1141,6 +1198,32 @@ function variations_setup() {
 
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "VOX" "$vox_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the Wave algorithm
+    wave_src_dir="$nist_src_dir/Wave/Reference_Implementation"
+    wave_dst_dir="$bin_dir/Wave"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${wave_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$wave_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Wave" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$wave_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Wave" "$variation_dir" "$variation" "$root_dir"
+
+    done
 
     #__________________________________________________________________________
     # Set the source and destination directories for the Xifrat1_Sign algorithm

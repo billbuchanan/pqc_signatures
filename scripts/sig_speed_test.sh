@@ -277,6 +277,12 @@ function cycles_test() {
         echo -e "\nSkipping HUFU benchmarking"
     fi
 
+    # Run testing for KAZ_SIGN algorithm
+    for variation in "${kaz_sign_variations[@]}"; do
+        echo -e "\nRunning KAZ_SIGN test for $variation"
+        $bin_dir/KAZ_SIGN/pqcsign_$variation >> $results_dir/$output_file
+    done
+
     # LESS variation testing
     for variation in "${less_variations[@]}"; do
         echo -e "\nRunning LESS test for $variation"
@@ -299,6 +305,12 @@ function cycles_test() {
     for variation in "${mira_variations[@]}"; do
         echo -e "\nRunning MIRA test for $variation"
         $bin_dir/MIRA/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # MiRitH variation testing
+    for variation in "${mirith_variations[@]}"; do
+        echo -e "\nRunning MiRitH test for $variation"
+        $bin_dir/MiRitH/pqcsign_$variation >> $results_dir/$output_file
     done
 
     # PERK variation testing
@@ -378,6 +390,28 @@ function cycles_test() {
     for variation in "${vox_variations[@]}"; do
         echo -e "\nRunning VOX test for $variation"
         $bin_dir/VOX/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # Run testing for Wave algorithm
+    for variation in "${wave_variations[@]}"; do
+
+        # Set unlimited stack limit if variation is Wave1644, this is a temporary fix
+        if [ "$variation" == "Wave1644" ]; then
+            
+            # Get the systems default stack limit and temporarily set it to unlimited
+            stack_limit=$(ulimit -s)
+            ulimit -s unlimited
+
+            # Run the Wave variation benchmark
+            $bin_dir/Wave/pqcsign_$variation >> $results_dir/$output_file
+
+            # Reset the stack limit to the systems default
+            ulimit -s $stack_limit
+
+        else
+            $bin_dir/Wave/pqcsign_$variation >> $results_dir/$output_file
+        fi
+    
     done
 
     # Xifrat1_Sign variation testing

@@ -15,6 +15,11 @@ ifeq ($(UNAME_S),Darwin)
 	LIBS :=-L/usr/local/opt/openssl/lib -lcrypto
 endif
 
+# Get the variation based on the parent directory of the makefile location
+PARENT_DIR := $(notdir $(patsubst %/,%,$(dir $(CURDIR))))
+DMIRITH_ALGNAME=\"$(PARENT_DIR)\"
+CFLAGS += -DMIRITH_ALGNAME=$(DMIRITH_ALGNAME)
+
 all: pqcsign PQCgenKAT_sign
 %.o: %.s
 	$(CC) -c $(CFLAGS) -o $@ $< 

@@ -33,14 +33,11 @@ function array_util_call() {
 
     # Import the variation arrays from environment variables
     IFS=',' read -r -a dme_sign_variations <<< "$DME_SIGN_VARIATIONS"
-    IFS=',' read -r -a kaz_sign_variations <<< "$KAZ_SIGN_VARIATIONS"
-    IFS=',' read -r -a mirith_variations <<< "$MIRITH_VARIATIONS"
     IFS=',' read -r -a mqom_variations <<< "$MQOM_VARIATIONS"
     IFS=',' read -r -a perk_variations <<< "$PERK_VARIATIONS"
     IFS=',' read -r -a preon_variations <<< "$PREON_VARIATIONS"
     IFS=',' read -r -a sdith_threshold_variations <<< "$SDITH_THRESHOLD_VARIATIONS"
     IFS=',' read -r -a squirrels_variations <<< "$SQUIRRELS_VARIATIONS"
-    IFS=',' read -r -a wave_variations <<< "$WAVE_VARIATIONS"
     
     # Call the array utility script to clear environment variables
     source "$scripts_dir/variation_array_util.sh" "clear"
@@ -209,22 +206,13 @@ function cycles_test() {
     # Set the output filename based on current run
     local output_file="sig_speed_results_run_$1.txt"
 
+    # # Redirect all output and errors to the output file
+    # exec &>> $results_dir/$output_file
+
     # Run testing for DME_Sign algorithm
     for variation in "${dme_sign_variations[@]}"; do
         echo -e "\nRunning DME_Sign test for $variation"
         $bin_dir/DME_Sign/pqcsign_$variation
-    done
-
-    # Run testing for KAZ_SIGN algorithm
-    for variation in "${kaz_sign_variations[@]}"; do
-        echo -e "\nRunning KAZ_SIGN test for $variation"
-        $bin_dir/KAZ_SIGN/pqcsign_$variation
-    done
-
-    # Run testing for MiRitH algorithm
-    for variation in "${mirith_variations[@]}"; do
-        echo -e "\nRunning MiRitH test for $variation"
-        $bin_dir/MiRitH/pqcsign_$variation
     done
 
     # Run testing for MQOM algorithm
@@ -255,12 +243,6 @@ function cycles_test() {
     for variation in "${squirrels_variations[@]}"; do
         echo -e "\nRunning SQUIRRELS test for $variation"
         $bin_dir/SQUIRRELS/pqcsign_$variation
-    done
-
-    # Run testing for Wave algorithm
-    for variation in "${wave_variations[@]}"; do
-        echo -e "\nRunning Wave test for $variation"
-        $bin_dir/Wave/pqcsign_$variation
     done
 
 }
@@ -299,75 +281,6 @@ function dme_sign_setup() {
         else
             echo -e "\nSkipping DME_Sign variation: $variation due to lack of reference code implementation, will be reviewed in future"
         fi
-
-    done
-
-}
-
-#---------------------------------------------------------------------------------------------------
-function kaz_sign_setup() {
-    # Function for performing the setup of the KAZ_SIGN algorithm
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the KAZ_SIGN algorithm
-    kaz_src_dir="$nist_src_dir/KAZ_SIGN/Reference_Implementation"
-    kaz_dst_dir="$bin_dir/KAZ_SIGN"
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${kaz_sign_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$kaz_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile the pqcsign binary for the current variation
-        make clean >> /dev/null
-        make 
-        mv "$variation_dir/pqcsign" "$kaz_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "KAZ_SIGN" "$variation_dir" "$variation" "$root_dir"
-
-    done
-
-}
-
-#---------------------------------------------------------------------------------------------------
-function mirith_setup() {
-    # Function for performing the setup of the MiRitH algorithm
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the MiRitH algorithm
-    mirith_src_dir="$nist_src_dir/MiRitH/Reference_Implementation"
-    mirith_dst_dir="$bin_dir/MiRitH"
-
-    # NOTE - MiRitH uses the same structures for its makefiles across all variations, so only one copy has been made in 
-    # the modified_nist_src_files directory and it copied across to all variations. This will make fixing errors easier as
-    # as there would be a total of 72 copies of the makefile to fix if they were all separate. There is the main makefile and 
-    # the nist makefile that need to copied over to the variations.
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${mirith_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$mirith_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "MiRitH" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile the pqcsign binary for the current variation
-        make clean >> /dev/null
-        make -j $(nproc)
-        mv "$variation_dir/nist/pqcsign" "$mirith_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "MiRitH" "$variation_dir" "$variation" "$root_dir"
 
     done
 
@@ -626,38 +539,6 @@ function squirrels_variations() {
 }
 
 #---------------------------------------------------------------------------------------------------
-function wave_setup() {
-    # Function for performing the setup of the Wave algorithm
-
-    #__________________________________________________________________________
-    # Set the source and destination directories for the Wave algorithm
-    wave_src_dir="$nist_src_dir/Wave/Reference_Implementation"
-    wave_dst_dir="$bin_dir/Wave"
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${wave_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$wave_src_dir/$variation"
-        cd $variation_dir
-
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "Wave" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile the pqcsign binary for the current variation
-        make clean >> /dev/null
-        make
-        mv "$variation_dir/pqcsign" "$wave_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "Wave" "$variation_dir" "$variation" "$root_dir"
-
-    done
-
-}
-
-#---------------------------------------------------------------------------------------------------
 function variations_setup() {
     # Function to setup the various signature algorithms and their variations
     # The setup functionality that is in the setup.sh script would go here
@@ -671,14 +552,12 @@ function variations_setup() {
 
     # Call setup functions
     dme_sign_setup
-    kaz_sign_setup
-    mirith_setup
     mqom_setup
     perk_setup
     preon_setup
     sdith_threshold_setup
     squirrels_variations
-    wave_setup
+
 
 }   
 

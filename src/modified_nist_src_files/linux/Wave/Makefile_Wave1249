@@ -25,7 +25,7 @@ benchmark_time: $(OBJS) prng/prng.o benchmark_time.c
 prng/prng-nist.o:
 	$(CC) $(CFLAGS) -DNIST_KAT -c -o prng/prng-nist.o prng/prng.c
 
-pqcsign: $(OBJS) prng/prng-nist.o NIST-kat/rng.o pqcsign.c
+pqcsign: $(OBJS) prng/prng.o pqcsign.c
 	$(CC) $(CFLAGS) -DWAVE $^ -o $@ $(LDFLAGS)
 
 clean:
