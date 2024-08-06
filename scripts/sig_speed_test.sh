@@ -437,6 +437,7 @@ function main() {
     determine_run_nums
 
     # Perform benchmarking for number of specified runs
+    # :TODO Iteration over the runs doesn't work
     for run_num in $(seq 1 $number_of_runs); do
         echo "Performing Run $run_num"
         cycles_test "$run_num"

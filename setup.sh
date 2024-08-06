@@ -968,6 +968,7 @@ function variations_setup() {
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
         make -j $(nproc)
+        # :TODO Not a good idea, lowercase only used here. Main script doesn't work
         variation_lower="${variation,,}"
         cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation_lower
         make clean >> /dev/null
@@ -1005,6 +1006,7 @@ function variations_setup() {
 
     #__________________________________________________________________________
     # Set the source and destination directories for the SDitH algorithm
+    # TODO: Here should be SDitH_hypercube instead of just SDitH. Main script doesn't work
     sdith_src_dir=$nist_src_dir/SDitH/Reference_Implementation
     sdith_hybercube_src_dir="$sdith_src_dir/Hypercube_Variant"
     sdith_threshold_src_dir="$sdith_src_dir/Threshold_Variant"
@@ -1049,6 +1051,7 @@ function variations_setup() {
         "$scripts_dir/copy_modified_src_files.sh" "copy" "SNOVA" "$variation_dir" "$variation" "$root_dir"
 
         # Compile and move pqcsign binary to relevant bin directory
+        # :TODO SNOVA is not creating?
         make clean >> /dev/null
         make pqcsign -j $(nproc)
         mv "$variation_dir/pqcsign" "$snova_dst_dir/pqcsign_$variation"
