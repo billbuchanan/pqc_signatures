@@ -6,7 +6,7 @@ Completed
 - Ascon_Sign
 - Biscuit
 - CROSS
-- DME_Sign †
+- DME_Sign
 - EagleSign
 - EHTv3v4
 - eMLE_Sig_2.0
@@ -15,23 +15,28 @@ Completed
 - HAETAE
 - HAWK
 - HPPC
-- HuFu ††
+- HuFu
 - KAZ_SIGN
 - LESS
+- PERK
+- Preon
 - MAYO
 - MEDS
 - MIRA
 - MiRitH
-- PERK †††
+- MQOM
+- PERK
 - Enhanced_pqsigRM
 - PROV
 - QR_UOV
 - Raccoon
 - RYDE
-- SDitH - Hypercube Variations ††††
-- SNOVA †††††
+- SDitH - Hypercube Variations
+- SDitH - Threshold Variations
+- SNOVA
 - SPHINCS_alpha
 - SQIsign
+- SQUIRRELS
 - TUOV
 - UOV
 - VOX
@@ -52,9 +57,4 @@ Still to do:
 
 ------------------------------------------------------------------------------------------------------
 in progress (marked for team-debugging):
-- MQOM
-- Preon
-- SDitH - Threshold Variations
-- SQUIRRELS
 - DME_Sign
-- PERK

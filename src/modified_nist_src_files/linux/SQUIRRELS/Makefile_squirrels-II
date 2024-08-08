@@ -125,9 +125,9 @@ build/PQCgenKAT_sign.o: ../../KAT/generator/PQCgenKAT_sign.c $(HEAD2)
 build/benchmarks.o: benchmarks.c $(HEAD1) $(HEAD2)
 	$(CC) $(CFLAGS) -I . -c -o build/benchmarks.o benchmarks.c
 
-build/pqcsign: build/pqcsign.o $(OBJ1)
-	$(LD) $(LDFLAGS) -lcrypto -o build/pqcsign build/pqcsign.o $(OBJ1) $(LIBS)
+build/pqcsign: build/pqcsign.o $(OBJ1) build/katrng.o
+	$(LD) $(LDFLAGS) -lcrypto -o build/pqcsign build/pqcsign.o $(OBJ1) build/katrng.o $(LIBS)
 
-build/pqcsign.o: pqcsign.c $(HEAD1)
-	$(CC) $(CFLAGS) -c -o build/pqcsign.o pqcsign.c
+build/pqcsign.o: pqcsign.c $(HEAD1) $(HEAD2)
+	$(CC) $(CFLAGS) -I . -c -o build/pqcsign.o pqcsign.c
 

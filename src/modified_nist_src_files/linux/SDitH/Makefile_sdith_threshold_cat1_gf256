@@ -1,6 +1,6 @@
 #modified-flag
 CC?=gcc
-ALL_FLAGS?=-O3 -flto -fPIC -std=c11 -march=native -Wall -Wextra -Wpedantic -Wshadow -DPARAM_THRESHOLD_NFPR_REF -DPARAM_GF256 -DPARAM_L1 -DNDEBUG
+ALL_FLAGS?=-O3 -flto -fPIC -std=c11 -march=native -Wall -Wextra -Wpedantic -Wshadow -DPARAM_THRESHOLD_NFPR_REF -DPARAM_GF256 -DPARAM_L1 -DNDEBUG -DSDITH_THRESHOLD
 ALL_FLAGS+=$(EXTRA_ALL_FLAGS)
 
 SYM_OBJ= rnd.o hash.o xof.o

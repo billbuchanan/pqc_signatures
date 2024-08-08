@@ -15,6 +15,11 @@ SK_IS_SEED = 1 # 0: sk = ssk; 1: sk = esk
 CRYPTO_ALGNAME = \"SNOVA_$(SNOVA_V)_$(SNOVA_O)_$(SNOVA_L)\"
 SNOVA_PARAMS = -D v_SNOVA=$(SNOVA_V) -D o_SNOVA=$(SNOVA_O) -D l_SNOVA=$(SNOVA_L) -D sk_is_seed=$(SK_IS_SEED) -D CRYPTO_ALGNAME=$(CRYPTO_ALGNAME)
 
+# Get the variation based on the parent directory of the makefile location
+PARENT_DIR := $(notdir $(patsubst %/,%,$(CURDIR)))
+DSNOVA_ALGNAME=\"$(PARENT_DIR)\"
+CFLAGS += -DSNOVA_ALGNAME=$(DSNOVA_ALGNAME)
+
 clean:
 	rm -f ./build/*.o *.a 
 	rm -f pqcsign pqcsign.o

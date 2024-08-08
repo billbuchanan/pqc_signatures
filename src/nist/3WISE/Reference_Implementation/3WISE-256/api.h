@@ -22,7 +22,7 @@ You are solely responsible for determining the appropriateness of using and dist
 #define CRYPTO_BYTES N
 
 // Change the algorithm name
-#define CRYPTO_ALGNAME "WISE"
+#define CRYPTO_ALGNAME "3WISE-256"
 
 int
 crypto_sign_keypair(unsigned char *pk, unsigned char *sk);

@@ -7,7 +7,7 @@
 
 - [X] Create basic setup script and makefiles to compile various algorithm source code that can later be used within performance measuring scripts
 
-- [ ] Resolve issues with the remaining algorithms which have been marked for team debugging
+- [X] Resolve issues with the remaining algorithms which have been marked for team debugging
 
 - [ ] Implement automated compiling and benchmarking for the signature schemes selected for standardisation in the third round of the main NIST competition to compare round 1 signatures against
 

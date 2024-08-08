@@ -313,10 +313,22 @@ function cycles_test() {
         $bin_dir/MiRitH/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # MQOM variation testing
+    for variation in "${mqom_variations[@]}"; do
+        echo -e "\nRunning MQOM test for $variation"
+        $bin_dir/MQOM/pqcsign_$variation >> $results_dir/$output_file
+    done
+
     # PERK variation testing
     for variation in "${perk_variations[@]}"; do
         echo -e "\nRunning PERK test for $variation"
         $bin_dir/PERK/pqcsign_$variation >> $results_dir/$output_file
+    done
+
+    # Preon variation testing
+    for variation in "${preon_variations[@]}"; do
+        echo -e "\nRunning Preon test for $variation"
+        $bin_dir/Preon/pqcsign_$variation >> $results_dir/$output_file
     done
 
     # PROV variation testing
@@ -350,6 +362,12 @@ function cycles_test() {
         $bin_dir/SDitH/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # SDitH-Threshold variation testing
+    for variation in "${sdith_threshold_variations[@]}"; do
+        echo -e "\nRunning SDitH Threshold test for $variation"
+        $bin_dir/SDitH/pqcsign_$variation >> $results_dir/$output_file
+    done
+
     # SNOVA variation testing if included is true
     if [ $snova_included -eq 1 ]; then
 
@@ -374,6 +392,12 @@ function cycles_test() {
         $bin_dir/SQIsign/pqcsign_$variation >> $results_dir/$output_file
     done
 
+    # SQURRIELS variation testing
+    for variation in "${squirrels_variations[@]}"; do
+        echo -e "\nRunning SQUIRRELS test for $variation"
+        $bin_dir/SQUIRRELS/pqcsign_$variation >> $results_dir/$output_file
+    done
+
     # TUOV variation testing
     for variation in "${tuov_variations[@]}"; do
         echo -e "\nRunning TUOV test for $variation"
@@ -392,26 +416,10 @@ function cycles_test() {
         $bin_dir/VOX/pqcsign_$variation >> $results_dir/$output_file
     done
 
-    # Run testing for Wave algorithm
+    # Wave variation testing
     for variation in "${wave_variations[@]}"; do
-
-        # Set unlimited stack limit if variation is Wave1644, this is a temporary fix
-        if [ "$variation" == "Wave1644" ]; then
-            
-            # Get the systems default stack limit and temporarily set it to unlimited
-            stack_limit=$(ulimit -s)
-            ulimit -s unlimited
-
-            # Run the Wave variation benchmark
-            $bin_dir/Wave/pqcsign_$variation >> $results_dir/$output_file
-
-            # Reset the stack limit to the systems default
-            ulimit -s $stack_limit
-
-        else
-            $bin_dir/Wave/pqcsign_$variation >> $results_dir/$output_file
-        fi
-    
+        echo -e "\nRunning Wave test for $variation"
+        $bin_dir/Wave/pqcsign_$variation >> $results_dir/$output_file
     done
 
     # Xifrat1_Sign variation testing

@@ -37,7 +37,7 @@ protection within the United States.
 #define CRYPTO_PUBLICKEYBYTES (((N - K) * K + 4) / 5)
 #define CRYPTO_BYTES (1170 + SALT_SIZE)
 
-#define CRYPTO_ALGNAME "WAVE-1217"
+#define CRYPTO_ALGNAME "WAVE-1249"
 
 int crypto_sign_keypair(unsigned char *pk, unsigned char *sk);
 

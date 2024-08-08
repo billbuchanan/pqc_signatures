@@ -864,6 +864,32 @@ function variations_setup() {
     done
 
     #__________________________________________________________________________
+    # Set the source and destination directories for the MQOM algorithm
+    mqom_src_dir="$nist_src_dir/MQOM/Reference_Implementation"
+    mqom_dst_dir="$bin_dir/MQOM"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${mqom_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$mqom_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "MQOM" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$mqom_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "MQOM" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
     # Set the source and destination directories for the PERK algorithm
     perk_src_dir=$nist_src_dir/PERK/Reference_Implementation
     perk_dst_dir=$bin_dir/PERK
@@ -886,6 +912,32 @@ function variations_setup() {
 
         # Restore the original source code files
         "$scripts_dir/copy_modified_src_files.sh" "restore" "PERK" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the PREON algorithm
+    preon_src_dir="$nist_src_dir/Preon/Reference_Implementation"
+    preon_dst_dir="$bin_dir/Preon"
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${preon_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$preon_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "Preon" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make  -j $(nproc)
+        mv "$variation_dir/pqcsign" "$preon_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "Preon" "$variation_dir" "$variation" "$root_dir"
 
     done
 
@@ -1035,6 +1087,27 @@ function variations_setup() {
 
     done
 
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${sdith_threshold_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$sdith_threshold_src_dir/$variation"
+        cd $variation_dir
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SDitH" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile and move pqcsign binary to relevant bin directory
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/pqcsign" "$sdith_dst_dir/pqcsign_$variation"
+        make clean >> /dev/null
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SDitH" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
     #__________________________________________________________________________
     # Set the source and destination directories for the SNOVA algorithm
     snova_src_dir=$nist_src_dir/SNOVA/Reference_Implementation
@@ -1046,6 +1119,13 @@ function variations_setup() {
         # Set the variation directory path and change to it
         variation_dir="$snova_src_dir/$variation"
         cd $variation_dir
+
+        # Ensure previous build dir is removed and create a new one
+        if [ -d "$variation_dir/build" ]; then
+            rm -rf "$variation_dir/build" && mkdir -p "$variation_dir/build"
+        else
+            mkdir -p "$variation_dir/build"
+        fi
 
         # Copy over modified files to the current variation directory
         "$scripts_dir/copy_modified_src_files.sh" "copy" "SNOVA" "$variation_dir" "$variation" "$root_dir"
@@ -1059,6 +1139,11 @@ function variations_setup() {
 
         # Restore the original source code files
         "$scripts_dir/copy_modified_src_files.sh" "restore" "SNOVA" "$variation_dir" "$variation" "$root_dir"
+
+        # Remove build dir after compilation if still present
+        if [ -d "$variation_dir/build" ]; then
+            rm -rf "$variation_dir/build"
+        fi
 
     done
 
@@ -1116,6 +1201,95 @@ function variations_setup() {
 
     # Restore the original source code files
     "$scripts_dir/copy_modified_src_files.sh" "restore" "SQIsign" "$sqi_src_dir" "all" "$root_dir"
+
+    #__________________________________________________________________________
+    # Set the source and destination directories for the SQUIRRELS algorithm
+    squirrels_src_dir="$nist_src_dir/SQUIRRELS/Reference_Implementation"
+    squirrels_lib_dir="$nist_src_dir/SQUIRRELS/lib"
+    orgin_lib_dir_backup="$root_dir/main_default_src_backup/SQUIRRELS"
+    squirrels_dst_dir="$bin_dir/SQUIRRELS"
+
+    # Check if original lib directory is present and make a copy of it
+    if [ ! -f "$squirrels_lib_dir/modded-lib.flag" ]; then
+
+        # Remove the current lib backup directory if it exists as the one in squirrels src is the default
+        if [ -d "$orgin_lib_dir_backup/lib" ]; then
+            rm -rf "$orgin_lib_dir_backup/lib"
+            cp -r "$squirrels_lib_dir" "$orgin_lib_dir_backup/lib"
+            touch "$squirrels_lib_dir/modded-lib.flag"
+
+        else
+            cp -r "$squirrels_lib_dir" "$orgin_lib_dir_backup/lib"
+            touch "$squirrels_lib_dir/modded-lib.flag"
+
+        fi
+    
+    else
+
+        # Check if original lib directory backup is present and restore from that
+        if [ -d "$orgin_lib_dir_backup/lib" ]; then
+            rm -rf "$squirrels_lib_dir"
+            cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+            touch "$squirrels_lib_dir/modded-lib.flag"
+
+        else
+           echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
+           echo -e "please manually restore the src/nist/SQUIRRELS/lib directory to avoid committing the built lib files\n" >> "$root_dir/last_setup_error.log"
+        fi
+    
+    fi
+
+    # Loop through the different variations and compile the pqcsign binary
+    for variation in "${squirrels_variations[@]}"; do
+
+        # Set the variation directory path and change to it
+        variation_dir="$squirrels_src_dir/$variation"
+        cd $variation_dir
+
+        # Ensure that there is no build directory present from previous runs
+        if [ -d "build" ]; then
+            rm -rf build
+        fi
+
+        # Copy over modified files to the current variation directory
+        "$scripts_dir/copy_modified_src_files.sh" "copy" "SQUIRRELS" "$variation_dir" "$variation" "$root_dir"
+
+        # Compile the pqcsign binary for the current variation
+        make clean >> /dev/null
+        make
+        mv "$variation_dir/build/pqcsign" "$squirrels_dst_dir/pqcsign_$variation"
+
+        # Copy over the required shared libraries to the bin directory only once
+        if [ ! -d "$squirrels_dst_dir/lib" ]; then
+            mkdir -p "$squirrels_dst_dir/lib"
+            cp -R "$squirrels_lib_dir/build/mpfr/lib" "$squirrels_dst_dir/lib/mpfr"
+            cp -R "$squirrels_lib_dir/build/gmp/lib" "$squirrels_dst_dir/lib/gmp"
+            cp -R "$squirrels_lib_dir/build/flint/lib" "$squirrels_dst_dir/lib/flint"
+            cp -R "$squirrels_lib_dir/build/fplll/lib" "$squirrels_dst_dir/lib/fplll"
+        fi
+
+        # Set rpath to include all relevant subdirectories in ./lib
+        patchelf --set-rpath '$ORIGIN/lib/mpfr:$ORIGIN/lib/gmp:$ORIGIN/lib/flint:$ORIGIN/lib/fplll' "$squirrels_dst_dir/pqcsign_$variation"
+
+        # Clean up and remove build directory
+        make clean >> /dev/null
+        rm -rf "$variation_dir/build"
+
+        # Restore the original source code files
+        "$scripts_dir/copy_modified_src_files.sh" "restore" "SQUIRRELS" "$variation_dir" "$variation" "$root_dir"
+
+    done
+
+    # Restore the original lib directory
+    if [ -d "$orgin_lib_dir_backup/lib" ]; then
+        rm -rf "$squirrels_lib_dir"
+        cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+
+    else
+        echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
+        echo -e "please manually restore the src/nist/SQUIRRELS/lib directory to avoid committing the built lib files\n" >> "$root_dir/last_setup_error.log"
+
+    fi
 
     #__________________________________________________________________________
     # Set the source and destination directories for the TUOV algorithm
