@@ -19,3 +19,5 @@ go run main.go
 ## Future Enhancements
 - JSON conversion and formatting
 - HTML+JS dashboard
+
+![alt text](image.png)
