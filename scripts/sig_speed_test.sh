@@ -346,8 +346,7 @@ function cycles_test() {
     # Raccoon variation testing
     for variation in "${raccoon_variations[@]}"; do
         echo -e "\nRunning raccoon test for $variation"
-        variation_lower="${variation,,}"
-        $bin_dir/Raccoon/pqcsign_$variation_lower >> $results_dir/$output_file
+        $bin_dir/Raccoon/pqcsign_$variation >> $results_dir/$output_file
     done
 
     # RYDE variation testing

@@ -226,7 +226,7 @@ function environment_setup() {
 
     # Call the array utility script to get the algorithm variation arrays
     array_util_call
-
+    
 }
 
 #---------------------------------------------------------------------------------------------------

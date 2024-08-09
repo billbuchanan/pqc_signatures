@@ -1020,9 +1020,7 @@ function variations_setup() {
         # Compile and move pqcsign binary to relevant bin directory
         make clean >> /dev/null
         make -j $(nproc)
-        # :TODO Not a good idea, lowercase only used here. Main script doesn't work
-        variation_lower="${variation,,}"
-        cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation_lower
+        cp $variation_dir/pqcsign $raccoon_dst_dir/pqcsign_$variation
         make clean >> /dev/null
 
         # Restore the original source code files

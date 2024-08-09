@@ -1,7 +1,7 @@
 #modified-flag
 # Compiler settings
 CC      := gcc
-CFLAGS  := -Iinc -Wall -Wextra -Ofast -march=native -fstack-usage
+CFLAGS  := -Iinc -Wall -Wextra -Ofast -march=native -fstack-usage -DRACCOON
 LDLIBS  := -lcrypto
 
 # Define binaries

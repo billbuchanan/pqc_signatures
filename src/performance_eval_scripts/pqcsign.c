@@ -15,6 +15,7 @@ The script also makes use of preprocessor directives to determine what testing f
 #include <time.h>
 #include <stdint.h>
 #include <x86intrin.h>
+#include <ctype.h>
 
 //Determine what OS is being used to determine which include lib is needed for stack resizing
 #if __unix
@@ -120,6 +121,16 @@ char *showhex(uint8_t a[], int size) {
 }
 
 //------------------------------------------------------------------------------
+void lower(char *string) {
+    // Function to convert a string to lowercase
+
+    for (int i = 0; string[i]; i++) {
+        string[i] = tolower(string[i]);
+    }
+
+}
+
+//------------------------------------------------------------------------------
 void set_macros(char *alg_name) {
     // Function to set the environment macros for the signature scheme being tested as API usage varies between schemes
 
@@ -171,6 +182,10 @@ void set_macros(char *alg_name) {
 
     #elif defined(PERK_ALGNAME)
         strcpy(alg_name, PERK_ALGNAME);
+
+    #elif defined (RACCOON)
+        strcpy(alg_name, CRYPTO_ALGNAME);
+        lower(alg_name);
 
     #elif defined (SNOVA_ALGNAME)
         strcpy(alg_name, SNOVA_ALGNAME);
