@@ -47,6 +47,7 @@ function ensure_default_src_files() {
                 cp "$main_backup" "$temp_backup"
 
             else
+
                 # Output not able to automatically restore default and that user must manually restore later
                 echo "Unable to automatically restore default source files for $current_alg $current_variation" >> "$root_dir/last_setup_error.log"
                 echo "The testing binaries should still compile, but the default source files must be manually restored if needed" >> "$root_dir/last_setup_error.log"
@@ -78,6 +79,45 @@ function copy_modified_src_files() {
     # Call relevant functionality for each algorithm, copying or restoring modified source files
     case $current_alg in
 
+        "AIMer")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
+            make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
+            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            api_default_filepath="$dst_variation_dir/api.h"
+            api_main_backup_file="$main_alg_backup/api_$current_variation.h"
+            api_temp_backup_file="$dst_variation_dir/temp_api_copy.h"
+
+            # Copy or restore modified source files for AIMer algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir" "$api_default_filepath" "$api_main_backup_file" "$api_temp_backup_file"
+
+                # Make temp copy of original makefile and api.h file and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+                cp "$api_default_filepath" "$api_main_backup_file"
+                cp "$api_default_filepath" "$api_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
+                cp "$modified_files_path/api_$current_variation.h" "$api_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+                mv "$api_temp_backup_file" "$api_default_filepath"
+
+            fi
+            ;;
+
         "Biscuit")
 
             # Set the filepaths for the files being worked with
@@ -98,8 +138,8 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/common.mk_$current_variation" "$make_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
 
-
             elif [ "$util_flag" == "restore" ]; then
+
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
                 mv "$make_temp_backup_file" "$make_default_filepath"
@@ -110,10 +150,10 @@ function copy_modified_src_files() {
         "CROSS")
 
             # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
             api_default_filepath="$dst_variation_dir/include/api.h"
             api_main_backup_file="$main_alg_backup/api_cross.h"
             api_temp_backup_file="$dst_variation_dir/include/temp_api_copy.h"
-            make_default_filepath="$dst_variation_dir/Makefile"
 
             # Copy or restore modified source files for CROSS algorithm
             if [ "$util_flag" == "copy" ]; then
@@ -130,8 +170,8 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/api_cross.h" "$api_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/lib/pqcsign.c"
 
-
             elif [ "$util_flag" == "restore" ]; then
+
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/lib/pqcsign.c"
                 mv "$api_temp_backup_file" "$api_default_filepath"
@@ -139,45 +179,6 @@ function copy_modified_src_files() {
             fi
             ;;
 
-        "HuFu")
-
-            # Set the filepaths for the files being worked with
-            api_default_filepath="$dst_variation_dir/api.h"
-            api_main_backup_file="$main_alg_backup/api_$current_variation.h"
-            api_temp_backup_file="$dst_variation_dir/temp_api_copy.h"
-
-            make_default_filepath="$dst_variation_dir/Makefile"
-            make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
-            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
-
-            # Copy or restore modified source files for HuFu algorithm
-            if [ "$util_flag" == "copy" ]; then
-
-                # Ensure the default source code is present for makefile
-                ensure_default_src_files "$dst_variation_dir" "$api_default_filepath" "$api_main_backup_file" "$api_temp_backup_file"
-                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
-
-                # Make temp copy of original makefile and api.h and copy over modified makefile
-                cp "$api_default_filepath" "$api_main_backup_file"
-                cp "$api_default_filepath" "$api_temp_backup_file" # temp stored in working_dir
-                cp "$make_default_filepath" "$make_main_backup_file"
-                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
-
-                # Copy over modified files to source code directories
-                cp "$modified_files_path/api_$current_variation.h" "$api_default_filepath"
-                cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
-                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"   
-
-
-            elif [ "$util_flag" == "restore" ]; then
-                # Restore default source files
-                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
-                mv "$api_temp_backup_file" "$api_default_filepath"
-                mv "$make_temp_backup_file" "$make_default_filepath"
-
-            fi
-            ;;
-        
         "SQIsign")
 
             # Set the filepaths for the files being worked with
@@ -199,8 +200,155 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/CMakeLists_sqi.txt" "$make_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/apps/pqcsign.c"
 
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/apps/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+
+        "HAETAE")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/CMakeLists.txt"
+            make_main_backup_file="$main_alg_backup/CMakeLists_$current_alg.txt"
+            make_temp_backup_file="$dst_variation_dir/temp_cmakelists_copy"
+
+            api_default_filepath="$dst_variation_dir/kat/api.h"
+            api_main_backup_file="$main_alg_backup/api_$current_alg.h"
+            api_temp_backup_file="$dst_variation_dir/kat/temp_api_copy.h"
+
+            api_src_default_filepath="$dst_variation_dir/kat/api.c"
+
+            # Copy or restore modified source files for HAETAE algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir/kat" "$api_default_filepath" "$api_main_backup_file" "$api_temp_backup_file"
+                
+                if [ -f "$api_src_default_filepath" ]; then
+                    rm -f "$api_src_default_filepath"
+                fi
+
+                # Make temp copy of original makefile and api.h file and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+                cp "$api_default_filepath" "$api_main_backup_file"
+                cp "$api_default_filepath" "$api_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/CMakeLists_$current_alg.txt" "$make_default_filepath"
+                cp "$modified_files_path/api_HAETAE.h" "$api_default_filepath"
+                cp "$modified_files_path/api_HAETAE.c" "$api_src_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/src/pqcsign.c"
 
             elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/src/pqcsign.c" && rm -f "$api_src_default_filepath"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+                mv "$api_temp_backup_file" "$api_default_filepath"
+
+            fi
+            ;;
+
+        "HuFu")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
+            make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
+            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            api_default_filepath="$dst_variation_dir/api.h"
+            api_main_backup_file="$main_alg_backup/api_$current_variation.h"
+            api_temp_backup_file="$dst_variation_dir/temp_api_copy.h"
+
+            # Copy or restore modified source files for HuFu algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$api_default_filepath" "$api_main_backup_file" "$api_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+
+                # Make temp copy of original makefile and api.h and copy over modified makefile
+                cp "$api_default_filepath" "$api_main_backup_file"
+                cp "$api_default_filepath" "$api_temp_backup_file" # temp stored in working_dir
+                cp "$make_default_filepath" "$make_main_backup_file"
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/api_$current_variation.h" "$api_default_filepath"
+                cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"   
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$api_temp_backup_file" "$api_default_filepath"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+
+        "LESS")
+
+            # NOTE - LESS does not have a default CMakelists.txt file, so a variation of the one included in the additional implementation is used
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/CMakeLists.txt"
+
+            # Copy or restore modified source files for LESS algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Remove any CMakelists.txt file if it exists as there is no default one
+                if [ -f "$make_default_filepath" ]; then
+                    rm -f "$make_default_filepath"
+                fi
+
+                # Remove pqcsign source file if it exists
+                if [ -f "$dst_variation_dir/lib/pqcsign.c" ]; then
+                    rm -f "$dst_variation_dir/lib/pqcsign.c"
+                fi
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/CMakeLists_LESS.txt" "$make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/lib/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/lib/pqcsign.c"
+
+            fi
+            ;;
+
+        "MAYO")
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/apps/CMakeLists.txt"
+            make_main_backup_file="$main_alg_backup/CMakeLists_$current_variation.txt"
+            make_temp_backup_file="$dst_variation_dir/apps/temp_cmakelists_copy"
+
+            # Copy or restore modified source files for SQIsign algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir/apps" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+                
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/CMakeLists_MAYO.txt" "$make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/apps/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/apps/pqcsign.c"
                 mv "$make_temp_backup_file" "$make_default_filepath"
@@ -221,7 +369,6 @@ function copy_modified_src_files() {
                 # Ensure the default source code is present for makefile
                 ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
 
-
                 # Make temp copy of original makefile and copy over modified makefile
                 cp "$make_default_filepath" "$make_main_backup_file" 
                 cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
@@ -230,11 +377,52 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/src/pqcsign.c"
 
-
             elif [ "$util_flag" == "restore" ]; then
+
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/src/pqcsign.c"
                 mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+
+        "MiRitH")
+
+            # Set the filepaths for the files being worked with
+            main_make_default_filepath="$dst_variation_dir/Makefile"
+            nist_make_default_filepath="$dst_variation_dir/nist/Makefile"
+
+            main_make_main_backup_file="$main_alg_backup/Makefile_$current_variation"
+            nist_make_main_backup_file="$main_alg_backup/nist/Makefile_$current_variation"
+
+            main_make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+            nist_make_temp_backup_file="$dst_variation_dir/nist/temp_make_copy"
+
+            # Copy or restore modified source files for MiRitH algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$main_make_default_filepath" "$main_make_main_backup_file" "$main_make_temp_backup_file"
+                ensure_default_src_files "$dst_variation_dir/nist" "$nist_make_default_filepath" "$nist_make_main_backup_file" "$nist_make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$main_make_default_filepath" "$main_make_main_backup_file" 
+                cp "$main_make_default_filepath" "$main_make_temp_backup_file" # temp stored in working_dir
+
+                cp "$nist_make_default_filepath" "$nist_make_main_backup_file" 
+                cp "$nist_make_default_filepath" "$nist_make_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_main_MiRitH" "$main_make_default_filepath"
+                cp "$modified_files_path/Makefile_nist_MiRitH" "$nist_make_default_filepath"
+                cp "$pqcsign_src_file" "$dst_variation_dir/nist/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$main_make_default_filepath" && rm -f "$nist_make_default_filepath" && rm -f "$dst_variation_dir/nist/pqcsign.c"
+                mv "$main_make_temp_backup_file" "$main_make_default_filepath"
+                mv "$nist_make_temp_backup_file" "$nist_make_default_filepath"
 
             fi
             ;;
@@ -261,8 +449,8 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/src/pqcsign.c"
 
-
             elif [ "$util_flag" == "restore" ]; then
+
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/src/pqcsign.c"
                 mv "$make_temp_backup_file" "$make_default_filepath"
@@ -293,102 +481,9 @@ function copy_modified_src_files() {
 
 
             elif [ "$util_flag" == "restore" ]; then
+
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/src/pqcsign.c"
-                mv "$make_temp_backup_file" "$make_default_filepath"
-
-            fi
-            ;;
-
-        "UOV")
-            # NOTE - variation dir is just reference source code directory as modded source files are stored there, not in the variation directories
-
-            # Set the filepaths for the files being worked with
-            make_default_filepath="$dst_variation_dir/Makefile"
-            make_main_backup_file="$main_alg_backup/Makefile_uov"
-            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
-
-            # Copy or restore modified source files for UOV algorithm
-            if [ "$util_flag" == "copy" ]; then
-
-                # Ensure the default source code is present for makefile
-                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
-
-                # Make temp copy of original makefile and copy over modified makefile
-                cp "$make_default_filepath" "$make_main_backup_file" 
-                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
-
-                # Copy over modified files to source code directories
-                cp "$modified_files_path/Makefile_uov" "$dst_variation_dir/Makefile"
-                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
-
-
-            elif [ "$util_flag" == "restore" ]; then
-
-                # Restore default source files
-                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
-                mv "$make_temp_backup_file" "$make_default_filepath"
-
-            fi
-            ;;
-
-        "MAYO")
-
-            # Set the filepaths for the files being worked with
-            make_default_filepath="$dst_variation_dir/apps/CMakeLists.txt"
-            make_main_backup_file="$main_alg_backup/CMakeLists_$current_variation.txt"
-            make_temp_backup_file="$dst_variation_dir/apps/temp_cmakelists_copy"
-
-            # Copy or restore modified source files for SQIsign algorithm
-            if [ "$util_flag" == "copy" ]; then
-
-                # Ensure the default source code is present for makefile
-                ensure_default_src_files "$dst_variation_dir/apps" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
-
-                # Make temp copy of original makefile and copy over modified makefile
-                cp "$make_default_filepath" "$make_main_backup_file" 
-                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
-                
-                # Copy over modified files to source code directories
-                cp "$modified_files_path/CMakeLists_MAYO.txt" "$make_default_filepath"
-                cp "$pqcsign_src_file" "$dst_variation_dir/apps/pqcsign.c"
-
-
-            elif [ "$util_flag" == "restore" ]; then
-                # Restore default source files
-                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/apps/pqcsign.c"
-                mv "$make_temp_backup_file" "$make_default_filepath"
-
-            fi
-            ;;
-
-        "VOX")
-            # NOTE - variation dir is just reference source code directory as partitions are set at compile time by passed argument
-
-            # Set the filepaths for the files being worked with
-            make_default_filepath="$dst_variation_dir/Makefile"
-            make_main_backup_file="$main_alg_backup/Makefile_VOX"
-            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
-
-            # Copy or restore modified source files for VOX algorithm
-            if [ "$util_flag" == "copy" ]; then
-
-                # Ensure the default source code is present for makefile
-                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
-
-                # Make temp copy of original makefile and copy over modified makefile
-                cp "$make_default_filepath" "$make_main_backup_file" 
-                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
-
-                # Copy over modified files to source code directories
-                cp "$modified_files_path/Makefile_VOX" "$dst_variation_dir/Makefile"
-                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
-
-
-            elif [ "$util_flag" == "restore" ]; then
-
-                # Restore default source files
-                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
                 mv "$make_temp_backup_file" "$make_default_filepath"
 
             fi
@@ -417,11 +512,73 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/Makefile_TUOV" "$dst_variation_dir/Makefile"
                 cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
 
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+
+        "UOV")
+            # NOTE - variation dir is just reference source code directory as modded source files are stored there, not in the variation directories
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
+            make_main_backup_file="$main_alg_backup/Makefile_uov"
+            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            # Copy or restore modified source files for UOV algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_uov" "$dst_variation_dir/Makefile"
+                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
 
             elif [ "$util_flag" == "restore" ]; then
 
                 # Restore default source files
                 rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$make_temp_backup_file" "$make_default_filepath"
+
+            fi
+            ;;
+
+        "VOX")
+            # NOTE - variation dir is just reference source code directory as partitions are set at compile time by passed argument
+
+            # Set the filepaths for the files being worked with
+            make_default_filepath="$dst_variation_dir/Makefile"
+            make_main_backup_file="$main_alg_backup/Makefile_VOX"
+            make_temp_backup_file="$dst_variation_dir/temp_make_copy"
+
+            # Copy or restore modified source files for VOX algorithm
+            if [ "$util_flag" == "copy" ]; then
+
+                # Ensure the default source code is present for makefile
+                ensure_default_src_files "$dst_variation_dir" "$make_default_filepath" "$make_main_backup_file" "$make_temp_backup_file"
+
+                # Make temp copy of original makefile and copy over modified makefile
+                cp "$make_default_filepath" "$make_main_backup_file" 
+                cp "$make_default_filepath" "$make_temp_backup_file" # temp stored in working_dir
+
+                # Copy over modified files to source code directories
+                cp "$modified_files_path/Makefile_VOX" "$dst_variation_dir/Makefile"
+                cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
+
+            elif [ "$util_flag" == "restore" ]; then
+
+                # Restore default source files
+                rm -f "$make_default_filepath" && rm -f "$dst_variation_dir/pqcsign.c"
+                mv "$api_temp_backup_file" "$api_default_filepath"
                 mv "$make_temp_backup_file" "$make_default_filepath"
 
             fi
@@ -463,7 +620,6 @@ function copy_modified_src_files() {
                 cp "$modified_files_path/Makefile_$current_variation" "$make_default_filepath"
                 cp "$pqcsign_src_file" "$dst_variation_dir/pqcsign.c"
 
-
             elif [ "$util_flag" == "restore" ]; then
             
                 # Restore default source files
@@ -476,6 +632,7 @@ function copy_modified_src_files() {
             
             fi
             ;;
+            
     esac
 
 }

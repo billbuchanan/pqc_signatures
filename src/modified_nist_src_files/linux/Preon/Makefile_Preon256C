@@ -1,0 +1,25 @@
+#modified-flag
+CC = cc
+CFLAGS := ${CFLAGS} -DUSE_PREON256C -DAES256=1 -DUSE_PRNG -O0 -DPREON
+LFLAGS := ${LFLAGS} -lm -lssl -lcrypto
+
+PQCGEN_KAT_SRCS = $(filter-out pqcsign.c, $(wildcard *.c))
+PQCSIGN_SRCS = $(filter-out PQCgenKAT_sign.c, $(wildcard *.c))
+PQCGEN_KAT_OBJS = $(patsubst %.c, %.o, $(PQCGEN_KAT_SRCS))
+PQCSIGN_OBJS = $(patsubst %.c, %.o, $(PQCSIGN_SRCS))
+
+all: PQCgenKAT_sign pqcsign
+
+PQCgenKAT_sign: $(PQCGEN_KAT_OBJS)
+	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+
+pqcsign: $(PQCSIGN_OBJS)
+	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+.PHONY: clean 
+
+clean:
+	rm -f *.o PQCgenKAT_sign pqcsign

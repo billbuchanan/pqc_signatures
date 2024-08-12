@@ -1,8 +1,27 @@
-# Round 1 Additional Signatures - Development Branch
+# Round 1 Additional Signatures - Development Branch <!-- omit from toc --> 
+
+- [Development Branch Details](#development-branch-details)
+  - [Description](#description)
+  - [Main Branch Documentation Details](#main-branch-documentation-details)
+  - [Current Task Checklist for Development Branch](#current-task-checklist-for-development-branch)
+  - [Documentation for Developers](#documentation-for-developers)
+- [Implementation Checklist](#implementation-checklist)
+  - [Implemented](#implemented)
+  - [Marked for Team Debugging](#marked-for-team-debugging)
+  - [Algorithm Team Debugging Implementation Stage Table](#algorithm-team-debugging-implementation-stage-table)
+  - [Info Table for Schemes Marked for Team Debugging that have been fixed](#info-table-for-schemes-marked-for-team-debugging-that-have-been-fixed)
+- [Basic Setup Instructions](#basic-setup-instructions)
+- [Information for Developers](#information-for-developers)
+  - [Development Setup Script Usage](#development-setup-script-usage)
+  - [Script Descriptions](#script-descriptions)
+  - [Main Scripts](#main-scripts)
+  - [Utility Scripts](#utility-scripts)
+  - [Development Scripts](#development-scripts)
+
 
 ## Development Branch Details
 
-### Description:
+### Description
 This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project. It aims to provide a implementation of the benchmarking schemes for Linux environments and eventually will incorporate Windows environments similar to the setup in the main branch of this repository.
 
 The development branch may not always be in a fully functioning state and documentation may still need updated. The checkboxes below indicates whether the current development version is in a basic/fully functioning state and if the documentation is accurate for its current functionality. Regardless please keep this in mind and use the main branch if possible, thank you.
@@ -19,76 +38,94 @@ All documentation contained within the main branch is located within the `docs` 
 [Main-Branch-README](docs/MAIN_BRANCH_README.md)
 
 
-### Current Task Checklist for Development Branch:
+### Current Task Checklist for Development Branch
 
 A list of the current task checklist can be found here:
 
 [Dev-Branch-Checklist](./dev_branch_tasklist.md)
 
-
 ### Documentation for Developers
 This README also contains documentation on the functionality of the various scripts used within this version of the project for any developer working on this branch of the repository found here - [Developer-Docs](#information-for-developers). This section covers details of the each of the automated scripts included within the project alongside usage instructions for the temporary `dev_setup.sh` script used for testing the functionality of the remaining algorithms still to be implemented.
-
 
 ## Implementation Checklist
 The following is a set of checklists which detail the algorithm currently implemented within the automated compiling and benchmarking bash scripts. A copy of this list can also be referred to in the `completed.txt` file found within the `test_data/` directory.
 
 ### Implemented
 - 3WISE
+- AIMer
 - ALTEQ
 - Ascon_Sign
 - Biscuit
 - CROSS
 - DME_Sign †
+- EagleSign
 - EHTv3v4
 - eMLE_Sig_2.0
 - FAEST
 - FuLeeca
+- HAETAE
 - HAWK
 - HPPC
 - HuFu ††
+- KAZ_SIGN
+- LESS
 - MAYO
 - MEDS
 - MIRA
+- MiRitH
+- MQOM
 - PERK †††
+- Preon
 - Enhanced_pqsigRM
 - PROV
 - QR_UOV
 - Raccoon
 - RYDE
-- SDitH - Hypercube Variations ††††
-- SNOVA †††††
+- SDitH
+- SNOVA †††
 - SPHINCS_alpha
 - SQIsign
+- SQUIRRELS
 - TUOV
 - UOV
 - VOX
+- Wave
 - Xifrat1_Sign_I
 
 > † IMPORTANT Dev branch Notice: All variations for DME_SIGN function correctly apart from dme-3rnds-8vars-64bits-sign. This is due to the reference code for that variation not including all the correct source code files. This may of been intentional on the authors part, as the optimised implementation contains the correct source code files. This will be reviewed further, as all other schemes implemented use the reference code submitted to NIST, so deviating for this specific algorithm/variation may be problematic for the performance metrics gathered. For the moment, the automated compiling and benchmarking scripts will skip this variation until a decision has been made on how to proceed going forward.
+>
+> It has been included within the implemented section due to the majorty of the variations functioning, but the scheme as also been marked for team debugging to resolve the issues with the remaining variations.
 
 > †† IMPORTANT Dev branch Notice: Benchmarking HuFU can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the HuFU algorithm and its respective variations will be presented when executing the automated benchmarking script.  
 
-> ††† IMPORTANT Dev branch Notice: The PERK algorithm variations is currently partially functional apart from perk-256-short-3 and perk-256-short-5. This is due to a memory issue causing a segmentation fault within the default reference code submitted for those variations. This will be reviewed further but for the time being the rest of the PERK variations function correctly.
+> ††† IMPORTANT Dev branch Notice: Benchmarking SNOVA can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the SNOVA algorithm and its respective variations will be presented when executing the automated benchmarking script.  
 
-> †††† IMPORTANT Dev branch Notice: The SDitH algorithm variations is currently partially functional apart from the threshold variants. This is due to issues with the code that performs the signature verification for these variations. This will be reviewed further but for the time being the rest of the SDiTH-Hypercube variations function correctly. 
 
-> ††††† IMPORTANT Dev branch Notice: Benchmarking SNOVA can take a considerable amount of time, even when utilising a high performance machine. The option to skip testing the SNOVA algorithm and its respective variations will be presented when executing the automated benchmarking script.  
+### Marked for Team Debugging
+- DME_Sign
 
-### Still to be Implemented
-- AIMer
-- EagleSign
-- HAETAE
-- KAZ_SIGN
-- LESS
-- MiRitH
-- MQOM
-- Preon
-- SDitH - Threshold Variations
-- SQUIRRELS
-- Wave
 
-### Currently being Implemented 
+### Algorithm Team Debugging Implementation Stage Table
+| **Algorithm** | **Default Source Code in Modified Dir** | **Modifications Being Made to Default Files** | **Algorithm Able to Compile** | **PQCSign Binary Functioning** | **Notes**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|---------------|-----------------------------------------|-----------------------------------------------|-------------------------------|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| DME_SIGN      | X                                       | X                                             | X                             |                                | All variations for DME_SIGN function correctly apart from dme-3rnds-8vars-64bits-sign. This is due to the reference code for that variation not including all the correct source code files. This may of been intentional on the authors part, as the optimised implementation contains the correct source code files. This will be reviewed further, as all other schemes implemented use the reference code submitted to NIST, so deviating for this specific algorithm/variation may be problematic for the performance metrics gathered. For the moment, the automated compiling and benchmarking scripts will skip this variation until a decision has been made on how to proceed going forward. |
+
+
+### Info Table for Schemes Marked for Team Debugging that have been fixed
+| **Algorithm** | **Default Source Code in Modified Dir** | **Modifications Being Made to Default Files** | **Algorithm Able to Compile** | **PQCSign Binary Functioning** | **Notes**                                                                                                                                                                                                                                                                                                      |
+|---------------|-----------------------------------------|-----------------------------------------------|-------------------------------|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| AIMer         | X                                       | X                                             | X                             | X                              | NIST API files in default reference code did not have the correct signature size for parameter sets for each security level apart from parameter set 1.                                                                                                                                                        |
+| EagleSign     | X                                       | X                                             | X                             | X                              | The NIST API files differed enough that special cases needed to be added for parameter definitions and AES256ctr source code files were not present and had to be included to compile correctly                                                                                                                |
+| HAETAE        | X                                       | X                                             | X                             | X                              | The NIST API differed too greatly from the other schemes, a refactored version of the API file and creation of API.c file was needed to compile correctly. Also the shared libraries needed to be moved with pqcsign binaries to function correctly.                                                           |
+| KAZ_SIGN      | X                                       | X                                             | X                             | X                              | A separate function within pqcsign had to be created for the scheme due the significant difference in API usage.                                                                                                                                                                                               |
+| LESS          | X                                       | X                                             | X                             | X                              | The reference implementation of the LESS scheme did not come with a executable binary and a CMakeLists.txt file. A CMakeLists file had to be created based of the one included with the additional implementations code and modified to work with the pqcsign binary.                                          |
+| MiTitH        | X                                       | X                                             | X                             | X                              | A separate function within pqcsign had to be created that closely followed the functionality seen in the test_mirith.c file in the default source code due to the significant difference in API usage.                                                                                                         |
+| MQOM          | X                                       | X                                             | X                             | X                              | A separate function within pqcsign had to be created that closely followed the functionality seen in the benchmark.c file in the default source code due to the significant difference in API usage.                                                                                                           |
+| PERK          | X                                       | X                                             | X                             | X                              | The variations perk-256-short-3 and perk-256-short-5 required a larger stack size to function correctly, so exception handling to increase the stack size has been added to pqcsign. This will have to be resolved going forward, but it will work for now.                                                    |
+| Preon         | X                                       | X                                             | X                             | X                              | A separate function within pqcsign had to be created that closely followed the functionality seen in the PQCGenKAT.c file in the default source code due to the significant difference in API usage and that a segmentation fault would occur when using the standard benchmarking function.                   |
+| SQUIRRELS     | X                                       | X                                             | X                             | X                              | A separate function within pqcsign had to be created that closely followed the functionality seen in the benchmarks.c and PQCGenKAT.c files in the default source code due to the significant difference in API usage and that a segmentation fault would occur when using the standard benchmarking function. |
+| Wave          | X                                       | X                                             | X                             | X                              | The variation Wave1644 required a larger stack size to function correctly, so exception handling to increase the stack size has been added to pqcsign. This will have to be resolved going forward, but it will work for now.                                                                                  |
+
 
 ## Basic Setup Instructions
 To setup the testing environment and perform basic benchmarking of the algorithms that have been mentioned in the implemented list above, please conduct the following steps.
