@@ -10,8 +10,8 @@ This script benchmarks Post-Quantum Cryptography (PQC) algorithms, written in Go
 ![Solution Diagram](image.png)
 
 ## How to Install and Use
-
-> **IMPORTANT:** Run `./setup` in the root directory before executing any other scripts. All scripts should be run from the `scripts/` directory.
+> [!IMPORTANT]
+>  Run `./setup` in the root directory before executing any other scripts. All scripts should be run from the `scripts/` directory.
 
 1. **Install Go:** Ensure that Go is installed. You can download it from the official [Go website](https://go.dev/dl/) (version 1.22.5).
 2. **Set Up Your Workspace:** It's common to set your **GOPATH**.
