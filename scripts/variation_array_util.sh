@@ -209,7 +209,7 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         ASCON_SIGN_VARIATIONS+=("$line")
-    done < "$alg_variations_dir/Ascon_sign_variations.txt"
+    done < "$alg_variations_dir/Ascon_Sign_variations.txt"
 
     while IFS= read -r line; do
         BISCUIT_VARIATIONS+=("$line")
