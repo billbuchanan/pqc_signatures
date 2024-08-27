@@ -1,6 +1,0 @@
-sdith_hypercube_cat1_gf256
-sdith_hypercube_cat1_p251
-sdith_hypercube_cat3_gf256
-sdith_hypercube_cat3_p251
-sdith_hypercube_cat5_gf256
-sdith_hypercube_cat5_p251

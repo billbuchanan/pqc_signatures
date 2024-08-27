@@ -56,7 +56,7 @@ function array_util_call() {
     IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
     IFS=',' read -r -a raccoon_variations <<< "$RACCOON_VARIATIONS"
     IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
-    IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
+    IFS=',' read -r -a sdith_variations <<< "$SDITH_VARIATIONS"
     IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
     IFS=',' read -r -a sphincs_alpha_variations <<< "$SPHINCS_ALPHA_VARIATIONS"
     IFS=',' read -r -a sqi_variations <<< "$SQI_VARIATIONS"
@@ -1058,38 +1058,21 @@ function variations_setup() {
     # Set the source and destination directories for the SDitH algorithm
     # TODO: Here should be SDitH_hypercube instead of just SDitH. Main script doesn't work
     sdith_src_dir=$nist_src_dir/SDitH/Reference_Implementation
-    sdith_hybercube_src_dir="$sdith_src_dir/Hypercube_Variant"
+    sdith_hypercube_src_dir="$sdith_src_dir/Hypercube_Variant"
     sdith_threshold_src_dir="$sdith_src_dir/Threshold_Variant"
     sdith_dst_dir=$bin_dir/SDitH
 
-    # Setting up the Hypercube variants
-
     # Loop through the different variations and compile the pqcsign binary
-    for variation in "${sdith_hypercube_variations[@]}"; do
+    for variation in "${sdith_variations[@]}"; do
 
-        # Set the variation directory path and change to it
-        variation_dir="$sdith_hybercube_src_dir/$variation"
-        cd $variation_dir
+        # Determine if Hypercube or Threshold variant and set the variation directory path
+        if [[ "$variation" == *"hypercube"* ]]; then
+            variation_dir="$sdith_hypercube_src_dir/$variation"
+        else
+            variation_dir="$sdith_threshold_src_dir/$variation"
+        fi
 
-        # Copy over modified files to the current variation directory
-        "$scripts_dir/copy_modified_src_files.sh" "copy" "SDitH" "$variation_dir" "$variation" "$root_dir"
-
-        # Compile and move pqcsign binary to relevant bin directory
-        make clean >> /dev/null
-        make
-        mv "$variation_dir/pqcsign" "$sdith_dst_dir/pqcsign_$variation"
-        make clean >> /dev/null
-
-        # Restore the original source code files
-        "$scripts_dir/copy_modified_src_files.sh" "restore" "SDitH" "$variation_dir" "$variation" "$root_dir"
-
-    done
-
-    # Loop through the different variations and compile the pqcsign binary
-    for variation in "${sdith_threshold_variations[@]}"; do
-
-        # Set the variation directory path and change to it
-        variation_dir="$sdith_threshold_src_dir/$variation"
+        # Change to variation directory
         cd $variation_dir
 
         # Copy over modified files to the current variation directory
