@@ -62,7 +62,7 @@ function array_util_call() {
     IFS=',' read -r -a qr_uov_variations <<< "$QR_UOV_VARIATIONS"
     IFS=',' read -r -a raccoon_variations <<< "$RACCOON_VARIATIONS"
     IFS=',' read -r -a ryde_variations <<< "$RYDE_VARIATIONS"
-    IFS=',' read -r -a sdith_hypercube_variations <<< "$SDITH_HYPERCUBE_VARIATIONS"
+    IFS=',' read -r -a sdith_variations <<< "$SDITH_VARIATIONS"
     IFS=',' read -r -a snova_variations <<< "$SNOVA_VARIATIONS"
     IFS=',' read -r -a sphincs_alpha_variations <<< "$SPHINCS_ALPHA_VARIATIONS"
     IFS=',' read -r -a sqi_variations <<< "$SQI_VARIATIONS"

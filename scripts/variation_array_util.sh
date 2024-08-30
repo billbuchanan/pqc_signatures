@@ -103,11 +103,8 @@ function export_env_vars() {
     RYDE_VARIATIONS=$(IFS=,; echo "${RYDE_VARIATIONS[*]}")
     export RYDE_VARIATIONS
 
-    SDITH_HYPERCUBE_VARIATIONS=$(IFS=,; echo "${SDITH_HYPERCUBE_VARIATIONS[*]}")
-    export SDITH_HYPERCUBE_VARIATIONS
-
-    SDITH_THRESHOLD_VARIATIONS=$(IFS=,; echo "${SDITH_THRESHOLD_VARIATIONS[*]}")
-    export SDITH_THRESHOLD_VARIATIONS
+    SDITH_VARIATIONS=$(IFS=,; echo "${SDITH_VARIATIONS[*]}")
+    export SDITH_VARIATIONS
 
     SNOVA_VARIATIONS=$(IFS=,; echo "${SNOVA_VARIATIONS[*]}")
     export SNOVA_VARIATIONS
@@ -173,8 +170,7 @@ function clear_env_vars(){
     unset QR_UOV_VARIATIONS
     unset RACCOON_VARIATIONS
     unset RYDE_VARIATIONS
-    unset SDITH_HYPERCUBE_VARIATIONS
-    unset SDITH_THRESHOLD_VARIATIONS
+    unset SDITH_VARIATIONS
     unset SNOVA_VARIATIONS
     unset SPHINCS_ALPHA_VARIATIONS
     unset SQI_VARIATIONS
@@ -209,7 +205,7 @@ function create_alg_arrays() {
 
     while IFS= read -r line; do
         ASCON_SIGN_VARIATIONS+=("$line")
-    done < "$alg_variations_dir/Ascon_sign_variations.txt"
+    done < "$alg_variations_dir/Ascon_Sign_variations.txt"
 
     while IFS= read -r line; do
         BISCUIT_VARIATIONS+=("$line")
@@ -316,12 +312,8 @@ function create_alg_arrays() {
     done < "$alg_variations_dir/RYDE_variations.txt"
 
     while IFS= read -r line; do
-        SDITH_HYPERCUBE_VARIATIONS+=("$line")
-    done < "$alg_variations_dir/SDitH_hypercube_variations.txt"
-
-    while IFS= read -r line; do
-        SDITH_THRESHOLD_VARIATIONS+=("$line")
-    done < "$alg_variations_dir/SDitH_threshold_variations.txt"
+        SDITH_VARIATIONS+=("$line")
+    done < "$alg_variations_dir/SDitH_variations.txt"
 
     while IFS= read -r line; do
         SNOVA_VARIATIONS+=("$line")

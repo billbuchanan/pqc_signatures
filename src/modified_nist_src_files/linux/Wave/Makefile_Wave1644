@@ -33,6 +33,7 @@ clean:
 	-rm -rf $(OBJS) prng/prng.o prng/prng-nist.o NIST-kat/rng.o
 	-rm -rf pqcsign pqcsign.o
 	-rm -rf verify_test benchmark benchmark_speed benchmark_time
+	-rm -rf PQCgenKAT_sign
 
 veryclean: clean
 	-rm PQCgenKAT_sign verify_test benchmark benchmark_speed benchmark_time
