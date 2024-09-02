@@ -165,18 +165,17 @@
                     versionTitle.textContent = `${selectedAlgName} - ${key}`;
                     detailsDiv.appendChild(versionTitle);
 
-                    const keygenTime = document.createElement('p');
-                    keygenTime.innerHTML = `<strong>Keygen Time:</strong> ${algorithmDetails[key].Keygen} ms`;
-                    detailsDiv.appendChild(keygenTime);
+                    const keygenCycles = document.createElement('p');
+                    keygenCycles.innerHTML = `<strong>Keygen:</strong> ${algorithmDetails[key].Keygen} CPU cycles`;
+                    detailsDiv.appendChild(keygenCycles);
 
-                    const signTime = document.createElement('p');
-                    console.log(algorithmDetails)
-                    signTime.innerHTML = `<strong>Sign Time:</strong> ${algorithmDetails[key].Sign} ms`;
-                    detailsDiv.appendChild(signTime);
+                    const signCycles = document.createElement('p');
+                    signCycles.innerHTML = `<strong>Sign:</strong> ${algorithmDetails[key].Sign} CPU cycles`;
+                    detailsDiv.appendChild(signCycles);
 
-                    const verifyTime = document.createElement('p');
-                    verifyTime.innerHTML = `<strong>Verify Time:</strong> ${algorithmDetails[key].Verify} ms`;
-                    detailsDiv.appendChild(verifyTime);
+                    const verifyCycles = document.createElement('p');
+                    verifyCycles.innerHTML = `<strong>Verify:</strong> ${algorithmDetails[key].Verify} CPU cycles`;
+                    detailsDiv.appendChild(verifyCycles);
 
                     const privateKeySize = document.createElement('p');
                     privateKeySize.innerHTML = `<strong>Private Key Size:</strong> ${algorithmDetails[key].PrivateKeySize} bytes`;
@@ -191,13 +190,13 @@
                     detailsDiv.appendChild(signatureSize);
 
 
-                                        // Create a chart for the algorithm version
+                    // Create a chart for the algorithm version
                     const chartContainer = document.createElement('div');
                     chartContainer.className = 'chart-container';
                     const canvas = document.createElement('canvas');
                     chartContainer.appendChild(canvas);
                     detailsDiv.appendChild(chartContainer);
-                    createChart(canvas, algorithmDetails[key].Keygen, algorithmDetails[key].Sign);
+                    createChart(canvas, algorithmDetails[key].Keygen, algorithmDetails[key].Sign, algorithmDetails[key].Verify);
                     algorithmDetailsContainer.appendChild(detailsDiv);
                 });
             }
@@ -207,22 +206,24 @@
 
 
         // Function to create a column chart using Chart.js
-        function createChart(canvas, keygenTime, signTime) {
+        function createChart(canvas, keygenCycles, signCycles, verifyCycles) {
             const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Keygen Time', 'Sign Time'],
+                    labels: ['Keygen', 'Sign', 'Verify'],
                     datasets: [{
-                        label: 'Time (ms)',
-                        data: [keygenTime, signTime],
+                        label: 'CPU cycles',
+                        data: [keygenCycles, signCycles, verifyCycles],
                         backgroundColor: [
-                            'rgba(75, 192, 192, 0.6)', // Keygen Time color
-                            'rgba(153, 102, 255, 0.6)' // Sign Time color
+                            'rgba(75, 192, 192, 0.6)', // Keygen Cycles color
+                            'rgba(153, 102, 255, 0.6)', // Sign Cycles color
+                            'rgba(173, 216, 230, 0.6)' // Verify Cycles color
                         ],
                         borderColor: [
-                            'rgba(75, 192, 192, 1)', // Keygen Time border color
-                            'rgba(153, 102, 255, 1)' // Sign Time border color
+                            'rgba(75, 192, 192, 1)', // Keygen Cycles border color
+                            'rgba(153, 102, 255, 1)', // Sign Cycles border color
+                            'rgba(173, 216, 230, 1)' // Verify Cycles border color
                         ],
                         borderWidth: 1
                     }]
@@ -234,7 +235,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Time (ms)'
+                                text: 'CPU cycles'
                             }
                         },
                         x: {
