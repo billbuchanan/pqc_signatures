@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 2px solid #007bff;
+            transition: border-color 0.3s;
+        }
+        select:focus, input[type="file"]:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+        .algorithm-details {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #007bff;
+            background-color: #f0f8ff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .algorithm-details h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .algorithm-details p {
+            margin: 5px 0;
+            color: #333333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #6c757d;
+        }
+        .chart-container {
+            position: relative;
+            margin-top: 20px;
+            height: 400px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Visualizer</h1>
+        <h2 id="dateSubtitle"></h2>
+        <input type="file" id="fileInput" accept=".json" />
+        
+        <select id="algNameSelector">
+            <option value="">Select an algorithm name</option>
+        </select>
+        
+        <div id="algorithmDetailsContainer"></div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Algorithm Visualizer</p>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const algNameSelector = document.getElementById('algNameSelector');
+        const algorithmDetailsContainer = document.getElementById('algorithmDetailsContainer');
+        const dateSubtitle = document.getElementById('dateSubtitle');
+
+        let jsonData = null;
+
+        // Handle file selection
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    jsonData = JSON.parse(e.target.result);
+                    algNameSelector.innerHTML = '<option value="">Select an algorithm name</option>';
+                    algorithmDetailsContainer.innerHTML = '';
+
+
+                    // Extract date from the filename
+                    const fileName = file.name;
+                    const dateMatch = fileName.match(/results\d+_(\d{8})\.json/);
+                    if (dateMatch) {
+                        const dateString = dateMatch[1]; // Get the matched date string
+                        const formattedDate = formatDate(dateString);
+                        dateSubtitle.textContent = `Date: ${formattedDate}`;
+                    } else {
+                        dateSubtitle.textContent = ''; // Clear subtitle if no date found
+                    }
+                    Object.keys(jsonData).forEach(algName => {
+                        const option = document.createElement('option');
+                        option.value = algName;
+                        option.textContent = algName;
+                        algNameSelector.appendChild(option);
+                    });
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Format date from YYYYMMDD to a readable format with month as a string
+        function formatDate(dateString) {
+            const year = dateString.slice(0, 4);
+            const monthNumber = parseInt(dateString.slice(4, 6), 10); // Get the month as a number
+            const day = dateString.slice(6, 8);
+            
+            // Array of month names
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            // Get month name from the month number
+            const monthName = monthNames[monthNumber - 1]; // Adjusting for 0 index
+            return `${monthName} ${day}, ${year}`; // Return in Month Day, Year format
+        }
+
+        // Handle algorithm name selection
+        algNameSelector.addEventListener('change', function() {
+            const selectedAlgName = this.value;
+            algorithmDetailsContainer.innerHTML = '';
+
+            if (selectedAlgName && jsonData[selectedAlgName]) {
+                const versions = jsonData[selectedAlgName];
+
+                // Iterate over each version and display its details
+                Object.keys(versions).forEach(version => {
+                    const algorithmDetails = versions[version];
+                    const keys = Object.keys(algorithmDetails);
+                    key = keys[0]
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'algorithm-details';
+                    
+                    const versionTitle = document.createElement('h3');
+                    versionTitle.textContent = `${selectedAlgName} - ${key}`;
+                    detailsDiv.appendChild(versionTitle);
+
+                    const keygenCycles = document.createElement('p');
+                    keygenCycles.innerHTML = `<strong>Keygen:</strong> ${algorithmDetails[key].Keygen} CPU cycles`;
+                    detailsDiv.appendChild(keygenCycles);
+
+                    const signCycles = document.createElement('p');
+                    signCycles.innerHTML = `<strong>Sign:</strong> ${algorithmDetails[key].Sign} CPU cycles`;
+                    detailsDiv.appendChild(signCycles);
+
+                    const verifyCycles = document.createElement('p');
+                    verifyCycles.innerHTML = `<strong>Verify:</strong> ${algorithmDetails[key].Verify} CPU cycles`;
+                    detailsDiv.appendChild(verifyCycles);
+
+                    const privateKeySize = document.createElement('p');
+                    privateKeySize.innerHTML = `<strong>Private Key Size:</strong> ${algorithmDetails[key].PrivateKeySize} bytes`;
+                    detailsDiv.appendChild(privateKeySize);
+
+                    const publicKeySize = document.createElement('p');
+                    publicKeySize.innerHTML = `<strong>Public Key Size:</strong> ${algorithmDetails[key].PublicKeySize} bytes`;
+                    detailsDiv.appendChild(publicKeySize);
+
+                    const signatureSize = document.createElement('p');
+                    signatureSize.innerHTML = `<strong>Signature Size:</strong> ${algorithmDetails[key].SignatureSize} bytes`;
+                    detailsDiv.appendChild(signatureSize);
+
+
+                    // Create a chart for the algorithm version
+                    const chartContainer = document.createElement('div');
+                    chartContainer.className = 'chart-container';
+                    const canvas = document.createElement('canvas');
+                    chartContainer.appendChild(canvas);
+                    detailsDiv.appendChild(chartContainer);
+                    createChart(canvas, algorithmDetails[key].Keygen, algorithmDetails[key].Sign, algorithmDetails[key].Verify);
+                    algorithmDetailsContainer.appendChild(detailsDiv);
+                });
+            }
+        });
+
+
+
+
+        // Function to create a column chart using Chart.js
+        function createChart(canvas, keygenCycles, signCycles, verifyCycles) {
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Keygen', 'Sign', 'Verify'],
+                    datasets: [{
+                        label: 'CPU cycles',
+                        data: [keygenCycles, signCycles, verifyCycles],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)', // Keygen Cycles color
+                            'rgba(153, 102, 255, 0.6)', // Sign Cycles color
+                            'rgba(173, 216, 230, 0.6)' // Verify Cycles color
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)', // Keygen Cycles border color
+                            'rgba(153, 102, 255, 1)', // Sign Cycles border color
+                            'rgba(173, 216, 230, 1)' // Verify Cycles border color
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'CPU cycles'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Algorithm Operations'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
