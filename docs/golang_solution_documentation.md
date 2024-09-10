@@ -7,7 +7,7 @@ This script benchmarks Post-Quantum Cryptography (PQC) algorithms, written in Go
 - Utilizes Golang's built-in asynchronous mechanisms to execute each algorithm's benchmarking command in independent, thread-safe goroutines.
 - Channels are used for synchronization between all goroutines, managed by independent handler goroutines.
 
-![Solution Diagram](image.png)
+![Solution Diagram](documentation_images/image.png)
 
 ## How to Install and Use
 

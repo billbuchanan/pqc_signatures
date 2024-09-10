@@ -20,3 +20,4 @@ main_default_src_backup/
 last_setup_error.log
 dev_setup_output.txt
 .vscode
+scripts/sig_bench
