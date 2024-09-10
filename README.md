@@ -1,22 +1,33 @@
 # Round 1 Additional Signatures - Development Branch <!-- omit from toc --> 
 
+# NOTICE - This branch is now archived
+
+This branch has been archived due to major conflicts with the main branch, making future merging very challenging. To simplify any future merge, a new branch that incorporates all the changes made in this branch has been made to replace this one. This can be found here:
+
+[New Developing Branch](https://github.com/billbuchanan/pqc_signatures/tree/develop)
+
+For archive purposes this branch has been kept for reference. Please refer to the develop branch from now on for any development purposes.
+
+
+
 ## Contents <!-- omit from toc --> 
-- [Repository Overview](#repository-overview)
-- [Compatibility Information](#compatibility-information)
-  - [Supported Hardware](#supported-hardware)
-  - [Supported PQC Signature Algorithms](#supported-pqc-signature-algorithms)
-- [Installation Instructions](#installation-instructions)
-- [Running Performance Benchmarking](#running-performance-benchmarking)
-- [Automated Benchmarking with Bash](#automated-benchmarking-with-bash)
-  - [Script Usage](#script-usage)
-  - [Results Output](#results-output)
-- [Automated Benchmarking with Golang](#automated-benchmarking-with-golang)
-  - [Golang Setup](#golang-setup)
-  - [Script Usage](#script-usage-1)
-  - [Results Output](#results-output-1)
-- [Data Visualiser Tool](#data-visualiser-tool)
-- [Information for Developers](#information-for-developers)
-- [Useful Links](#useful-links)
+- [NOTICE - This branch is now archived](#notice---this-branch-is-now-archived)
+  - [Repository Overview](#repository-overview)
+  - [Compatibility Information](#compatibility-information)
+    - [Supported Hardware](#supported-hardware)
+    - [Supported PQC Signature Algorithms](#supported-pqc-signature-algorithms)
+  - [Installation Instructions](#installation-instructions)
+  - [Running Performance Benchmarking](#running-performance-benchmarking)
+  - [Automated Benchmarking with Bash](#automated-benchmarking-with-bash)
+    - [Script Usage](#script-usage)
+    - [Results Output](#results-output)
+  - [Automated Benchmarking with Golang](#automated-benchmarking-with-golang)
+    - [Golang Setup](#golang-setup)
+    - [Script Usage](#script-usage-1)
+    - [Results Output](#results-output-1)
+  - [Data Visualiser Tool](#data-visualiser-tool)
+  - [Information for Developers](#information-for-developers)
+  - [Useful Links](#useful-links)
 
 ## Repository Overview
 
