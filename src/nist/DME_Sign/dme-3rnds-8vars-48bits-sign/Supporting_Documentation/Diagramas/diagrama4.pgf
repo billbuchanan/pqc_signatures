@@ -1,7 +1,0 @@
-\begin{tikzcd}
-(\mathbb{F}_{q^m})^{n}
-\arrow[rrr,bend right=20,"L_3"]
-\arrow[r,,"\tilde{\pi}_2","\sim" below]&(\mathbb{F}_{q}^m)^{n}
-\arrow[r,"\tilde{L}_3"]&(\mathbb{F}_{q}^m)^{n}
-\arrow[r,"\sim" below]&\mathbb{F}_{q}^{mn}
-\end{tikzcd}

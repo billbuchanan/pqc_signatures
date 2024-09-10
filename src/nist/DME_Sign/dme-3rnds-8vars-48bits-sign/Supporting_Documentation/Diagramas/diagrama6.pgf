@@ -1,5 +1,0 @@
-﻿\begin{tikzcd}
-\mathbb{F}_{2}^{132}
-\arrow[r,"H"]&\mathbb{F}_{2^{24}}^{6}
-\arrow[r,"F" ]&\mathbb{F}_{2^{24}}^{6}
-\end{tikzcd}
