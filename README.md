@@ -7,10 +7,10 @@
   - [Supported PQC Signature Algorithms](#supported-pqc-signature-algorithms)
 - [Installation Instructions](#installation-instructions)
 - [Running Performance Benchmarking](#running-performance-benchmarking)
-- [Automated Bash Benchmarking Script Usage](#automated-bash-benchmarking-script-usage)
+- [Automated Benchmarking with Bash](#automated-benchmarking-with-bash)
   - [Script Usage](#script-usage)
   - [Results Output](#results-output)
-- [Automated Golang Benchmarking Script](#automated-golang-benchmarking-script)
+- [Automated Benchmarking with Golang](#automated-benchmarking-with-golang)
   - [Golang Setup](#golang-setup)
   - [Script Usage](#script-usage-1)
   - [Results Output](#results-output-1)
@@ -148,7 +148,7 @@ Both options are valid methods of gathering the data depending on the requiremen
 
 **NOTE:** At the current moment, the benchmarking binary is only able to output the number of CPU cycles required to complete the various cryptographic operations for each algorithm. In the future, the tool will be able to produce performance metrics such as time to complete and memory usage.
 
-## Automated Bash Benchmarking Script Usage
+## Automated Benchmarking with Bash
 
 ### Script Usage
 Whilst the automated bash script does not offer as much functionality compared to the Golang version and it cannot be used with the data visualiser currently. It does offer the benefit of not requiring any additional dependencies and may be useful for those who wish to use their own parsing scripts using languages such as Python. the automated process for gathering performance data by looping through and running the benchmarking binary for each algorithm and all of their variations.
@@ -168,7 +168,7 @@ Upon completing the benchmarking, the automated bash script will store the resul
 **NOTE:** **Currently there is no handling to deal with previous results being present when running the performance script. Upon execution, all previous results will be DELETED! Please make a copy of the results if you wish to keep them before executing the script again!**
 
 
-## Automated Golang Benchmarking Script
+## Automated Benchmarking with Golang
 Whilst the automated bash script can offer a simpler approach, it can at times be considerable slow. However, The Golang version of the automated benchmarking has the benefit of running the various benchmarks in parallel, where multiple binaries can be executed at once, reducing the overall testing time. Furthermore, the Golang version outputs the results in txt, CSV, and JSON format unlike the bash script version which outputs only text files.
 
 For more information on how the Golang version of the automated benchmarking script works, please refer to the its documentation which can be found here:
