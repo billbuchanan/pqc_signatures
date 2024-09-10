@@ -1,0 +1,72 @@
+Enhanced pqsigRM v1.0
+
+PRINCIPAL SUBMITTER
+- Jinkyu Cho, Seoul National University
+- Jong-Seon No, Seoul National University
+- Yongwoo Lee, Inha University
+- Young-Sik Kim, Chosun University
+- Zahyun Koo, Samsung Electronics
+
+E-mail address: jsno@snu.ac.kr
+
+This package includes supporting documents, reference implementation, optimized implementation, and KAT for pqsigRM.
+This reference implementation and optimized implementation are the implementation of a post-quantum digital signature algorithm, pqsigRM.
+The source code is tested under intel x64 cpu, ubuntu 22.04
+There is one variant of Enhanced pqsigRM.
+
+Enh-pqsigRM-613
+	A digital signature algorithm with 128-bit security (Category 1)
+
+
+# SOFTWARE REQUIREMENTS:
+
+	The source requires ANSI C compiler, and OpenSSL library for C. 
+	AVX2 support for optimized implementation.
+
+# COMPILING:
+	
+	This source can be compiled with gcc
+	
+	<Computing runtime>
+	make clean; make runtime; ./runtime
+
+	<KAT>
+	make clean; make sign; ./sign
+
+
+# DOCUMENTATION:
+/Reference_Implementation & /Optimized_Implementation
+	
+	/Enh-pqsigrm-613
+		/PQCgenKAT_sign.c				Known Answer Test for Enh-pqsigRM-613
+		/PQCsignKAT_24592.req			Known Answer Test request value
+		/PQCsignKAT_24592.rsp			Known Answer Test response value
+		/runtime.c					Measuring runtime
+
+		/src
+			/api.h				key sizes and algorithm name are defined here
+			
+			/common.c
+			/common.h			common variables and functions for signing and verifications 
+			
+			/keypair.c 			crypto_sign_keypair() is defined here
+			
+			/matrix.c
+			/matrix.h				basic matrix operations for Enh-pqsigRM-613
+			
+			/nearest_vector.c
+			/nearest_vector.h			decoding algorithms
+
+			/open.c 				crypto_sign_open() is defined here
+	
+			/parm.h 				basic parameters for Enh-pqsigRM-613
+		
+			/rm.c				
+			/rm.h				RM code generation
+
+			/rng.h 				random number generator published by NIST	
+			/rng.c
+			/sign.c 				crypto_sign() is defined here
+
+/Supporting_Documentation 		Supporting documentation for pqsigRM
+

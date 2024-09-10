@@ -1,5 +1,0 @@
-*.o
-PQCsignKAT*
-/bench
-/bench-*
-/kat_*

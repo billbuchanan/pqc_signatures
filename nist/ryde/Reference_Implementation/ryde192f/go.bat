@@ -1,0 +1,2 @@
+gcc -c *.c -I..\src\rbc-31 -I..\lib\XKCP\opt64 -I..\lib\XKCP -I..\src\wrapper -I..\lib\cryptocode -I..\lib\djbsort -I..\lib\randombytes -std=c99 -pedantic -Wall -Wextra -O3 -funroll-all-loops -march=native -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -Wno-newline-eof
+gcc   -o ryde128.exe *.o -llibcrypto -llibssl

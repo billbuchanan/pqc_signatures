@@ -1,3 +1,0 @@
-sqi_lvl1
-sqi_lvl3
-sqi_lvl5

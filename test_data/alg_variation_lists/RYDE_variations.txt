@@ -1,6 +1,0 @@
-ryde128f
-ryde128s
-ryde192f
-ryde192s
-ryde256f
-ryde256s

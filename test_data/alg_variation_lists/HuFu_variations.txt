@@ -1,3 +1,0 @@
-HuFu_NIST1
-HuFu_NIST3
-HuFu_NIST5

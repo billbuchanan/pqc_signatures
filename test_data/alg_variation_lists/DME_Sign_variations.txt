@@ -1,3 +1,0 @@
-dme-3rnds-8vars-32bits-sign
-dme-3rnds-8vars-48bits-sign
-dme-3rnds-8vars-64bits-sign

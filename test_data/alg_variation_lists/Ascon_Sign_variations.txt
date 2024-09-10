@@ -1,8 +1,0 @@
-Ascon-Sign-128f_robust
-Ascon-Sign-128s_robust
-Ascon-Sign-192f_robust
-Ascon-Sign-192s_robust
-Ascon-Sign-128f_simple
-Ascon-Sign-128s_simple
-Ascon-Sign-192f_simple
-Ascon-Sign-192s_simple

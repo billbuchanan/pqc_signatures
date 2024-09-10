@@ -1,3 +1,0 @@
-hawk256
-hawk512
-hawk1024
