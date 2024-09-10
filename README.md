@@ -1,36 +1,28 @@
 # Round 1 Additional Signatures - Development Branch <!-- omit from toc --> 
 
-## Repository Overview <!-- omit from toc -->
-
-### Project Description <!-- omit from toc --> 
-This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project. It aims to provide a implementation of the benchmarking schemes for Linux environments and eventually will incorporate Windows environments similar to the setup in the main branch of this repository.
-
-### Dev Branch Status
-The development branch may not always be in a fully functioning state and documentation may still need updated. The checkboxes below indicates whether the current development version is in a basic/fully functioning state and if the documentation is accurate for its current functionality. Regardless please keep this in mind and use the main branch if possible, thank you.
-
-- [x] Basic Functioning State
-- [ ] Fully Functioning State
-- [x] Up to date documentation
-
-Details on the current development branch tasks can be found here:
-
-[Development Branch Task List](docs/dev_branch_tasklist.md)
-
 ## Contents <!-- omit from toc --> 
-- [NIST PQC Addtional Signatures Round 1 Details](#nist-pqc-addtional-signatures-round-1-details)
+- [Repository Overview](#repository-overview)
 - [Compatibility Information](#compatibility-information)
   - [Supported Hardware](#supported-hardware)
   - [Supported PQC Signature Algorithms](#supported-pqc-signature-algorithms)
 - [Installation Instructions](#installation-instructions)
 - [Running Performance Benchmarking](#running-performance-benchmarking)
-  - [Automated Bash Benchmarking Script](#automated-bash-benchmarking-script)
-  - [Automated Golang Benchmarking Script](#automated-golang-benchmarking-script)
+- [Automated Bash Benchmarking Script Usage](#automated-bash-benchmarking-script-usage)
+  - [Script Usage](#script-usage)
+  - [Results Output](#results-output)
+- [Automated Golang Benchmarking Script](#automated-golang-benchmarking-script)
+  - [Golang Setup](#golang-setup)
+  - [Script Usage](#script-usage-1)
+  - [Results Output](#results-output-1)
 - [Data Visualiser Tool](#data-visualiser-tool)
 - [Information for Developers](#information-for-developers)
 - [Useful Links](#useful-links)
 
+## Repository Overview
 
-## NIST PQC Addtional Signatures Round 1 Details
+### Project Description <!-- omit from toc --> 
+This is the development branch for the pqc_signatures project which evaluates the performance of the proposed PQC signatures within round 1 of the NIST Post-Quantum Cryptography Additional Signatures project. It aims to provide a implementation of the benchmarking schemes for Linux environments and eventually will incorporate Windows environments similar to the setup in the main branch of this repository.
+
 Dilithium, FALCON and SPHINCS+ have become NIST standards for digital signatures, and with an aim to remove RSA, ECDSA and EdDSA. But, NIST wants alternatives to these, especially so that we are not too dependent on lattice-based approaches (such as with Dilithium and FALCON). These are [here](https://csrc.nist.gov/projects/pqc-dig-sig/round-1-additional-signatures):
 
 * Multivariate Signatures (10): 3WISE, DME-Sign, HPPC (Hidden Product of Polynomial Composition), MAYO, PROV (PRovable unbalanced Oil and Vinegar), QR-UOV, SNOVA, TUOV (Triangular Unbalanced Oil and Vinegar), UOV (Unbalanced Oil and Vinegar), and VOX.
@@ -45,6 +37,19 @@ The current standards are:
 
 * Falcon. [Falcon](https://asecuritysite.com/pqc/falcon_sign). Falcon is a NIST approved standard PQC (Post Quantum Cryptography) digital signatures. It is derived from NTRU ((Nth degree‐truncated polynomial ring units) and is a lattice-based methods for quantum robust digital signing. Falcon is based on the Gentry, Peikert and Vaikuntanathan method for generating lattice-based signature schemes, along with a trapdoor sampler - Fast Fourier sampling. We select three parameters: N, p and q. To generate the key pair, we select two polynomials: f and g. From these we compute: F=fq=f−1(modq) and where f and fq are the private keys. The public key is h=p⋅fq.f(modq). With Falcon-512 (which has an equivalent security to RSA-2048), we generate a public key of 897 bytes, and a signature size of 666 bytes, while FALCON-1024 gives a public key of 1,793 bytes and a signature size of 1,280 bytes.
 * Dilithium. [Dilithium](https://asecuritysite.com/pqc/dilithium_sign). At present, CRYSTALS (Cryptographic Suite for Algebraic Lattices) supports two quantum robust mechanisms: Kyber for key-encapsulation mechanism (KEM) and key exchange; and Dilithium for a digital signature algorithm. CRYSTALS Dilithium uses lattice-based Fiat-Shamir schemes, and produces one of the smallest signatures of all the post-quantum methods, and with relatively small public and private key sizes. The three main implements for the parameters used are: Dilithium 2, Dilithium 3 and Dilithium 5. Overall, Dilithium 3 is equivalent to a 128-bit signature, and is perhaps the starting point for an implementation.
+
+### Dev Branch Status <!-- omit from toc --> 
+The development branch may not always be in a fully functioning state and documentation may still need updated. The checkboxes below indicates whether the current development version is in a basic/fully functioning state and if the documentation is accurate for its current functionality. Regardless please keep this in mind and use the main branch if possible, thank you.
+
+- [x] Basic Functioning State
+- [ ] Fully Functioning State
+- [x] Up to date documentation
+
+Details on the current development branch tasks can be found here:
+
+[Development Branch Task List](docs/dev_branch_tasklist.md)
+
+
 
 ## Compatibility Information
 
@@ -143,9 +148,9 @@ Both options are valid methods of gathering the data depending on the requiremen
 
 **NOTE:** At the current moment, the benchmarking binary is only able to output the number of CPU cycles required to complete the various cryptographic operations for each algorithm. In the future, the tool will be able to produce performance metrics such as time to complete and memory usage.
 
-### Automated Bash Benchmarking Script
+## Automated Bash Benchmarking Script Usage
 
-#### Script Usage
+### Script Usage
 Whilst the automated bash script does not offer as much functionality compared to the Golang version and it cannot be used with the data visualiser currently. It does offer the benefit of not requiring any additional dependencies and may be useful for those who wish to use their own parsing scripts using languages such as Python. the automated process for gathering performance data by looping through and running the benchmarking binary for each algorithm and all of their variations.
 
 To execute the performance using the bash script version, the following commands should be executed from the project's root directory:
@@ -157,20 +162,20 @@ cd scripts
 
 During the scripts operation the user will be presented to skip the HuFu and/or Snova algorithms due to the significant amount of time it takes to complete their operations. Furthermore, the script will also present the user with the option to select the number of runs that the script will perform. This is to allow for the generation of performance data averages across multiple runs for the supported signature algorithms.
 
-#### Results Output
+### Results Output
 Upon completing the benchmarking, the automated bash script will store the results in the `test_data/results` directory in the form of text files. These text files can later be parsed using a language such as Python to extract the performance metrics.
 
 **NOTE:** **Currently there is no handling to deal with previous results being present when running the performance script. Upon execution, all previous results will be DELETED! Please make a copy of the results if you wish to keep them before executing the script again!**
 
 
-### Automated Golang Benchmarking Script
+## Automated Golang Benchmarking Script
 Whilst the automated bash script can offer a simpler approach, it can at times be considerable slow. However, The Golang version of the automated benchmarking has the benefit of running the various benchmarks in parallel, where multiple binaries can be executed at once, reducing the overall testing time. Furthermore, the Golang version outputs the results in txt, CSV, and JSON format unlike the bash script version which outputs only text files.
 
 For more information on how the Golang version of the automated benchmarking script works, please refer to the its documentation which can be found here:
 
 [Automated Golang Benchmarking Solution Overview]()
 
-#### Golang Setup
+### Golang Setup
 In order to use the Golang version of the automated benchmarking script, Golang must be installed and configured on the system. You can verify if the Golang is present on the system and is accessible from the PATH by executing the following command:
 
 ```
@@ -185,7 +190,7 @@ go version go1.22.6 linux/amd64
 
 If Golang is not already present on your system, then it can be downloaded from their [official website](https://go.dev/dl/). Detailed documentation on how to setup Golang on your system can also be found on the [Go Install Documentation](https://go.dev/doc/install) page.
 
-#### Script Usage
+### Script Usage
 With Golang present on the system, the automated  benchmarking script can now be compiled and executed. This must be done from within the `scripts` directory as currently there is no exception handling to deal with execution from different directories in this project. Going forward this issue will be addressed.
 
 To build the project and then perform the benchmarking, execute the following commands from the project's root directory:
@@ -208,7 +213,7 @@ Similar
 
 > **Note to Developers**: There is currently a .gitignore entry for the built binary being called sig_bench. If you decide to user another filename please either create an entry in the .gitignore file for that name or delete the binary before committing any changes. This is to avoid any unessecery files being present on the branch.
 
-#### Results Output
+### Results Output
 The Golang version outputs the results in txt, CSV, and JSON format which can be used with the data visualiser tool. The script has the following results output information:
 
 - Results are stored in the `test_data/results/` directory with filenames in the format `results_<run_number>_<YYYYMMDD>`, where `<run_number>` represents the run number and `<YYYYMMDD>` represents the current date. Files are overwritten if the script is executed on the same date.
