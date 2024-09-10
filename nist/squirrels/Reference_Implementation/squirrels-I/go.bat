@@ -1,2 +1,0 @@
-gcc -c *.c -W -Wall -O2 -I..\..\lib\flint-2.9.0 -I..\..\lib\build\mpfr\include -I..\..\lib\build\mpfr\include -I..\..\lib\build\gmp\include -I..\..\lib\build\flint\include\flint -I..\..\lib\build\fplll\include -DSQUIRRELS_LEVEL=1
-gcc   -o raccoon1.exe *.o -llibcrypto -llibssl

@@ -1,0 +1,2 @@
+The KATS for HPPC have been removed from this repo due to their large file size. The KATS can be found in the original submission found here:
+https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/HPPC-submission.zip
