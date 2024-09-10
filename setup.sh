@@ -1187,20 +1187,25 @@ function variations_setup() {
     # Set the source and destination directories for the SQUIRRELS algorithm
     squirrels_src_dir="$nist_src_dir/SQUIRRELS/Reference_Implementation"
     squirrels_lib_dir="$nist_src_dir/SQUIRRELS/lib"
-    orgin_lib_dir_backup="$root_dir/main_default_src_backup/SQUIRRELS"
+    origin_lib_dir_backup="$root_dir/main_default_src_backup/SQUIRRELS"
     squirrels_dst_dir="$bin_dir/SQUIRRELS"
+
+    # Create the lib backup directory if it does not exist
+    if [ ! -d "$origin_lib_dir_backup/lib" ]; then
+        mkdir -p "$origin_lib_dir_backup/lib"
+    fi
 
     # Check if original lib directory is present and make a copy of it
     if [ ! -f "$squirrels_lib_dir/modded-lib.flag" ]; then
 
         # Remove the current lib backup directory if it exists as the one in squirrels src is the default
-        if [ -d "$orgin_lib_dir_backup/lib" ]; then
-            rm -rf "$orgin_lib_dir_backup/lib"
-            cp -r "$squirrels_lib_dir" "$orgin_lib_dir_backup/lib"
+        if [ -d "$origin_lib_dir_backup/lib" ]; then
+            rm -rf "$origin_lib_dir_backup/lib"
+            cp -r "$squirrels_lib_dir" "$origin_lib_dir_backup/lib"
             touch "$squirrels_lib_dir/modded-lib.flag"
 
         else
-            cp -r "$squirrels_lib_dir" "$orgin_lib_dir_backup/lib"
+            cp -r "$squirrels_lib_dir" "$origin_lib_dir_backup/lib"
             touch "$squirrels_lib_dir/modded-lib.flag"
 
         fi
@@ -1208,9 +1213,9 @@ function variations_setup() {
     else
 
         # Check if original lib directory backup is present and restore from that
-        if [ -d "$orgin_lib_dir_backup/lib" ]; then
+        if [ -d "$origin_lib_dir_backup/lib" ]; then
             rm -rf "$squirrels_lib_dir"
-            cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+            cp -r "$origin_lib_dir_backup/lib" "$squirrels_lib_dir"
             touch "$squirrels_lib_dir/modded-lib.flag"
 
         else
@@ -1262,9 +1267,9 @@ function variations_setup() {
     done
 
     # Restore the original lib directory
-    if [ -d "$orgin_lib_dir_backup/lib" ]; then
+    if [ -d "$origin_lib_dir_backup/lib" ]; then
         rm -rf "$squirrels_lib_dir"
-        cp -r "$orgin_lib_dir_backup/lib" "$squirrels_lib_dir"
+        cp -r "$origin_lib_dir_backup/lib" "$squirrels_lib_dir"
 
     else
         echo -e "\nThe modded SQUIRRELS Lib directory could not be restored to default" >> "$root_dir/last_setup_error.log"
