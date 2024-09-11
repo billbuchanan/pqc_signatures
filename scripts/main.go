@@ -312,10 +312,10 @@ func PerformBenchmarking(res map[string][]string, cfg *ConfigParams, pathvars *P
 }
 
 func main() {
-	// Setting up of the WaitGroup to track all the goroutines
-	wg := sync.WaitGroup{}
-	handlerWG := sync.WaitGroup{}
+
+	// Start the test timer to measure the time of the whole benchmarking
 	start := time.Now()
+
 	// Set up the config
 	pathvars, err := NewPathVariables()
 	if err != nil {
@@ -323,14 +323,14 @@ func main() {
 	}
 	res, amount := NewAlgVariationArrays(pathvars.AlgVariationsDir)
 	cfg := setConfig()
-	// Setting up bufferend channel (length is amount of all the algorithms with their versions) for communication and stop-signal channel
-	output := make(chan []byte, amount)
-	stopchan := make(chan struct{})
-	// Setting up bufferend channel (length is amount of all the algorithms excluding their versions) for json writing channel
-	jsonchan := make(chan JSONChannelMessage, len(res))
+
+	// NOTE - The channels had to be changed to start and stop for each run, due to the script starting the second run before the first one is finished
+	// this caused the script to exceed the systems resources and crash. Will need to review this further.
 
 	fmt.Println("Started")
 	for run := 0; run < int(cfg.NumRuns); run++ {
+
+		// Creating the output files
 		file, err := os.Create(pathvars.ResultsDir + sep + "results" + strconv.Itoa(run+1) + "_" + time.Now().Local().Format("20060102") + ".txt")
 		file1, err1 := os.Create(pathvars.ResultsDir + sep + "results" + strconv.Itoa(run+1) + "_" + time.Now().Local().Format("20060102") + ".csv")
 		file2, err2 := os.Create(pathvars.ResultsDir + sep + "results" + strconv.Itoa(run+1) + "_" + time.Now().Local().Format("20060102") + ".json")
@@ -338,25 +338,44 @@ func main() {
 			fmt.Printf("File error %s \n", err)
 			return
 		}
+
+		// Setting up of the WaitGroup to track all the goroutines for the current run
+		wg := sync.WaitGroup{}
+		handlerWG := sync.WaitGroup{}
+
+		// Starting the channels for the current run
+
+		// Setting up bufferend channel (length is amount of all the algorithms with their versions) for communication and stop-signal channel
+		output := make(chan []byte, amount)
+		stopchan := make(chan struct{})
+		// Setting up bufferend channel (length is amount of all the algorithms excluding their versions) for json writing channel
+		jsonchan := make(chan JSONChannelMessage, len(res))
+
+		// Starting the goroutines for the text and csv file handling
 		handlerWG.Add(1)
 		go func(file *os.File, file1 *os.File, output <-chan []byte, stopchan <-chan struct{}) {
 			defer handlerWG.Done()
 			handleOutputChan(file, file1, output, stopchan)
 		}(file, file1, output, stopchan)
 
+		// Starting the goroutine for the json file handling
 		handlerWG.Add(1)
 		go func(file2 *os.File, jsonchan <-chan JSONChannelMessage, stopchan <-chan struct{}) {
 			defer handlerWG.Done()
 			handleJSONChan(file2, jsonchan, stopchan, len(res))
 		}(file2, jsonchan, stopchan)
 
+		// Perform the benchmarking for the current run
 		PerformBenchmarking(res, cfg, pathvars, run, output, jsonchan, &wg)
+
+		wg.Wait()
+		// Send close signals to both channels
+		close(stopchan)
+		handlerWG.Wait()
+		close(output)
+		close(jsonchan)
+
 	}
-	wg.Wait()
-	// Send close signals to both channels
-	close(stopchan)
-	handlerWG.Wait()
-	close(output)
-	close(jsonchan)
+
 	fmt.Printf("Finished in %s\n", time.Since(start))
 }
