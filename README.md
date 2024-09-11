@@ -14,7 +14,9 @@
   - [Golang Setup](#golang-setup)
   - [Script Usage](#script-usage-1)
   - [Results Output](#results-output-1)
-- [Data Visualiser Tool](#data-visualiser-tool)
+- [Processing Results](#processing-results)
+  - [Python Parser](#python-parser)
+  - [Data Visualiser Tool](#data-visualiser-tool)
 - [Information for Developers](#information-for-developers)
 - [Useful Links](#useful-links)
 
@@ -223,10 +225,32 @@ The Golang version outputs the results in txt, CSV, and JSON format which can be
 
 **NOTE:** **Currently there is no handling to deal with previous results being present when running the performance script. Upon execution, all previous results will be DELETED! Please make a copy of the results if you wish to keep them before executing the script again!**
 
-## Data Visualiser Tool
+## Processing Results
+There are two main ways in which the results can be processed:
+
+- Creating formatted CSV and XLSX files of the results using the Python parser
+- Using the data visualiser tool
+
+The first method allows for the results to be used within further analysis and allows for the generation of averages for the performance algorithms across multiple runs. The second method provides a web interface for viewing the data for an individual test run in graph format.
+
+### Python Parser
+The python parser script `result_parser.py` can be found in the `scripts` directory. This script will automatically determine the results files present in the `test_data/results` directory. The script currently only functions for parsing the JSON files outputted by the automated Golang benchmarking script. It is able to determine the all the result files associated with a a test_batch which is identified by the date formatting in the filename. 
+
+The script will create formatted CSV and XLSX files for each run in all of the test batches currently stored. The script will also generate averages for each algorithm and its operations across all the test runs in a specific test batch group.
+
+To utilise the Python parsing tool, execute the following commands from the project's root directory:
+
+```
+cd scripts
+python3 result_parser.py
+```
+
+Upon completion, the formatted results and averages files can be found in the `test_data/parsed_results` directory.
+
+### Data Visualiser Tool
 This project also a data visualiser tool to review the performance data that was outputted by the automated Golang benchmarking script. This tool takes the JSON file version of the performance results outputted by the script and provides an interface for viewing the CPU cycles required to complete the cryptographic operations of the various algorithms.
 
-When the the benchmarking has completed, the results can be viewed in the data visualiser tool by opening the **page.html** (located in the `scripts` directory) in a web browser. Once opened, a JSON file containing the results can be selected to be reviewed using the GUI present in the web interface. These files can be found in the `testd_data/results` directory. After a results file has been selected for review, the user can select one of the various signature algorithms that were benchmarked. This will display the CPU cycles performance data for each of that algorithms variations for the three cryptographic operations:
+When the the benchmarking has completed, the results can be viewed in the data visualiser tool by opening the **page.html** (located in the `scripts` directory) in a web browser. Once opened, a JSON file containing the results can be selected to be reviewed using the GUI present in the web interface. These files can be found in the `test_data/results` directory. After a results file has been selected for review, the user can select one of the various signature algorithms that were benchmarked. This will display the CPU cycles performance data for each of that algorithms variations for the three cryptographic operations:
 
 - Key Generation
 - Signing

@@ -17,7 +17,6 @@ algs_list_dir=$test_data_dir/sig_algs_list
 alg_variations_dir=$test_data_dir/alg_variation_lists
 scripts_dir=$root_dir/scripts
 
-
 #---------------------------------------------------------------------------------------------------
 function array_util_call() {
     # Function for calling the array utility script to set the variation arrays used in the script
@@ -1413,6 +1412,11 @@ function variations_setup() {
 #---------------------------------------------------------------------------------------------------
 function main() {
     # Main function for setting up the required environment and compiling the various signature algorithms
+
+    # Create the root directory marker file if it does not exist
+    if [ ! -f "$root_dir/.repo_root_dir_marker.tmp" ]; then
+        touch "$root_dir/.repo_root_dir_marker.tmp"
+    fi
 
     # Remove error log from any previous runs
     if [ -f "last_setup_error.log" ]; then

@@ -18,3 +18,5 @@ last_setup_error.log
 dev_setup_output.txt
 .vscode
 scripts/sig_bench
+.repo_root_dir_marker.tmp
+test_data/parsed_results/
