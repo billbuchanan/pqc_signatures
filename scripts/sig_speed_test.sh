@@ -14,7 +14,7 @@ test_data_dir=$root_dir/test_data
 results_dir=$test_data_dir/results
 algs_list_dir=$test_data_dir/sig_algs_list
 alg_variations_dir=$test_data_dir/alg_variation_lists
-num_runs=0
+number_of_runs=1
 
 
 #---------------------------------------------------------------------------------------------------
@@ -137,10 +137,11 @@ function determine_run_nums() {
     while true; do
 
         # Get user input for number of runs
-        read -p "Enter the number of runs to be performed: " num_runs
+        read -p "Enter the number of runs to be performed: " user_input
 
         # Check if input is valid and set number of runs
-        if [[ $num_runs =~ ^[0-9]+$ ]]; then
+        if [[ $user_input =~ ^[0-9]+$ ]]; then
+            number_of_runs=$user_input
             break
         else
             echo -e "Invalid input. Please enter a positive integer\n"
