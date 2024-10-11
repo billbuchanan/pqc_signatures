@@ -38,12 +38,12 @@ def get_repo_root_dir():
             print("Root directory path file not present, please ensure the path is correct and try again.")
             sys.exit(1)
 
-#---------------------------------------------------------------------------------------------------
-def setup_base_env():
-    """ Function for setting up the base environment for the parser script. This includes setting up the paths for the various directories
-        used in the parsing process. The function also determines the test batches that are present in the results directory and returns
-        these as a dictionary containing the test batches and all the results files associated with it"""
 
+#---------------------------------------------------------------------------------------------------
+def setup_env(version_selection):
+    """ Function for setting up the base environment for the parser script. This includes setting up the paths for the various directories
+        used in the parsing process. The function will then determine which version of the parser to run based on the version selection (go/bash) """
+     
     # Get the root directory of the repository
     root_dir = get_repo_root_dir()
 
@@ -64,40 +64,45 @@ def setup_base_env():
     else:
         shutil.rmtree(paths["parsed_results_dir"])
         os.makedirs(paths["parsed_results_dir"])
-    
-    # Get all the files present in the results directory
-    results_dir_listing = os.listdir(paths["results_dir"])
-    results_dir_listing.sort()
-    
-    # Determine the results files to be processed that are in results directory
-    test_batches = {}
-    result_file_present_flag = False
-    file_found_flag = False
 
-    for file in results_dir_listing:
+    # Setup the environment for the go if version selection is 1, if the bash version is set, only return the paths
+    if version_selection == 1:
 
-        # Check if the current file meets the requirements for processing
-        if "results" in file and ".json" in file:
+        # Get all the files present in the results directory
+        results_dir_listing = os.listdir(paths["results_dir"])
+        results_dir_listing.sort()
+        
+        # Determine the results files to be processed that are in results directory
+        test_batches = {}
 
-            # Get the test batch based on the date in the filename
-            results_date = file.split("_")[1].split(".")[0]
+        for file in results_dir_listing:
 
-            # Add the file to the test batch if it is not already present and increment the run count
-            if results_date not in test_batches.keys():
-                test_batches[results_date] = [file]
+            # Check if the current file meets the requirements for processing
+            if "results" in file and ".json" in file:
 
-            elif file not in test_batches[results_date]:
-                test_batches[results_date].append(file)
+                # Get the test batch based on the date in the filename
+                results_date = file.split("_")[1].split(".")[0]
 
-    if len(test_batches) != 0:
+                # Add the file to the test batch if it is not already present and increment the run count
+                if results_date not in test_batches.keys():
+                    test_batches[results_date] = [file]
 
-        return paths, test_batches
+                elif file not in test_batches[results_date]:
+                    test_batches[results_date].append(file)
+
+        # Check if there are any results files present in the results directory
+        if len(test_batches) != 0:
+
+            return paths, test_batches
+
+        else:
+            print("No results files found in the results directory that can be parsed")
+            print("please ensure the files are present and try again.")
+            sys.exit(1)
 
     else:
-        print("No results files found in the results directory that can be parsed")
-        print("please ensure the files are present and try again.")
-        sys.exit(1)
-
+        return paths
+    
 #---------------------------------------------------------------------------------------------------
 def convert_json_to_formatted_csv(paths, test_group, test_group_name):
     """ Function for converting the JSON results files to formatted CSV files which are 
@@ -196,16 +201,12 @@ def average_generator(paths, test_group, test_group_name):
     # Save the averages dataframe to a CSV file and xlsx file
     averages_df.to_csv(os.path.join(paths["parsed_results_dir"], f"averages_{test_group_name}.csv"), index=False)
     averages_df.to_excel(os.path.join(paths["parsed_results_dir"], f"averages_{test_group_name}.xlsx"), index=False)
-    
+
 #---------------------------------------------------------------------------------------------------
-def main():
-    """ Main function for controlling the parser """
+def go_version_parser(paths, test_batches):
 
     # Print the parser start message to the terminal
-    print("Starting the results parser...")
-
-    # Setup the base environment for the parser
-    paths, test_batches = setup_base_env()
+    print("Starting the results parser for the Golang Results...")
 
     # Loop through and process the various test batches present
     for test_group_name in test_batches.keys():
@@ -216,6 +217,86 @@ def main():
 
     # Print the parser end message to the terminal
     print("Results parser completed successfully")
+
+#---------------------------------------------------------------------------------------------------
+def bash_version_parsers(paths):
+
+    # Print the parser start message to the terminal
+    print("Starting the results parser for the Bash Results...")
+
+    # Get all the results files in the results directory that fit the bash format
+    results_files = []
+
+    for file in os.listdir(paths["results_dir"]):
+        if f"sig_speed_results_run" in file:
+            results_files.append(file)    
+    
+    results_files.sort()
+
+    # Loop through the results files and extract the results from the text file and output to csv format
+    for current_file in results_files:
+
+        # Set empty df to store results and set file path for current results file
+        results_df = pd.DataFrame(columns=["Algorithm", "Keygen Cycles", "Sign Cycles", "Verify Cycles"])
+        results_path = os.path.join(paths["results_dir"], current_file)
+
+        current_alg_row = []
+
+        # Open the file and read the results data
+        with open(results_path, "r") as current_results_file:
+
+            # Loop through each line of the file and extract the data
+            for line in current_results_file:
+
+                # Get the algorithm name and the keygen, sign, and verify cycles
+                if "Algorithm:" in line:
+                    alg_name = line.split(":")[1].strip()
+                    current_alg_row.append(alg_name)
+                
+                elif "Keygen:" in line:
+                    keygen_cycles = int(line.split(":")[1].strip().split(" ")[0])
+                    current_alg_row.append(keygen_cycles)
+
+                elif "Sign:" in line:
+                    sign_cycles = int(line.split(":")[1].strip().split(" ")[0])
+                    current_alg_row.append(sign_cycles)
+
+                elif "Verify:" in line:
+                    verify_cycles = int(line.split(":")[1].strip().split(" ")[0])
+                    current_alg_row.append(verify_cycles)
+
+                # Check if all data for the current algorithm has been collected and add to the dataframe
+                if len(current_alg_row) == 4:
+                    results_df.loc[len(results_df)] = current_alg_row
+                    current_alg_row = []
+
+        # Save the collected results to a csv file
+        run_num = current_file.split("_")[4].split(".")[0]
+        results_df.to_csv(os.path.join(paths["parsed_results_dir"], f"results_{run_num}.csv"), index=False)
+        results_df.to_excel(os.path.join(paths["parsed_results_dir"], f"results_{run_num}.xlsx"), index=False)
+
+    # Print the parser end message to the terminal
+    print("Results parser completed successfully")
+
+#---------------------------------------------------------------------------------------------------
+def main():
+    """ Main function for controlling the parser """
+
+    # determine the version of the parser to run
+    version_selection = int(input("Enter the version of the parser to run (1 for go version, 2 for bash version): "))
+    print(f"\n")
+
+    if version_selection == 1:
+        paths, test_batches = setup_env(version_selection)
+        go_version_parser(paths, test_batches)
+    
+    elif version_selection == 2:
+        paths = setup_env(version_selection)
+        bash_version_parsers(paths)
+    
+    else:
+        print("Invalid version selection, please try again.")
+        sys.exit(1)
 
 #------------------------------------------------------------------------------
 """Main boiler plate"""

@@ -165,7 +165,7 @@ cd scripts
 During the scripts operation the user will be presented to skip the HuFu and/or Snova algorithms due to the significant amount of time it takes to complete their operations. Furthermore, the script will also present the user with the option to select the number of runs that the script will perform. This is to allow for the generation of performance data averages across multiple runs for the supported signature algorithms.
 
 ### Results Output
-Upon completing the benchmarking, the automated bash script will store the results in the `test_data/results` directory in the form of text files. These text files can later be parsed using a language such as Python to extract the performance metrics.
+Upon completing the benchmarking, the automated bash script will store the results in the `test_data/results` directory in the form of text files. These text files can later be parsed using a language such as Python to extract the performance metrics. Currently, the Python result parsing script in this repository has basic functionality for parsing the results outputted by the Bash benchmarking script. This functionality will be further improved as the project continues and better exception handling for result files will be implemented.
 
 **NOTE:** **Currently there is no handling to deal with previous results being present when running the performance script. Upon execution, all previous results will be DELETED! Please make a copy of the results if you wish to keep them before executing the script again!**
 
@@ -234,7 +234,7 @@ There are two main ways in which the results can be processed:
 The first method allows for the results to be used within further analysis and allows for the generation of averages for the performance algorithms across multiple runs. The second method provides a web interface for viewing the data for an individual test run in graph format.
 
 ### Python Parser
-The python parser script `result_parser.py` can be found in the `scripts` directory. This script will automatically determine the results files present in the `test_data/results` directory. The script currently only functions for parsing the JSON files outputted by the automated Golang benchmarking script. It is able to determine the all the result files associated with a a test_batch which is identified by the date formatting in the filename. 
+The python parser script `result_parser.py` can be found in the `scripts` directory. This script will automatically determine the results files present in the `test_data/results` directory. The script currently only functions for parsing the JSON files outputted by the automated Golang benchmarking script and the text files outputted by the Bash benchmarking script. It is able to determine all the result files associated with a a test_batch which is identified by the date formatting in the filename. 
 
 The script will create formatted CSV and XLSX files for each run in all of the test batches currently stored. The script will also generate averages for each algorithm and its operations across all the test runs in a specific test batch group.
 
@@ -244,6 +244,11 @@ To utilise the Python parsing tool, execute the following commands from the proj
 cd scripts
 python3 result_parser.py
 ```
+
+The Python script will request which version of the benchmarking script was used to determine what results it needs to parse. The following options are available:
+
+- Go Version - Selection 1
+- Bash Version - Selection 2
 
 Upon completion, the formatted results and averages files can be found in the `test_data/parsed_results` directory.
 
